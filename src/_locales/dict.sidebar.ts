@@ -11,6 +11,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Поиск...',
     zh_CN: '搜索...',
     zh_TW: '搜尋...',
+    ja: '検索...',
   },
 
   // ---
@@ -22,6 +23,7 @@ export const sidebarTranslations: Translations = {
     hu: 'Figyelmeztetés',
     ru: 'Внимание',
     zh: '警告',
+    ja: '警告',
   },
   'confirm.tabs_close_pre': {
     en: 'Are you sure you want to close ',
@@ -30,6 +32,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Вы действительно хотите закрыть ',
     zh_CN: '你确定要关闭 ',
     zh_TW: '你確定要關閉 ',
+    ja: '本当に閉じますか',
   },
   'confirm.tabs_close_post': {
     en: ' tabs?',
@@ -38,6 +41,7 @@ export const sidebarTranslations: Translations = {
     ru: (n = 0) => (NUM_234_RE.test(n.toString()) ? ' вкладки?' : ' вкладок?'),
     zh_CN: ' 标签页吗？',
     zh_TW: ' 分頁嗎？',
+    ja: 'のタブを閉じますか？',
   },
   'confirm.bookmarks_delete': {
     en: 'Are you sure you want to delete selected bookmarks?',
@@ -46,6 +50,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Вы действительно хотите удалить выбранные закладки?',
     zh_CN: '你确定要删除选定的书签吗？',
     zh_TW: '你確定要刪除選定的書籤嗎？',
+    ja: '選択したブックマークを削除してもよろしいですか？',
   },
 
   // ---
@@ -57,6 +62,7 @@ export const sidebarTranslations: Translations = {
     hu: 'Nincs találat',
     ru: 'Ничего не найдено',
     zh: '未找到',
+    ja: '何も見つかりません',
   },
   'panel.nothing': {
     en: 'Nothing...',
@@ -65,6 +71,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Ничего...',
     zh_CN: '无...',
     zh_TW: '無...',
+    ja: '何も...',
   },
 
   // ---
@@ -76,6 +83,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Показать историю этого сайта',
     zh_CN: '显示该站点的历史记录',
     zh_TW: '顯示此網站的歷史紀錄',
+    ja: 'このサイトの履歴を表示',
   },
   'panel.history.show_more': {
     en: '...hidden visits:',
@@ -83,6 +91,7 @@ export const sidebarTranslations: Translations = {
     ru: '...скрытых записей:',
     zh_CN: '...隐藏的访问：',
     zh_TW: '...隱藏的紀錄：',
+    ja: '...非表示の訪問:',
   },
 
   // ---
@@ -94,6 +103,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Открыть новую вкладку',
     zh_CN: '打开一个新标签',
     zh_TW: '開啟一個新分頁',
+    ja: '新しいタブを開く',
   },
   'newTabBar.in_default_container': {
     en: ' in default container',
@@ -101,6 +111,7 @@ export const sidebarTranslations: Translations = {
     ru: ' в стандартном контейнере',
     zh_CN: ' 在默认容器中',
     zh_TW: ' 在預設容器中',
+    ja: 'デフォルトのコンテナで',
   },
   'newTabBar.in_container_prefix': {
     en: ' in "',
@@ -108,6 +119,7 @@ export const sidebarTranslations: Translations = {
     ru: ' в контейнере "',
     zh_CN: ' 在 "',
     zh_TW: ' 在「',
+    ja: '「',
   },
   'newTabBar.in_container_postfix': {
     en: '" container',
@@ -115,6 +127,7 @@ export const sidebarTranslations: Translations = {
     ru: '"',
     zh_CN: '" 容器中',
     zh_TW: '」容器中',
+    ja: '」コンテナ',
   },
   'newTabBar.mid_child': {
     en: 'Middle click: Open a child tab',
@@ -122,6 +135,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Средняя кнопка мыши: Открыть новую дочернюю вкладку',
     zh_CN: '中键单击：打开子选项卡',
     zh_TW: '中鍵點選：開啟子分頁',
+    ja: '中クリック：子タブを開く',
   },
   'newTabBar.mid_reopen': {
     en: 'Middle click: Reopen active tab',
@@ -129,6 +143,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Средняя кнопка мыши: Переоткрыть активную вкладку',
     zh_CN: '中键点击：重新打开活动标签',
     zh_TW: '中鍵點選：重新開啟當前分頁',
+    ja: '中クリック：アクティブタブを再度開く',
   },
 
   // ---
@@ -141,6 +156,7 @@ export const sidebarTranslations: Translations = {
     hu: 'Panel törlése',
     ru: 'Удаление панели',
     zh: '移除面板',
+    ja: 'パネルの削除',
   },
   'popup.tabs_panel_removing.attach': {
     en: 'Attach tabs to neighbour panel',
@@ -149,6 +165,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Присоединить вкладки к соседней панели',
     zh_CN: '将标签附加到相邻面板',
     zh_TW: '將分頁附加到相鄰面板',
+    ja: 'タブを隣接するパネルにアタッチする',
   },
   'popup.tabs_panel_removing.leave': {
     en: 'Leave tabs untouched',
@@ -157,6 +174,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Оставить вкладки',
     zh_CN: '保持标签页不变',
     zh_TW: '保持分頁不變',
+    ja: 'タブをそのままにする',
   },
   'popup.tabs_panel_removing.save': {
     en: 'Save panel to bookmarks and close tabs',
@@ -165,6 +183,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Сохранить панель в закладки и закрыть вкладки',
     zh_CN: '将面板保存到书签并关闭标签页',
     zh_TW: '將面板儲存到書籤並關閉分頁',
+    ja: 'パネルをブックマークに保存してタブを閉じる',
   },
   'popup.tabs_panel_removing.close': {
     en: 'Close tabs',
@@ -173,6 +192,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Закрыть вкладки',
     zh_CN: '关闭标签页',
     zh_TW: '關閉分頁',
+    ja: 'タブを閉じる',
   },
   'popup.tabs_panel_removing.other_win_note': {
     en: 'Note: Tabs of this panel in other windows will be moved to the neighbour panel',
@@ -181,6 +201,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Вкладки этой панели в других окнах будут перемещены на соседнюю панель',
     zh_CN: '注意：此面板在其他窗口中的标签页将移动到相邻面板或左侧',
     zh_TW: '注意：其他視窗中屬於此面板的分頁將附加到相鄰面板',
+    ja: '注意：他のウィンドウのこのパネルのタブは隣接するパネルに移動されます',
   },
   // - What to do with old unused bookmarks on saving tabs panel
   'popup.wtdwOldBookmarks.title': {
@@ -190,6 +211,7 @@ export const sidebarTranslations: Translations = {
     ru: folderName => `Вкладки были сохранены в папке "${folderName}"`,
     zh_CN: folderName => `标签页已保存在 "${folderName}" 文件夹中`,
     zh_TW: folderName => `分頁已儲存在「${folderName}」資料夾中`,
+    ja: folderName => `タブは「${folderName}」フォルダに保存されました`,
   },
   'popup.wtdwOldBookmarks.note': {
     en: 'Delete old bookmarks in that folder?',
@@ -198,6 +220,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Удалить старые закладки в этой папке?',
     zh_CN: '删除该文件夹中的旧书签？',
     zh_TW: '刪除該資料夾中的舊書籤？',
+    ja: 'そのフォルダ内の古いブックマークを削除しますか？',
   },
   'popup.wtdwOldBookmarks.checkbox_label': {
     en: "Remember and don't ask again",
@@ -205,6 +228,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Запомнить и больше не спрашивать',
     zh_CN: '记住，不要再问',
     zh_TW: '記住，不再詢問',
+    ja: '覚えておいて、もう一度尋ねない',
   },
   'popup.wtdwOldBookmarks.delete': {
     en: 'Delete',
@@ -213,6 +237,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Удалить',
     zh_CN: '删除',
     zh_TW: '刪除',
+    ja: '削除',
   },
   'popup.wtdwOldBookmarks.keep': {
     en: 'Keep',
@@ -220,6 +245,7 @@ export const sidebarTranslations: Translations = {
     hu: 'Megtartás',
     ru: 'Оставить',
     zh: '保留',
+    ja: '保持',
   },
   // - Container config popup
   'popup.container.title': {
@@ -228,6 +254,7 @@ export const sidebarTranslations: Translations = {
     hu: 'Konténer',
     ru: 'Контейнер',
     zh: '容器',
+    ja: 'コンテナ',
   },
   'popup.container.name_placeholder': {
     en: 'Container name',
@@ -235,6 +262,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Название контейнера',
     zh_CN: '容器名称',
     zh_TW: '容器名稱',
+    ja: 'コンテナ名',
   },
   // - Panel config popup
   'popup.tabs_panel.title': {
@@ -244,6 +272,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Панель вкладок',
     zh_CN: '标签页面板',
     zh_TW: '分頁面板',
+    ja: 'タブパネル',
   },
   'popup.bookmarks_panel.title': {
     en: 'Bookmarks panel',
@@ -252,6 +281,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Панель закладок',
     zh_CN: '书签面板',
     zh_TW: '書籤面板',
+    ja: 'ブックマークパネル',
   },
   'popup.common.name_label': {
     en: 'Name',
@@ -260,6 +290,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Имя',
     zh_CN: '名称',
     zh_TW: '名稱',
+    ja: '名前',
   },
   'popup.common.icon_label': {
     en: 'Icon',
@@ -268,6 +299,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Иконка',
     zh_CN: '图标',
     zh_TW: '圖示',
+    ja: 'アイコン',
   },
   'popup.common.color_label': {
     en: 'Color',
@@ -276,6 +308,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Цвет',
     zh_CN: '颜色',
     zh_TW: '顏色',
+    ja: '色',
   },
   'popup.common.btn_more': {
     en: 'More options...',
@@ -284,6 +317,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Больше опций...',
     zh_CN: '更多选项...',
     zh_TW: '更多選項...',
+    ja: 'その他のオプション...',
   },
   // - Group config popup
   'popup.group_config.popup_title': {
@@ -293,6 +327,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Группа',
     zh_CN: '组',
     zh_TW: '群組',
+    ja: 'グループ',
   },
   'popup.group_config.title': {
     en: 'Title',
@@ -301,6 +336,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Название',
     zh_CN: '标题',
     zh_TW: '標題',
+    ja: 'タイトル',
   },
   'popup.group_config.title_placeholder': {
     en: 'Group title',
@@ -309,6 +345,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Название группы',
     zh_CN: '组标题',
     zh_TW: '群組標題',
+    ja: 'グループタイトル',
   },
   'popup.group_config.do_not_show_again': {
     en: "Don't show again",
@@ -317,6 +354,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Больше не показывать',
     zh_CN: '不再显示',
     zh_TW: '不再顯示',
+    ja: '再表示しない',
   },
 
   // ---
@@ -328,6 +366,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Закладки',
     zh_CN: '书签',
     zh_TW: '書籤',
+    ja: 'ブックマーク',
   },
   'sub_panel.bookmarks_panel.root_title': {
     en: 'All Bookmarks',
@@ -335,6 +374,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Все закладки',
     zh_CN: '全部书签',
     zh_TW: '全部書籤',
+    ja: 'すべてのブックマーク',
   },
   'sub_panel.rct_panel.title': {
     en: 'Recently closed tabs',
@@ -342,6 +382,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Недавно закрытые вкладки',
     zh_CN: '最近关闭的标签页',
     zh_TW: '最近關閉的分頁',
+    ja: '最近閉じたタブ',
   },
   'sub_panel.history_panel.title': {
     en: 'History',
@@ -349,6 +390,7 @@ export const sidebarTranslations: Translations = {
     ru: 'История',
     zh_CN: '历史',
     zh_TW: '歷史',
+    ja: '履歴',
   },
 
   // ---
@@ -361,6 +403,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Панель закладок',
     zh_CN: '书签面板',
     zh_TW: '書籤面板',
+    ja: 'ブックマークパネル',
   },
   'dnd.tooltip.tabs_panel': {
     en: 'panel',
@@ -368,6 +411,7 @@ export const sidebarTranslations: Translations = {
     hu: 'panel',
     ru: 'панель',
     zh: '面板',
+    ja: 'パネル',
   },
   'dnd.tooltip.tabs': {
     en: 'tabs',
@@ -380,6 +424,7 @@ export const sidebarTranslations: Translations = {
     },
     zh_CN: '标签页',
     zh_TW: '分頁',
+    ja: 'タブ',
   },
   'dnd.tooltip.bookmarks': {
     en: 'bookmarks',
@@ -392,6 +437,7 @@ export const sidebarTranslations: Translations = {
     },
     zh_CN: '书签',
     zh_TW: '書籤',
+    ja: 'ブックマーク',
   },
   'dnd.tooltip.nav_item': {
     en: 'Navigation element',
@@ -400,6 +446,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Элемент навигации',
     zh_CN: '导航元素',
     zh_TW: '導覽元件',
+    ja: 'ナビゲーション要素',
   },
   'dnd.tooltip.new_tab': {
     en: 'New tab',
@@ -407,6 +454,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Новая вкладка',
     zh_CN: '新标签页',
     zh_TW: '新分頁',
+    ja: '新しいタブ',
   },
 
   // ---
@@ -419,6 +467,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Показать скрытые панели',
     zh_CN: '显示隐藏的面板',
     zh_TW: '顯示隱藏的面板',
+    ja: '非表示パネルを表示',
   },
   'nav.btn_settings': {
     en: 'Settings',
@@ -427,6 +476,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Настройки',
     zh_CN: '设置',
     zh_TW: '設定',
+    ja: '設定',
   },
   'nav.btn_add_tp': {
     en: 'Create tabs panel',
@@ -435,6 +485,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Создать панель вкладок',
     zh_CN: '创建标签页面板',
     zh_TW: '建立分頁面板',
+    ja: 'タブパネルを作成',
   },
   'nav.btn_search': {
     en: 'Search',
@@ -443,6 +494,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Поиск',
     zh_CN: '搜索',
     zh_TW: '搜尋',
+    ja: '検索',
   },
   'nav.btn_create_snapshot': {
     en: 'Create snapshot',
@@ -451,6 +503,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Создать снепшот',
     zh_CN: '创建快照',
     zh_TW: '建立快照',
+    ja: 'スナップショットを作成',
   },
   'nav.btn_remute_audio_tabs': {
     en: 'Mute/Unmute audible tabs',
@@ -459,6 +512,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Приглушить/Включить вкладки со звуком',
     zh_CN: '静音/取消静音有声标签页',
     zh_TW: '靜音/取消靜音有聲分頁',
+    ja: 'ミュート/ミュート解除可能なタブ',
   },
   'nav.btn_collapse': {
     en: 'Collapse all',
@@ -467,6 +521,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Свернуть все',
     zh_CN: '全部折叠',
     zh_TW: '全部折疊',
+    ja: 'すべて折りたたむ',
   },
   'nav.tabs_panel_tooltip_mid_rm_all': {
     en: 'Middle click: Close tabs',
@@ -474,6 +529,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Средняя кнопка мыши: Закрыть влкадки',
     zh_CN: '中键点击：关闭全部标签',
     zh_TW: '中鍵點選：關閉全部分頁',
+    ja: '中クリック：タブを閉じる',
   },
   'nav.tabs_panel_tooltip_mid_rm_rmp': {
     en: 'Middle click: Close tabs and remove panel',
@@ -481,6 +537,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Средняя кнопка мыши: Закрыть вкладки и удалить панель',
     zh_CN: '中键点击：关闭标签并移除面板',
     zh_TW: '中鍵點選：關閉分頁並移除面板',
+    ja: '中クリック：タブを閉じてパネルを削除',
   },
   'nav.tabs_panel_tooltip_mid_rm_act_tab': {
     en: 'Middle click: Close active tab',
@@ -488,6 +545,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Средняя кнопка мыши: Закрыть активную вкладку',
     zh_CN: '中键单击：关闭活动标签页',
     zh_TW: '中鍵點選：關閉當前分頁',
+    ja: '中クリック：アクティブなタブを閉じる',
   },
   'nav.tabs_panel_tooltip_mid_discard': {
     en: 'Middle click: Unload tabs',
@@ -495,6 +553,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Средняя кнопка мыши: Выгрузить вкладки',
     zh_CN: '中键单击：卸载标签页',
     zh_TW: '中鍵點選：卸載分頁',
+    ja: '中クリック：タブをアンロード',
   },
   'nav.tabs_panel_tooltip_mid_hide': {
     en: 'Middle click: Hide panel',
@@ -502,6 +561,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Средняя кнопка мыши: Скрыть панель',
     zh_CN: '中键单击：隐藏面板',
     zh_TW: '中鍵點選：隱藏面板',
+    ja: '中クリック：パネルを非表示',
   },
   'nav.tabs_panel_tooltip_mid_bookmark': {
     en: 'Middle click: Save to bookmarks',
@@ -509,6 +569,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Средняя кнопка мыши: Сохранить в закладки',
     zh_CN: '中键点击：保存到书签',
     zh_TW: '中鍵點選：儲存到書籤',
+    ja: '中クリック：ブックマークに保存',
   },
   'nav.tabs_panel_tooltip_mid_bkm_rmp': {
     en: 'Middle click: Save to bookmarks and remove panel',
@@ -516,6 +577,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Средняя кнопка мыши: Сохранить в закладки и удалить панель',
     zh_CN: '中键点击：保存到书签并移除面板',
     zh_TW: '中鍵點選：儲存到書籤並移除面板',
+    ja: '中クリック：ブックマークに保存してパネルを削除',
   },
   'nav.tabs_panel_tooltip_mid_convert': {
     en: 'Middle click: Convert to bookmarks panel',
@@ -523,6 +585,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Средняя кнопка мыши: Конвертировать в панель закладок',
     zh_CN: '中键单击：转换到书签面板',
     zh_TW: '中鍵點選：轉換到書籤面板',
+    ja: '中クリック：ブックマークパネルに変換',
   },
   'nav.tabs_panel_tooltip_mid_conv_hide': {
     en: 'Middle click: Convert to bookmarks and hide panel',
@@ -530,6 +593,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Средняя кнопка мыши: Конвертировать в панель закладок и скрыть',
     zh_CN: '中键单击：转换为书签并隐藏面板',
     zh_TW: '中鍵點選：轉換為書籤並隱藏面板',
+    ja: '中クリック：ブックマークに変換してパネルを非表示',
   },
   'nav.bookmarks_panel_tooltip_mid_convert': {
     en: 'Middle click: Convert to tabs panel',
@@ -537,6 +601,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Средняя кнопка мыши: Конвертировать в панель вкладок',
     zh_CN: '中键单击：转换为标签面板',
     zh_TW: '中鍵點選：轉換為分頁面板',
+    ja: '中クリック：タブパネルに変換',
   },
 
   // ---
@@ -549,6 +614,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Скрыть уведомление',
     zh_CN: '隐藏通知',
     zh_TW: '隱藏通知',
+    ja: '通知を非表示',
   },
   'notif.undo_ctrl': {
     en: 'Undo',
@@ -557,6 +623,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Восстановить',
     zh_CN: '撤消',
     zh_TW: '復原',
+    ja: '元に戻す',
   },
   'notif.tabs_rm_post': {
     en: ' tabs closed',
@@ -569,6 +636,7 @@ export const sidebarTranslations: Translations = {
     },
     zh_CN: ' 标签页已关闭',
     zh_TW: ' 分頁已關閉',
+    ja: ' タブが閉じられました',
   },
   'notif.bookmarks_create_err': {
     en: 'Cannot create bookmark',
@@ -576,6 +644,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Невозможно создать закладку',
     zh_CN: ' 无法创建书签',
     zh_TW: ' 無法建立書籤',
+    ja: ' ブックマークを作成できません',
   },
   'notif.bookmarks_rm_post': {
     en: n => (n === 1 ? ' bookmark removed' : ' bookmarks removed'),
@@ -588,6 +657,7 @@ export const sidebarTranslations: Translations = {
     },
     zh_CN: ' 书签已删除',
     zh_TW: ' 書籤已刪除',
+    ja: ' ブックマークが削除されました',
   },
   'notif.bookmarks_sort': {
     en: 'Sorting bookmarks...',
@@ -596,6 +666,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Сортировка закладок...',
     zh_CN: '书签排序',
     zh_TW: '書籤排序',
+    ja: 'ブックマークをソートしています...',
   },
   'notif.tabs_sort': {
     en: 'Sorting tabs...',
@@ -604,6 +675,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Сортировка вкладок...',
     zh_CN: '排序选项卡...',
     zh_TW: '排序分頁...',
+    ja: 'タブをソートしています...',
   },
   'notif.snapshot_created': {
     en: 'Snapshot created',
@@ -612,6 +684,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Снепшот создан',
     zh_CN: '快照已创建',
     zh_TW: '快照已建立',
+    ja: 'スナップショットが作成されました',
   },
   'notif.view_snapshot': {
     en: 'View',
@@ -620,6 +693,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Посмотреть',
     zh_CN: '查看',
     zh_TW: '檢視',
+    ja: '表示',
   },
   'notif.tabs_err': {
     en: 'Wrong tabs position detected',
@@ -628,6 +702,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Обнаружено неправильное положение вкладок',
     zh_CN: '检测到错误的标签页位置',
     zh_TW: '偵測到錯誤的分頁位置',
+    ja: '不正なタブの位置が検出されました',
   },
   'notif.tabs_err_fix': {
     en: 'Update tabs',
@@ -636,6 +711,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Обновить вкладки',
     zh_CN: '更新标签页',
     zh_TW: '更新分頁',
+    ja: 'タブを更新',
   },
   'notif.tabs_reloading': {
     en: 'Reloading tabs',
@@ -644,6 +720,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Перезагрузка вкладок',
     zh_CN: '重新加载标签页',
     zh_TW: '重新載入分頁',
+    ja: 'タブを再読み込みしています...',
   },
   'notif.tabs_reloading_stop': {
     en: 'Stop',
@@ -651,6 +728,7 @@ export const sidebarTranslations: Translations = {
     hu: 'Állj',
     ru: 'Остановить',
     zh: '停止',
+    ja: '停止',
   },
   'notif.tabs_panel_saving_bookmarks': {
     en: 'Saving to bookmarks...',
@@ -659,6 +737,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Сохранение в закладки...',
     zh_CN: '保存到书签...',
     zh_TW: '儲存到書籤...',
+    ja: 'ブックマークに保存しています...',
   },
   'notif.tabs_panel_saved_bookmarks': {
     en: 'Panel saved',
@@ -667,6 +746,7 @@ export const sidebarTranslations: Translations = {
     ru: 'панель сохранена в',
     zh_CN: '面板已保存',
     zh_TW: '面板已儲存',
+    ja: 'パネルが保存されました',
   },
   'notif.tabs_panel_updated_bookmarks': {
     en: 'Bookmarks updated',
@@ -675,6 +755,7 @@ export const sidebarTranslations: Translations = {
     ru: 'закладки обновлены в',
     zh_CN: '书签已更新',
     zh_TW: '書籤已更新',
+    ja: 'ブックマークが更新されました',
   },
   'notif.converting': {
     en: 'Converting...',
@@ -683,6 +764,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Конвертация...',
     zh_CN: '转换中...',
     zh_TW: '轉換中...',
+    ja: '変換中...',
   },
   'notif.tabs_panel_to_bookmarks_err': {
     en: 'Cannot save tabs panel to bookmarks',
@@ -691,6 +773,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Невозможно сохранить панель вкладок в закладки',
     zh_CN: '无法将标签页面板保存到书签',
     zh_TW: '無法將分頁面板儲存到書籤',
+    ja: 'タブパネルをブックマークに保存できません',
   },
   'notif.tabs_panel_to_bookmarks_err.folder': {
     en: 'Cannot create destination folder',
@@ -699,6 +782,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Невозможно создать папку для панели',
     zh_CN: '无法创建目标文件夹',
     zh_TW: '無法建立目標資料夾',
+    ja: '宛先フォルダを作成できません',
   },
   'notif.tabs_panel_to_bookmarks_err.folder_upd': {
     en: 'Cannot update destination folder',
@@ -707,6 +791,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Невозможно обновить папку для панели',
     zh_CN: '无法更新目标文件夹',
     zh_TW: '無法更新目標資料夾',
+    ja: '宛先フォルダを更新できません',
   },
   'notif.tabs_panel_to_bookmarks_err.bookmarks': {
     en: 'Cannot create bookmarks',
@@ -715,6 +800,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Невозможно создать закладки',
     zh_CN: '无法创建书签',
     zh_TW: '無法建立書籤',
+    ja: 'ブックマークを作成できません',
   },
   'notif.restore_from_bookmarks_err': {
     en: 'Cannot restore panel from bookmarks',
@@ -723,6 +809,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Невозможно восстановить панель из закладок',
     zh_CN: '无法从书签恢复面板',
     zh_TW: '無法從書籤復原面板',
+    ja: 'ブックマークからパネルを復元できません',
   },
   'notif.restore_from_bookmarks_err.root': {
     en: 'Root folder not found',
@@ -731,6 +818,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Корневая папка не найдена',
     zh_CN: '未找到根文件夹',
     zh_TW: '未找到根資料夾',
+    ja: 'ルートフォルダが見つかりません',
   },
   'notif.restore_from_bookmarks_ok': {
     en: 'The tab panel has been successfully restored',
@@ -739,18 +827,21 @@ export const sidebarTranslations: Translations = {
     ru: 'Панель вкладок успешно восстановлена',
     zh_CN: '标签页面板已恢复',
     zh_TW: '分頁面板已復原',
+    ja: 'タブパネルが正常に復元されました',
   },
   'notif.panel_conv': {
     en: 'The panel has been successfully converted',
     hu: 'A panel átalakítása kész',
     ru: 'Панель успешно преобразована',
     zh_TW: '面板已成功被轉換',
+    ja: 'パネルが正常に変換されました',
   },
   'notif.panel_bkmrkd': {
     en: 'The panel has been successfully bookmarked',
     hu: 'A panel könyvjelzőzése kész',
     ru: 'Панель успешно добавлена в закладки',
     zh_TW: '面板已成功加入書籤',
+    ja: 'パネルが正常にブックマークされました',
   },
   'notif.done': {
     en: 'Done',
@@ -758,6 +849,7 @@ export const sidebarTranslations: Translations = {
     hu: 'Rendben',
     ru: 'Готово',
     zh: '已完成',
+    ja: '完了',
   },
   'notif.new_bookmark': {
     en: 'New bookmark added',
@@ -766,6 +858,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Новая закладка добавлена',
     zh_CN: '书签已添加',
     zh_TW: '書籤已加入',
+    ja: '新しいブックマークが追加されました',
   },
   'notif.bookmarks_sub_panel.no_root.title': {
     en: 'Cannot find root folder',
@@ -774,6 +867,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Невозможно найти корневую папку',
     zh_CN: '找不到根文件夹',
     zh_TW: '找不到根資料夾',
+    ja: 'ルートフォルダが見つかりません',
   },
   'notif.bookmarks_sub_panel.no_root.details': {
     en: 'Try to re-save tabs panel',
@@ -782,6 +876,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Попробуйте пересохранить панель вкладок',
     zh_CN: '尝试重新保存标签页面板',
     zh_TW: '嘗試重新儲存分頁面板',
+    ja: 'タブパネルを再保存してみてください',
   },
   'notif.bookmarks_sub_panel.no_root.save': {
     en: 'Save',
@@ -790,6 +885,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Сохранить',
     zh_CN: '保存',
     zh_TW: '儲存',
+    ja: '保存',
   },
   'notif.proxy_auth_err': {
     en: 'Proxy authentication error',
@@ -798,6 +894,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Ошибка аутентификации прокси',
     zh_CN: '代理认证错误',
     zh_TW: '代理認證錯誤',
+    ja: 'プロキシの認証エラー',
   },
   'notif.proxy_auth_err_details': {
     en: 'Check the proxy settings to make sure that they are correct.',
@@ -806,6 +903,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Проверьте настройки прокси, чтобы убедиться, что они верны.',
     zh_CN: '检查代理设置以确保它们是正确的',
     zh_TW: '檢查代理設定以確保它們是正確的',
+    ja: 'プロキシ設定を確認して正しいことを確認してください。',
   },
   'notif.proxy_auth_err_ctrl': {
     en: 'Open settings',
@@ -814,6 +912,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Открыть настройки',
     zh_CN: '打开设置',
     zh_TW: '開啟設定',
+    ja: '設定を開く',
   },
   'notif.history_del_sites': {
     en: 'Clearing history',
@@ -822,6 +921,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Очистка истории',
     zh_CN: '清除历史记录',
     zh_TW: '清除歷史紀錄',
+    ja: '履歴をクリアしています...',
   },
   'notif.history_del_sites_nothing': {
     en: 'Nothing to clear',
@@ -830,6 +930,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Нечего очищать',
     zh_CN: '没有内容可清除',
     zh_TW: '沒有內容可清除',
+    ja: 'クリアするものはありません',
   },
   'notif.cc.err': {
     en: 'Unable to clear cookies',
@@ -838,6 +939,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Не удалось очистить куки',
     zh_CN: '无法清除 Cookie',
     zh_TW: '無法清除 Cookie',
+    ja: 'Cookie をクリアできません',
   },
   'notif.cc.err_url': {
     en: 'Incorrect URL: ',
@@ -846,6 +948,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Неверный URL: ',
     zh_CN: '不正确的网址：',
     zh_TW: '不正確的網址：',
+    ja: '不正な URL: ',
   },
   'notif.cc.ok': {
     en: 'Cookies was cleared',
@@ -853,6 +956,7 @@ export const sidebarTranslations: Translations = {
     hu: 'A sütik törlése kész',
     ru: 'Cookies были очищены',
     zh: 'Cookie 已清除',
+    ja: 'Cookie がクリアされました',
   },
 
   // ---
@@ -865,6 +969,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Стандартный',
     zh_CN: '默认',
     zh_TW: '預設',
+    ja: 'デフォルト',
   },
   'colors.blue': {
     en: 'Blue',
@@ -873,6 +978,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Синий',
     zh_CN: '蓝色',
     zh_TW: '藍色',
+    ja: '青色',
   },
   'colors.turquoise': {
     en: 'Turquoise',
@@ -881,6 +987,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Бирюзовый',
     zh_CN: '青绿色',
     zh_TW: '青綠色',
+    ja: 'ターコイズ',
   },
   'colors.green': {
     en: 'Green',
@@ -889,6 +996,7 @@ export const sidebarTranslations: Translations = {
     ru: 'Зеленый',
     zh_CN: '绿色',
     zh_TW: '綠色',
+    ja: '緑色',
   },
   'colors.yellow': {
     en: 'Yellow',
@@ -897,12 +1005,14 @@ export const sidebarTranslations: Translations = {
     ru: 'Желтый',
     zh_CN: '黄色',
     zh_TW: '黃色',
+    ja: '黄色',
   },
   'colors.orange': {
     en: 'Orange',
     hu: 'narancssárga',
     ru: 'Оранжевый',
     zh: '橙色',
+    ja: 'オレンジ',
   },
   'colors.red': {
     en: 'Red',
@@ -911,12 +1021,14 @@ export const sidebarTranslations: Translations = {
     ru: 'Красный',
     zh_CN: '红色',
     zh_TW: '紅色',
+    ja: '赤色',
   },
   'colors.pink': {
     en: 'Pink',
     hu: 'rózsaszín',
     ru: 'Розовый',
     zh: '粉色',
+    ja: 'ピンク',
   },
   'colors.purple': {
     en: 'Purple',
@@ -924,6 +1036,7 @@ export const sidebarTranslations: Translations = {
     hu: 'lila',
     ru: 'Фиолетовый',
     zh: '紫色',
+    ja: '紫色',
   },
 }
 

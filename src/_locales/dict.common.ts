@@ -12,6 +12,7 @@ export const commonTranslations: Translations = {
     ru: 'Название закладки...',
     zh_CN: '书签名称...',
     zh_TW: '書籤名稱...',
+    ja: 'ブックマーク名...',
   },
   'bookmarks_editor.name_folder_placeholder': {
     en: 'Folder name...',
@@ -20,6 +21,7 @@ export const commonTranslations: Translations = {
     ru: 'Название папки...',
     zh_CN: '文件夹名称...',
     zh_TW: '資料夾名稱...',
+    ja: 'フォルダ名...',
   },
   'bookmarks_editor.url_placeholder': {
     en: 'e.g. https://example.com',
@@ -27,6 +29,7 @@ export const commonTranslations: Translations = {
     hu: 'pl.: https://pelda.hu',
     ru: 'Ссылка...',
     zh: '例如 https://example.com',
+    js: '例: https://example.com',
   },
 
   // ---
@@ -39,6 +42,7 @@ export const commonTranslations: Translations = {
     ru: 'Создать',
     zh_CN: '创建',
     zh_TW: '建立',
+    ja: '作成',
   },
   'btn.save': {
     en: 'Save',
@@ -47,6 +51,7 @@ export const commonTranslations: Translations = {
     ru: 'Сохранить',
     zh_CN: '保存',
     zh_TW: '儲存',
+    ja: '保存',
   },
   'btn.restore': {
     en: 'Restore',
@@ -55,6 +60,7 @@ export const commonTranslations: Translations = {
     ru: 'Восстановить',
     zh_CN: '恢复',
     zh_TW: '復原',
+    ja: '復元',
   },
   'btn.update': {
     en: 'Update',
@@ -62,6 +68,7 @@ export const commonTranslations: Translations = {
     hu: 'Frissítés',
     ru: 'Обновить',
     zh: '更新',
+    ja: '更新',
   },
   'btn.yes': {
     en: 'Yes',
@@ -70,11 +77,13 @@ export const commonTranslations: Translations = {
     ru: 'Да',
     zh_CN: '确认',
     zh_TW: '確定',
+    ja: 'はい',
   },
   'btn.ok': {
     en: 'Ok',
     ru: 'Ок',
     zh: '是',
+    ja: 'OK',
   },
   'btn.no': {
     en: 'No',
@@ -82,6 +91,7 @@ export const commonTranslations: Translations = {
     hu: 'Nem',
     ru: 'Нет',
     zh: '取消',
+    ja: 'いいえ',
   },
   'btn.cancel': {
     en: 'Cancel',
@@ -89,6 +99,7 @@ export const commonTranslations: Translations = {
     hu: 'Mégsem',
     ru: 'Отмена',
     zh: '取消',
+    ja: 'キャンセル',
   },
   'btn.stop': {
     en: 'Stop',
@@ -96,6 +107,7 @@ export const commonTranslations: Translations = {
     hu: 'Leállítás',
     ru: 'Остановить',
     zh: '停止',
+    ja: '停止',
   },
 
   // ---
@@ -107,6 +119,7 @@ export const commonTranslations: Translations = {
     hu: 'Konténer',
     ru: 'Контейнер',
     zh: '容器',
+    ja: 'コンテナ',
   },
 
   // ---
@@ -118,6 +131,7 @@ export const commonTranslations: Translations = {
     ru: 'Вкладки',
     zh_CN: '标签页',
     zh_TW: '分頁',
+    ja: 'タブ',
   },
 
   // ---
@@ -130,6 +144,7 @@ export const commonTranslations: Translations = {
     ru: 'Закладки',
     zh_CN: '书签',
     zh_TW: '書籤',
+    ja: 'ブックマーク',
   },
   'panel.bookmarks.req_perm': {
     en: 'Bookmarks panel requires "Bookmarks" permission.',
@@ -138,6 +153,7 @@ export const commonTranslations: Translations = {
     ru: 'Панель закладок требует разрешения "Закладки".',
     zh_CN: '书签面板需要"书签"权限。',
     zh_TW: '書籤面板需要「書籤」權限。',
+    ja: 'ブックマークパネルには「ブックマーク」権限が必要です。',
   },
 
   // ---
@@ -150,6 +166,7 @@ export const commonTranslations: Translations = {
     ru: 'История',
     zh_CN: '历史',
     zh_TW: '歷史',
+    ja: '履歴',
   },
   'panel.history.load_more': {
     en: 'Scroll to load more',
@@ -158,6 +175,7 @@ export const commonTranslations: Translations = {
     ru: 'Прокрутитe вниз, чтобы загрузить больше',
     zh_CN: '滚动加载更多',
     zh_TW: '捲動載入更多',
+    ja: 'スクロールしてさらに読み込む',
   },
   'panel.history.req_perm': {
     en: 'History panel requires "History" permission.',
@@ -166,6 +184,7 @@ export const commonTranslations: Translations = {
     ru: 'Панель истории требует разрешения "История".',
     zh_CN: '历史面板需要"历史"权限。',
     zh_TW: '歷史面板需要「歷史」權限。',
+    ja: '履歴パネルには「履歴」権限が必要です。',
   },
 
   // ---
@@ -178,6 +197,7 @@ export const commonTranslations: Translations = {
     ru: 'Название',
     zh_CN: '名称',
     zh_TW: '名稱',
+    ja: '名前',
   },
   'popup.bookmarks.location_label': {
     en: 'Location',
@@ -186,6 +206,7 @@ export const commonTranslations: Translations = {
     ru: 'Расположение',
     zh_CN: '地址',
     zh_TW: '位置',
+    ja: '場所',
   },
   'popup.bookmarks.location_new_folder_placeholder': {
     en: 'New folder name',
@@ -194,6 +215,7 @@ export const commonTranslations: Translations = {
     ru: 'Название новой папки',
     zh_CN: '新文件夹名称',
     zh_TW: '新資料夾名稱',
+    ja: '新しいフォルダ名',
   },
   'popup.bookmarks.recent_locations_label': {
     en: 'Recent locations',
@@ -202,6 +224,7 @@ export const commonTranslations: Translations = {
     ru: 'Недавние расположения',
     zh_CN: '最近地址',
     zh_TW: '最近位置',
+    ja: '最近の場所',
   },
   'popup.bookmarks.save_in_bookmarks': {
     en: 'Save in bookmarks',
@@ -210,6 +233,7 @@ export const commonTranslations: Translations = {
     ru: 'Сохранить в закладки',
     zh_CN: '保存至书签',
     zh_TW: '新增書籤',
+    ja: 'ブックマークに保存',
   },
   'popup.bookmarks.set_folder_for_tabs_panel': {
     en: 'Set folder for this tabs panel',
@@ -218,6 +242,7 @@ export const commonTranslations: Translations = {
     ru: 'Установить папку для этой панели вкладок',
     zh_CN: '设置此标签面板的文件夹',
     zh_TW: '設定此分頁面板的資料夾',
+    ja: 'このタブパネルのフォルダを設定',
   },
   'popup.bookmarks.edit_bookmark': {
     en: 'Edit bookmark',
@@ -226,6 +251,7 @@ export const commonTranslations: Translations = {
     ru: 'Редактировать закладку',
     zh_CN: '编辑书签',
     zh_TW: '編輯書籤',
+    ja: 'ブックマークを編集',
   },
   'popup.bookmarks.edit_folder': {
     en: 'Edit folder',
@@ -234,6 +260,7 @@ export const commonTranslations: Translations = {
     ru: 'Редактировать папку',
     zh_CN: '编辑文件夹',
     zh_TW: '編輯資料夾',
+    ja: 'フォルダを編集',
   },
   'popup.bookmarks.select_root_folder': {
     en: 'Select root folder',
@@ -242,6 +269,7 @@ export const commonTranslations: Translations = {
     ru: 'Выберите корневую папку',
     zh_CN: '选择根文件夹',
     zh_TW: '選取根資料夾',
+    ja: 'ルートフォルダを選択',
   },
   'popup.bookmarks.create_bookmark': {
     en: 'Create bookmark',
@@ -250,6 +278,7 @@ export const commonTranslations: Translations = {
     ru: 'Создать закладку',
     zh_CN: '创建书签',
     zh_TW: '建立書籤',
+    ja: 'ブックマークを作成',
   },
   'popup.bookmarks.create_folder': {
     en: 'Create folder',
@@ -258,6 +287,7 @@ export const commonTranslations: Translations = {
     ru: 'Создать папку',
     zh_CN: '创建文件夹',
     zh_TW: '建立資料夾',
+    ja: 'フォルダを作成',
   },
   'popup.bookmarks.move_to': {
     en: 'Move to',
@@ -266,6 +296,7 @@ export const commonTranslations: Translations = {
     ru: 'Переместить в',
     zh_CN: '移动到',
     zh_TW: '移動到',
+    ja: '移動先',
   },
   'popup.bookmarks.move': {
     en: 'Move',
@@ -274,6 +305,7 @@ export const commonTranslations: Translations = {
     ru: 'Переместить',
     zh_CN: '移动',
     zh_TW: '移動',
+    ja: '移動',
   },
   'popup.bookmarks.create_bookmarks': {
     en: 'Create bookmark[s]',
@@ -282,6 +314,7 @@ export const commonTranslations: Translations = {
     ru: 'Создать закладки',
     zh_CN: '创建书签',
     zh_TW: '建立書籤',
+    ja: 'ブックマークを作成',
   },
   'popup.bookmarks.restore': {
     en: 'Restore from bookmarks folder',
@@ -290,6 +323,7 @@ export const commonTranslations: Translations = {
     ru: 'Восстановить из папки закладок',
     zh_CN: '从书签文件夹恢复',
     zh_TW: '從書籤資料夾復原',
+    ja: 'ブックマークフォルダから復元',
   },
   'popup.bookmarks.convert_title': {
     en: 'Convert to bookmarks',
@@ -298,6 +332,7 @@ export const commonTranslations: Translations = {
     ru: 'Конвертировать в закладки',
     zh_CN: '转换为书签',
     zh_TW: '轉換為書籤',
+    ja: 'ブックマークに変換',
   },
   'popup.bookmarks.convert': {
     en: 'Convert',
@@ -306,6 +341,7 @@ export const commonTranslations: Translations = {
     ru: 'Конвертировать',
     zh_CN: '转换',
     zh_TW: '轉換',
+    ja: '変換',
   },
 
   'popup.new_tab_shortcuts.title': {
@@ -315,6 +351,7 @@ export const commonTranslations: Translations = {
     ru: 'Ярлыки новой вкладки',
     zh_CN: '新标签快捷方式',
     zh_TW: '新分頁捷徑',
+    ja: '新しいタブのショートカット',
   },
   'popup.new_tab_shortcuts.create_title': {
     en: 'Create shortcut',
@@ -323,6 +360,7 @@ export const commonTranslations: Translations = {
     ru: 'Создать ярлык',
     zh_CN: '创建快捷方式',
     zh_TW: '建立捷徑',
+    ja: 'ショートカットを作成',
   },
   'popup.new_tab_shortcuts.new_shortcut_container_label': {
     en: 'Container',
@@ -330,6 +368,7 @@ export const commonTranslations: Translations = {
     hu: 'Konténer',
     ru: 'Контейнер',
     zh: '容器',
+    ja: 'コンテナ',
   },
   'popup.new_tab_shortcuts.new_shortcut_default_container': {
     en: 'Default container',
@@ -338,6 +377,7 @@ export const commonTranslations: Translations = {
     ru: 'Стандартный контейнер',
     zh_CN: '默认容器',
     zh_TW: '預設容器',
+    ja: 'デフォルトコンテナ',
   },
   'popup.new_tab_shortcuts.new_shortcut_url_label': {
     en: 'URL',
@@ -350,6 +390,7 @@ export const commonTranslations: Translations = {
     ru: 'Новая вкладка по умолчанию',
     zh_CN: '默认新标签',
     zh_TW: '預設新分頁',
+    ja: 'デフォルトの新しいタブ',
   },
   'popup.new_tab_shortcuts.add_br_btn': {
     en: 'Add new line',
@@ -358,6 +399,7 @@ export const commonTranslations: Translations = {
     ru: 'Добавить новую строку',
     zh_CN: '添加新行',
     zh_TW: '新增分隔線',
+    ja: '新しい行を追加',
   },
   'popup.new_tab_shortcuts.add_shortcut_btn': {
     en: 'Add shortcut',
@@ -366,6 +408,7 @@ export const commonTranslations: Translations = {
     ru: 'Добавить ярлык',
     zh_CN: '添加快捷方式',
     zh_TW: '新增捷徑',
+    ja: 'ショートカットを追加',
   },
 
   'popup.tab_move_rules.title': {
@@ -375,6 +418,7 @@ export const commonTranslations: Translations = {
     ru: 'Правила автоматического перемещения вкладок',
     zh_CN: '标签页自动移动规则',
     zh_TW: '分頁自動移動規則',
+    ja: 'タブ自動移動ルール',
   },
   'popup.tab_move_rules.editor_title.new': {
     en: 'Create auto-move rule',
@@ -383,6 +427,7 @@ export const commonTranslations: Translations = {
     ru: 'Создать правило',
     zh_CN: '创建自动移动规则',
     zh_TW: '建立自動移動規則',
+    ja: '自動移動ルールを作成',
   },
   'popup.tab_move_rules.editor_title.edit': {
     en: 'Edit auto-move rule',
@@ -391,6 +436,7 @@ export const commonTranslations: Translations = {
     ru: 'Редактировать правило',
     zh_CN: '编辑自动移动规则',
     zh_TW: '編輯自動移動規則',
+    ja: '自動移動ルールを編集',
   },
   'popup.tab_move_rules.rule_name_label': {
     en: 'Name (optional)',
@@ -398,6 +444,7 @@ export const commonTranslations: Translations = {
     ru: 'Название (опционально)',
     zh_CN: '名称（选填）',
     zh_TW: '名稱（選填）',
+    ja: '名前（オプション）',
   },
   'popup.tab_move_rules.rule_container_label': {
     en: 'If tab is in a container',
@@ -406,6 +453,7 @@ export const commonTranslations: Translations = {
     ru: 'Если вкладка в контейнере',
     zh_CN: '如果标签页在容器中',
     zh_TW: '如果分頁在容器中',
+    ja: 'タブがコンテナ内にある場合',
   },
   'popup.tab_move_rules.rule_url_label': {
     en: 'If tab has URL ("substring" or "/RegExp/")',
@@ -413,6 +461,7 @@ export const commonTranslations: Translations = {
     hu: 'Ha az URL illeszkedik ("szövegrészlet" vagy /RegExp/)',
     ru: 'Если вкладка имеет URL-адрес ("подстрока" или "/RegExp/")',
     zh: '如果 URL 含有 ("字符串" 或 "/RegExp/")',
+    ja: 'URL が ("部分文字列" または "/RegExp/") を含む場合',
   },
   'popup.tab_move_rules.rule_top_lvl_label': {
     en: 'If tab at the top level of tree',
@@ -421,6 +470,7 @@ export const commonTranslations: Translations = {
     ru: 'Если вкладка на верхнем уровне дерева',
     zh_CN: '如果标签页位于树的顶层',
     zh_TW: '如果分頁位於樹的頂層',
+    ja: 'タブがツリーの最上位レベルにある場合',
   },
   'popup.tab_move_rules.add_rule_btn': {
     en: 'Add rule',
@@ -429,6 +479,7 @@ export const commonTranslations: Translations = {
     ru: 'Добавить правило',
     zh_CN: '添加规则',
     zh_TW: '新增規則',
+    ja: 'ルールを追加',
   },
   'popup.tab_move_rules.edit_rule_btn.save': {
     en: 'Save',
@@ -437,6 +488,7 @@ export const commonTranslations: Translations = {
     ru: 'Сохранить',
     zh_CN: '保存',
     zh_TW: '儲存',
+    ja: '保存',
   },
   'popup.tab_move_rules.edit_rule_btn.cancel': {
     en: 'Cancel',
@@ -444,6 +496,7 @@ export const commonTranslations: Translations = {
     hu: 'Mégsem',
     ru: 'Отмена',
     zh: '取消',
+    ja: 'キャンセル',
   },
 
   'popup.tab_reopen_rules.title': {
@@ -453,6 +506,7 @@ export const commonTranslations: Translations = {
     ru: 'Правила',
     zh_CN: '标签页重新打开规则',
     zh_TW: '分頁重新開啟規則',
+    ja: 'タブを再度開くルール',
   },
   'popup.tab_reopen_rules.enable_label': {
     en: 'Enable listed rules',
@@ -461,6 +515,7 @@ export const commonTranslations: Translations = {
     ru: 'Включить перечисленные правила',
     zh_CN: '启用列出的规则',
     zh_TW: '啟用列出的規則',
+    ja: 'リストされたルールを有効にする',
   },
   'popup.tab_reopen_rules.editor_title.new': {
     en: 'Create new rule',
@@ -469,6 +524,7 @@ export const commonTranslations: Translations = {
     ru: 'Создать правило',
     zh_CN: '创建新规则',
     zh_TW: '建立新規則',
+    ja: '新しいルールを作成',
   },
   'popup.tab_reopen_rules.editor_title.edit': {
     en: 'Edit rule',
@@ -477,6 +533,7 @@ export const commonTranslations: Translations = {
     ru: 'Редактировать правило',
     zh_CN: '编辑规则',
     zh_TW: '編輯規則',
+    ja: 'ルールを編集',
   },
   'popup.tab_reopen_rules.rule_name_label': {
     en: 'Name (optional)',
@@ -484,6 +541,7 @@ export const commonTranslations: Translations = {
     ru: 'Название (опционально)',
     zh_CN: '名称（选填）',
     zh_TW: '名稱（選填）',
+    ja: '名前（オプション）',
   },
   'popup.tab_reopen_rules.rule_type_label': {
     en: 'Type of the rule',
@@ -492,6 +550,7 @@ export const commonTranslations: Translations = {
     ru: 'Тип правила',
     zh_CN: '规则类型',
     zh_TW: '規則類型',
+    ja: 'ルールの種類',
   },
   'popup.tab_reopen_rules.rule_type_include': {
     en: 'Include rule',
@@ -500,6 +559,7 @@ export const commonTranslations: Translations = {
     ru: 'Правило включения',
     zh_CN: '包括规则',
     zh_TW: '包括規則',
+    ja: 'インクルードルール',
   },
   'popup.tab_reopen_rules.rule_type_exclude': {
     en: 'Exclude rule',
@@ -508,6 +568,7 @@ export const commonTranslations: Translations = {
     ru: 'Правило исключения',
     zh_CN: '排除规则',
     zh_TW: '排除規則',
+    ja: '除外ルール',
   },
   'popup.tab_reopen_rules.rule_url_label': {
     en: 'If tab has URL ("substring" or "/RegExp/")',
@@ -516,6 +577,7 @@ export const commonTranslations: Translations = {
     ru: 'Если вкладка имеет URL-адрес ("подстрока" или "/RegExp/")',
     zh_CN: '如果标签页有 URL ("字符串" 或 "/RegExp/")',
     zh_TW: '如果分頁含有 URL ("字符串" 或 "/RegExp/")',
+    ja: 'URL が ("部分文字列" または "/RegExp/") を含む場合',
   },
   'popup.tab_reopen_rules.rule_suffix_include': {
     en: n => `...reopen it in "${n}" container`,
@@ -524,6 +586,7 @@ export const commonTranslations: Translations = {
     ru: n => `...открыть ee в контейнере "${n}"`,
     zh_CN: n => `...在 "${n}" 容器中重新打开它`,
     zh_TW: n => `...在「${n}」容器中重新開啟它`,
+    ja: n => `...「${n}」コンテナで再度開く`,
   },
   'popup.tab_reopen_rules.rule_suffix_exclude': {
     en: n => `...and it is in "${n}" container, reopen it in default container.`,
@@ -532,6 +595,7 @@ export const commonTranslations: Translations = {
     ru: n => `...и она находится в контейнере "${n}", открыть ее в контейнере по умолчанию.`,
     zh_CN: n => `...而它在 "${n}" 容器中，在默认容器中重新打开它。`,
     zh_TW: n => `...而它在「${n}」容器中，則在預設容器中重新開啟它。`,
+    ja: n => `...かつそれが「${n}」コンテナにある場合、デフォルトコンテナで再度開きます。`,
   },
   'popup.tab_reopen_rules.add_rule_btn': {
     en: 'Add rule',
@@ -540,6 +604,7 @@ export const commonTranslations: Translations = {
     ru: 'Добавить правило',
     zh_CN: '添加规则',
     zh_TW: '新增規則',
+    ja: 'ルールを追加',
   },
   'popup.tab_reopen_rules.edit_rule_btn.save': {
     en: 'Save',
@@ -548,6 +613,7 @@ export const commonTranslations: Translations = {
     ru: 'Сохранить',
     zh_CN: '保存',
     zh_TW: '儲存',
+    ja: '保存',
   },
   'popup.tab_reopen_rules.edit_rule_btn.cancel': {
     en: 'Cancel',
@@ -555,6 +621,7 @@ export const commonTranslations: Translations = {
     hu: 'Mégsem',
     ru: 'Отмена',
     zh: '取消',
+    ja: 'キャンセル',
   },
 
   'popup.url_rules.title': {
@@ -564,6 +631,7 @@ export const commonTranslations: Translations = {
     ru: 'Настройка сайта',
     zh_CN: '站点配置',
     zh_TW: '網站設定',
+    ja: 'サイト設定',
   },
   'popup.url_rules.match_label': {
     en: 'Select tabs by URL',
@@ -572,6 +640,7 @@ export const commonTranslations: Translations = {
     ru: 'Выбирать вкладки по URL',
     zh_CN: '按 URL 选择标签页',
     zh_TW: '依 URL 選取分頁',
+    ja: 'URL によってタブを選択',
   },
   'popup.url_rules.custom_match_placeholder': {
     en: '"substring" or "/RegExp/"',
@@ -579,6 +648,7 @@ export const commonTranslations: Translations = {
     hu: '"szövegrészlet" vagy /RegExp/',
     ru: '"подстрока" или "/RegExp/"',
     zh: '"字符串" 或 "/RegExp/"',
+    ja: '"部分文字列" または "/RegExp/"',
   },
   'popup.url_rules.reopen_label': {
     en: 'Reopen these tabs in container:',
@@ -587,6 +657,7 @@ export const commonTranslations: Translations = {
     ru: 'Открывать эти вкладки в контейнере:',
     zh_CN: '重新打开这些选项卡在：',
     zh_TW: '重開這些分頁於容器：',
+    ja: 'これらのタブをコンテナで再度開く：',
   },
   'popup.url_rules.move_label': {
     en: 'Move these tabs to panel:',
@@ -595,6 +666,7 @@ export const commonTranslations: Translations = {
     ru: 'Перемещать эти вкладки в панель:',
     zh_CN: '将这些选项卡移动到面板：',
     zh_TW: '將這些分頁移動到面板：',
+    ja: 'これらのタブをパネルに移動：',
   },
   'popup.url_rules.move_top_lvl_label': {
     en: 'If tab at the top level of tree',
@@ -603,6 +675,7 @@ export const commonTranslations: Translations = {
     ru: 'Если вкладка на верхнем уровне дерева',
     zh_CN: '如果选项卡位于树的顶层',
     zh_TW: '如果分頁位於樹的頂層',
+    ja: 'タブがツリーの最上位レベルにある場合',
   },
 
   // ---
@@ -616,6 +689,7 @@ export const commonTranslations: Translations = {
     ru: 'Открыть настройки',
     zh_CN: '打开设置',
     zh_TW: '開啟設定',
+    ja: '設定を開く',
   },
   'menu.browserAction.create_snapshot': {
     en: 'Create snapshot',
@@ -624,6 +698,7 @@ export const commonTranslations: Translations = {
     ru: 'Создать снепшот',
     zh_CN: '创建快照',
     zh_TW: '建立快照',
+    ja: 'スナップショットを作成',
   },
   // - New tab bar
   'menu.new_tab_bar.no_container': {
@@ -633,6 +708,7 @@ export const commonTranslations: Translations = {
     ru: 'Не в контейнере',
     zh_CN: '无容器',
     zh_TW: '無容器',
+    ja: 'コンテナなし',
   },
   'menu.new_tab_bar.new_container': {
     en: 'In New Container',
@@ -640,6 +716,7 @@ export const commonTranslations: Translations = {
     hu: 'Új konténer',
     ru: 'В новом контейнере',
     zh: '在新容器中',
+    ja: '新しいコンテナで',
   },
   'menu.new_tab_bar.manage_shortcuts': {
     en: 'Manage Shortcuts',
@@ -647,6 +724,7 @@ export const commonTranslations: Translations = {
     ru: 'Управление ярлыками',
     zh_CN: '管理快捷方式',
     zh_TW: '管理捷徑',
+    ja: 'ショートカットの管理',
   },
   'menu.new_tab_bar.manage_containers': {
     en: 'Manage Containers',
@@ -654,6 +732,7 @@ export const commonTranslations: Translations = {
     hu: 'Konténerek kezelése',
     ru: 'Управление контейнерами',
     zh: '管理容器',
+    ja: 'コンテナの管理',
   },
   // - Bookmark
   'menu.bookmark.open_in_sub_menu_name': {
@@ -663,6 +742,7 @@ export const commonTranslations: Translations = {
     ru: 'Открыть в',
     zh_CN: '打开',
     zh_TW: '開啟',
+    ja: '開く',
   },
   'menu.bookmark.open_in_new_window': {
     en: 'Open in new normal window',
@@ -671,6 +751,7 @@ export const commonTranslations: Translations = {
     ru: 'Открыть в новом стандартном окне',
     zh_CN: '新建窗口打开链接',
     zh_TW: '用新視窗開啟',
+    ja: '新しい通常ウィンドウで開く',
   },
   'menu.bookmark.open_in_new_priv_window': {
     en: 'Open in new private window',
@@ -679,6 +760,7 @@ export const commonTranslations: Translations = {
     ru: 'Открыть в новом приватном окне',
     zh_CN: '新建隐私窗口打开链接',
     zh_TW: '用新隱私視窗開啟',
+    ja: '新しいプライベートウィンドウで開く',
   },
   'menu.bookmark.open_in_panel_': {
     en: 'Open in panel...',
@@ -687,6 +769,7 @@ export const commonTranslations: Translations = {
     ru: 'Открыть в панели...',
     zh_CN: '在面板中打开...',
     zh_TW: '在面板中開啟...',
+    ja: 'パネルで開く...',
   },
   'menu.bookmark.open_in_new_panel': {
     en: 'Open in new tabs panel',
@@ -695,6 +778,7 @@ export const commonTranslations: Translations = {
     ru: 'Открыть в новой панели вкладок',
     zh_CN: '新标签面板中打开链接',
     zh_TW: '用新分頁面板開啟',
+    ja: '新しいタブパネルで開く',
   },
   'menu.bookmark.open_in_ctr_': {
     en: 'Open in container...',
@@ -703,6 +787,7 @@ export const commonTranslations: Translations = {
     ru: 'Открыть в контейнере...',
     zh_CN: '在容器中打开...',
     zh_TW: '在容器中開啟...',
+    ja: 'コンテナで開く...',
   },
   'menu.bookmark.open_in_default_ctr': {
     en: 'Open in default container',
@@ -711,6 +796,7 @@ export const commonTranslations: Translations = {
     ru: 'Открыть в стандартном контейнере',
     zh_CN: '在默认容器中打开',
     zh_TW: '用預設容器開啟',
+    ja: 'デフォルトコンテナで開く',
   },
   'menu.bookmark.open_in_': {
     en: 'Open in ',
@@ -719,6 +805,7 @@ export const commonTranslations: Translations = {
     ru: 'Открыть в ',
     zh_CN: '打开在 ',
     zh_TW: '開啟於：',
+    ja: '開く：',
   },
   'menu.bookmark.sort_sub_menu_name': {
     en: 'Sort',
@@ -726,6 +813,7 @@ export const commonTranslations: Translations = {
     hu: 'Rendezés',
     ru: 'Сортировать',
     zh: '排序',
+    ja: '並べ替え',
   },
   'menu.bookmark.sort_by_name_asc': {
     en: 'Sort by name (A-z)',
@@ -734,6 +822,7 @@ export const commonTranslations: Translations = {
     ru: 'Сортировать по названию (А-я)',
     zh_CN: '按名称排序 (A-z)',
     zh_TW: '依名稱排序 (A-z)',
+    ja: '名前で並べ替え (A-Z)',
   },
   'menu.bookmark.sort_by_name_des': {
     en: 'Sort by name (z-A)',
@@ -742,6 +831,7 @@ export const commonTranslations: Translations = {
     ru: 'Сортировать по названию (я-А)',
     zh_CN: '按名称排序 (z-A)',
     zh_TW: '依名稱排序 (z-A)',
+    ja: '名前で並べ替え (Z-A)',
   },
   'menu.bookmark.sort_by_link_asc': {
     en: 'Sort by URL (A-z)',
@@ -750,6 +840,7 @@ export const commonTranslations: Translations = {
     ru: 'Сортировать по адресу (А-я)',
     zh_CN: '按网址排序 (A-z)',
     zh_TW: '依網址排序 (A-z)',
+    ja: 'URL で並べ替え (A-Z)',
   },
   'menu.bookmark.sort_by_link_des': {
     en: 'Sort by URL (z-A)',
@@ -758,6 +849,7 @@ export const commonTranslations: Translations = {
     ru: 'Сортировать по адресу (я-А)',
     zh_CN: '按网址排序 (z-A)',
     zh_TW: '依網址排序 (z-A)',
+    ja: 'URL で並べ替え (Z-A)',
   },
   'menu.bookmark.sort_by_time_asc': {
     en: 'Sort by time (Old-New)',
@@ -766,6 +858,7 @@ export const commonTranslations: Translations = {
     ru: 'Сортировать по времени (Старые-Новые)',
     zh_CN: '按添加时间排序（旧-新）',
     zh_TW: '依加入日期排序（舊-新）',
+    ja: '時間で並べ替え (古い順)',
   },
   'menu.bookmark.sort_by_time_des': {
     en: 'Sort by time (New-Old)',
@@ -774,6 +867,7 @@ export const commonTranslations: Translations = {
     ru: 'Сортировать по времени (Новые-Старые)',
     zh_CN: '按添加时间排序（新-旧）',
     zh_TW: '依加入日期排序（新-舊）',
+    ja: '時間で並べ替え (新しい順)',
   },
   'menu.bookmark.create_bookmark': {
     en: 'Create bookmark',
@@ -782,6 +876,7 @@ export const commonTranslations: Translations = {
     ru: 'Создать закладку',
     zh_CN: '创建书签',
     zh_TW: '新增書籤',
+    ja: 'ブックマークを作成',
   },
   'menu.bookmark.create_folder': {
     en: 'Create folder',
@@ -790,6 +885,7 @@ export const commonTranslations: Translations = {
     ru: 'Создать папку',
     zh_CN: '创建文件夹',
     zh_TW: '新增資料夾',
+    ja: 'フォルダを作成',
   },
   'menu.bookmark.create_separator': {
     en: 'Create separator',
@@ -798,6 +894,7 @@ export const commonTranslations: Translations = {
     ru: 'Создать разделитель',
     zh_CN: '创建分隔符',
     zh_TW: '新增分隔線',
+    ja: 'セパレータを作成',
   },
   'menu.bookmark.open_as_bookmarks_panel': {
     en: 'Open as bookmarks panel',
@@ -806,6 +903,7 @@ export const commonTranslations: Translations = {
     ru: 'Открыть как панель закладок',
     zh_CN: '作为书签面板打开',
     zh_TW: '作為書籤面板開啟',
+    ja: 'ブックマークパネルとして開く',
   },
   'menu.bookmark.open_as_tabs_panel': {
     en: 'Open as tabs panel',
@@ -814,6 +912,7 @@ export const commonTranslations: Translations = {
     ru: 'Открыть как панель вкладок',
     zh_CN: '作为标签页面板打开',
     zh_TW: '作為分頁面板開啟',
+    ja: 'タブパネルとして開く',
   },
   'menu.bookmark.move_to': {
     en: 'Move to...',
@@ -822,6 +921,7 @@ export const commonTranslations: Translations = {
     ru: 'Переместить в...',
     zh_CN: '移动到...',
     zh_TW: '移動到...',
+    ja: '移動先...',
   },
   'menu.bookmark.edit_bookmark': {
     en: 'Edit',
@@ -830,6 +930,7 @@ export const commonTranslations: Translations = {
     ru: 'Редактировать',
     zh_CN: '编辑',
     zh_TW: '編輯',
+    ja: '編集',
   },
   'menu.bookmark.delete_bookmark': {
     en: 'Delete',
@@ -838,6 +939,7 @@ export const commonTranslations: Translations = {
     ru: 'Удалить',
     zh_CN: '删除',
     zh_TW: '刪除',
+    ja: '削除',
   },
   // - Bookmarks panel
   'menu.bookmark.collapse_all': {
@@ -847,6 +949,7 @@ export const commonTranslations: Translations = {
     ru: 'Свернуть все папки',
     zh_CN: '折叠全部文件夹',
     zh_TW: '折疊全部資料夾',
+    ja: 'すべてのフォルダを折りたたむ',
   },
   'menu.bookmark.switch_view': {
     en: 'View mode',
@@ -855,6 +958,7 @@ export const commonTranslations: Translations = {
     ru: 'Режим отображения',
     zh_CN: '视图模式',
     zh_TW: '檢視模式',
+    ja: '表示モード',
   },
   'menu.bookmark.switch_view_history': {
     en: 'History view',
@@ -863,6 +967,7 @@ export const commonTranslations: Translations = {
     ru: 'Хронологическое отображение',
     zh_CN: '历史视图',
     zh_TW: '歷史檢視',
+    ja: '履歴ビュー',
   },
   'menu.bookmark.switch_view_tree': {
     en: 'Tree view',
@@ -871,6 +976,7 @@ export const commonTranslations: Translations = {
     ru: 'Древовидное отображение',
     zh_CN: '树状视图',
     zh_TW: '樹狀檢視',
+    ja: 'ツリービュー',
   },
   'menu.bookmark.convert_to_tabs_panel': {
     en: 'Convert to tabs panel',
@@ -879,6 +985,7 @@ export const commonTranslations: Translations = {
     ru: 'Конвертировать в панель вкладок',
     zh_CN: '转换为标签页面板',
     zh_TW: '轉換為分頁面板',
+    ja: 'タブパネルに変換',
   },
   'menu.bookmark.remove_panel': {
     en: 'Remove panel',
@@ -886,6 +993,7 @@ export const commonTranslations: Translations = {
     hu: 'Panel törlése',
     ru: 'Удалить панель',
     zh: '移除面板',
+    ja: 'パネルを削除',
   },
   // - Tab
   'menu.tab.undo': {
@@ -895,6 +1003,7 @@ export const commonTranslations: Translations = {
     ru: 'Восстановить закрытую вкладку',
     zh_CN: '撤消关闭标签页',
     zh_TW: '回復關閉的分頁',
+    ja: '閉じたタブを元に戻す',
   },
   'menu.tab.mute': {
     en: 'Mute',
@@ -903,6 +1012,7 @@ export const commonTranslations: Translations = {
     ru: 'Выключить звук',
     zh_CN: '静音',
     zh_TW: '分頁靜音',
+    ja: 'ミュート',
   },
   'menu.tab.unmute': {
     en: 'Unmute',
@@ -911,6 +1021,7 @@ export const commonTranslations: Translations = {
     ru: 'Включить звук',
     zh_CN: '取消静音',
     zh_TW: '取消分頁靜音',
+    ja: 'ミュート解除',
   },
   'menu.tab.reload': {
     en: 'Reload',
@@ -919,6 +1030,7 @@ export const commonTranslations: Translations = {
     ru: 'Перезагрузить',
     zh_CN: '重新加载',
     zh_TW: '重新載入分頁',
+    ja: 'リロード',
   },
   'menu.tab.bookmark': {
     en: 'Add to bookmarks',
@@ -927,6 +1039,7 @@ export const commonTranslations: Translations = {
     ru: 'В закладки',
     zh_CN: '添加到书签',
     zh_TW: '將分頁加入書籤',
+    ja: 'ブックマークに追加',
   },
   'menu.tab.move_to_sub_menu_name': {
     en: 'Move to',
@@ -935,6 +1048,7 @@ export const commonTranslations: Translations = {
     ru: 'Переместить в',
     zh_CN: '移动到',
     zh_TW: '移動分頁',
+    ja: '移動先',
   },
   'menu.tab.move_to_new_window': {
     en: 'Move to new window',
@@ -943,6 +1057,7 @@ export const commonTranslations: Translations = {
     ru: 'Переместить в новое окно',
     zh_CN: '移动到新窗口',
     zh_TW: '移動到新視窗',
+    ja: '新しいウィンドウに移動',
   },
   'menu.tab.move_to_new_priv_window': {
     en: 'Move to private window',
@@ -951,6 +1066,7 @@ export const commonTranslations: Translations = {
     ru: 'Переместить в приватное окно',
     zh_CN: '移动到新隐私窗口',
     zh_TW: '移動到新隱私視窗',
+    ja: '新しいプライベートウィンドウに移動',
   },
   'menu.tab.move_to_window_': {
     en: 'Move to window...',
@@ -959,6 +1075,7 @@ export const commonTranslations: Translations = {
     ru: 'Переместить в окно...',
     zh_CN: '移动到窗口...',
     zh_TW: '移動到視窗...',
+    ja: 'ウィンドウに移動...',
   },
   'menu.tab.move_to_another_window': {
     en: 'Move to another window',
@@ -967,6 +1084,7 @@ export const commonTranslations: Translations = {
     ru: 'Переместить в другое окно',
     zh_CN: '移动到另一个窗口',
     zh_TW: '移動到另一個視窗',
+    ja: '別のウィンドウに移動',
   },
   'menu.tab.move_to_panel_label': {
     en: 'Move to panel...',
@@ -975,6 +1093,7 @@ export const commonTranslations: Translations = {
     ru: 'Переместить в панель...',
     zh_CN: '移动到面板...',
     zh_TW: '移動到面板...',
+    ja: 'パネルに移動...',
   },
   'menu.tab.move_to_panel_': {
     en: 'Move to ',
@@ -983,6 +1102,7 @@ export const commonTranslations: Translations = {
     ru: 'Переместить в ',
     zh_CN: '移动到 ',
     zh_TW: '移動到面板：',
+    ja: '移動先：',
   },
   'menu.tab.move_to_new_panel': {
     en: 'Move to new panel',
@@ -991,6 +1111,7 @@ export const commonTranslations: Translations = {
     ru: 'Переместить в новую панель',
     zh_CN: '移动到新面板',
     zh_TW: '移動到新面板',
+    ja: '新しいパネルに移動',
   },
   'menu.tab.reopen_in_sub_menu_name': {
     en: 'Reopen in',
@@ -999,6 +1120,7 @@ export const commonTranslations: Translations = {
     ru: 'Переоткрыть в',
     zh_CN: '重新打开',
     zh_TW: '重新開啟',
+    ja: '再度開く',
   },
   'menu.tab.reopen_in_new_window': {
     en: 'Reopen in new window of another type',
@@ -1007,6 +1129,7 @@ export const commonTranslations: Translations = {
     ru: 'Переоткрыть в новом окне другого типа',
     zh_CN: '用其他类型的新窗口重新打开',
     zh_TW: '用其他類型的新視窗重新開啟',
+    ja: '他のタイプの新しいウィンドウで再度開く',
   },
   'menu.tab.reopen_in_new_norm_window': {
     en: 'Reopen in new normal window',
@@ -1015,6 +1138,7 @@ export const commonTranslations: Translations = {
     ru: 'Переоткрыть в новом стандартном окне',
     zh_CN: '用新普通窗口重新打开',
     zh_TW: '用新普通視窗重新開啟',
+    ja: '新しい通常ウィンドウで再度開く',
   },
   'menu.tab.reopen_in_new_priv_window': {
     en: 'Reopen in new private window',
@@ -1023,6 +1147,7 @@ export const commonTranslations: Translations = {
     ru: 'Переоткрыть в новом приватном окне',
     zh_CN: '用新隐私窗口重新打开',
     zh_TW: '用新隱私視窗重新開啟',
+    ja: '新しいプライベートウィンドウで再度開く',
   },
   'menu.tab.reopen_in_window': {
     en: 'Reopen in window of another type',
@@ -1031,6 +1156,7 @@ export const commonTranslations: Translations = {
     ru: 'Переоткрыть в окне другого типа',
     zh_CN: '用其他类型的窗口重新打开',
     zh_TW: '用其他類型的視窗重新開啟',
+    ja: '他のタイプのウィンドウで再度開く',
   },
   'menu.tab.reopen_in_norm_window': {
     en: 'Reopen in normal window',
@@ -1039,6 +1165,7 @@ export const commonTranslations: Translations = {
     ru: 'Переоткрыть в стандартном окне',
     zh_CN: '用普通窗口重新打开',
     zh_TW: '用普通視窗重新開啟',
+    ja: '通常ウィンドウで再度開く',
   },
   'menu.tab.reopen_in_priv_window': {
     en: 'Reopen in private window',
@@ -1047,6 +1174,7 @@ export const commonTranslations: Translations = {
     ru: 'Переоткрыть в приватном окне',
     zh_CN: '用隐私窗口重新打开',
     zh_TW: '用隱私視窗重新開啟',
+    ja: 'プライベートウィンドウで再度開く',
   },
   'menu.tab.reopen_in_window_': {
     en: 'Reopen in window...',
@@ -1055,6 +1183,7 @@ export const commonTranslations: Translations = {
     ru: 'Переоткрыть в окне...',
     zh_CN: '用窗口重新打开...',
     zh_TW: '用視窗重新開啟...',
+    ja: 'ウィンドウで再度開く...',
   },
   'menu.tab.reopen_in_ctr_': {
     en: 'Reopen in container...',
@@ -1063,6 +1192,7 @@ export const commonTranslations: Translations = {
     ru: 'Переоткрыть в контейнере...',
     zh_CN: '用容器重新打开...',
     zh_TW: '用容器重新開啟...',
+    ja: 'コンテナで再度開く...',
   },
   'menu.tab.reopen_in_default_container': {
     en: 'Reopen in default container',
@@ -1071,6 +1201,7 @@ export const commonTranslations: Translations = {
     ru: 'Переоткрыть в стандартном контейнере',
     zh_CN: '用默认容器重新打开',
     zh_TW: '用預設容器重新開啟',
+    ja: 'デフォルトコンテナで再度開く',
   },
   'menu.tab.reopen_in_': {
     en: 'Reopen in ',
@@ -1079,6 +1210,7 @@ export const commonTranslations: Translations = {
     ru: 'Переоткрыть в ',
     zh_CN: '重新打开在 ',
     zh_TW: '重開於容器：',
+    ja: '再度開く：',
   },
   'menu.tab.reopen_in_new_container': {
     en: 'Reopen in new container',
@@ -1087,6 +1219,7 @@ export const commonTranslations: Translations = {
     ru: 'Переоткрыть в новом контейнере',
     zh_CN: '用新容器重新打开',
     zh_TW: '用新容器重新開啟',
+    ja: '新しいコンテナで再度開く',
   },
   'menu.tab.colorize_': {
     en: 'Set color',
@@ -1094,6 +1227,7 @@ export const commonTranslations: Translations = {
     ru: 'Задать цвет',
     zh_CN: '设置颜色',
     zh_TW: '設定顏色',
+    ja: '色を設定',
   },
   'menu.tab.colorize_colors': {
     en: 'Color...',
@@ -1101,6 +1235,7 @@ export const commonTranslations: Translations = {
     ru: 'Цвет...',
     zh_CN: '颜色...',
     zh_TW: '顏色...',
+    ja: '色…',
   },
   'menu.tab.sort_sub_menu_name': {
     en: 'Sort',
@@ -1108,6 +1243,7 @@ export const commonTranslations: Translations = {
     hu: 'Rendezés',
     ru: 'Сортировать',
     zh: '排序',
+    ja: '並べ替え',
   },
   'menu.tab.sort_by_title_asc': {
     en: 'Sort by title (A-z)',
@@ -1116,6 +1252,7 @@ export const commonTranslations: Translations = {
     ru: 'Сортировать по названию (А-я)',
     zh_CN: '按名称排序 (A-z)',
     zh_TW: '依名稱排序 (A-z)',
+    ja: 'タイトルで並べ替え (A-Z)',
   },
   'menu.tab.sort_by_title_des': {
     en: 'Sort by title (z-A)',
@@ -1124,6 +1261,7 @@ export const commonTranslations: Translations = {
     ru: 'Сортировать по названию (я-А)',
     zh_CN: '按名称排序 (z-A)',
     zh_TW: '依名稱排序 (z-A)',
+    ja: 'タイトルで並べ替え (Z-A)',
   },
   'menu.tab.sort_by_url_asc': {
     en: 'Sort by URL (A-z)',
@@ -1132,6 +1270,7 @@ export const commonTranslations: Translations = {
     ru: 'Сортировать по адресу (А-я)',
     zh_CN: '按网址排序 (A-z)',
     zh_TW: '依網址排序 (A-z)',
+    ja: 'URL で並べ替え (A-Z)',
   },
   'menu.tab.sort_by_url_des': {
     en: 'Sort by URL (z-A)',
@@ -1140,6 +1279,7 @@ export const commonTranslations: Translations = {
     ru: 'Сортировать по адресу (я-А)',
     zh_CN: '按网址排序 (z-A)',
     zh_TW: '依網址排序 (z-A)',
+    ja: 'URL で並べ替え (Z-A)',
   },
   'menu.tab.sort_by_time_asc': {
     en: 'Sort by access time (Old-Recent)',
@@ -1148,6 +1288,7 @@ export const commonTranslations: Translations = {
     ru: 'Сортировать по времени доступа (Старые-Новые)',
     zh_CN: '按存取时间排序（旧-新）',
     zh_TW: '依最近瀏覽時間排序（舊-新）',
+    ja: '時間で並べ替え (古い順)',
   },
   'menu.tab.sort_by_time_des': {
     en: 'Sort by access time (Recent-Old)',
@@ -1156,6 +1297,7 @@ export const commonTranslations: Translations = {
     ru: 'Сортировать по времени доступа (Новые-Старые)',
     zh_CN: '按存取时间排序（新-旧）',
     zh_TW: '依最近瀏覽時間排序（新-舊）',
+    ja: '時間で並べ替え (新しい順)',
   },
   'menu.tab.sort_tree_by_title_asc': {
     en: 'Sort tree by title (A-z)',
@@ -1164,6 +1306,7 @@ export const commonTranslations: Translations = {
     ru: 'Сортировать дерево по названию (А-я)',
     zh_CN: '按标题对树进行排序 (A-z)',
     zh_TW: '依名稱對樹排序 (A-z)',
+    ja: 'タイトルでツリーを並べ替え (A-Z)',
   },
   'menu.tab.sort_tree_by_title_des': {
     en: 'Sort tree by title (z-A)',
@@ -1172,6 +1315,7 @@ export const commonTranslations: Translations = {
     ru: 'Сортировать дерево по названию (я-А)',
     zh_CN: '按标题对树进行排序 (z-A)',
     zh_TW: '依名稱對樹排序 (z-A)',
+    ja: 'タイトルでツリーを並べ替え (Z-A)',
   },
   'menu.tab.sort_tree_by_url_asc': {
     en: 'Sort tree by URL (A-z)',
@@ -1180,6 +1324,7 @@ export const commonTranslations: Translations = {
     ru: 'Сортировать дерево по адресу (А-я)',
     zh_CN: '按 URL 对树排序 (A-z)',
     zh_TW: '依網址對樹排序 (A-z)',
+    ja: 'URL でツリーを並べ替え (A-Z)',
   },
   'menu.tab.sort_tree_by_url_des': {
     en: 'Sort tree by URL (z-A)',
@@ -1188,6 +1333,7 @@ export const commonTranslations: Translations = {
     ru: 'Сортировать дерево по адресу (я-А)',
     zh_CN: '按 URL 对树排序 (z-A)',
     zh_TW: '依網址對樹排序 (z-A)',
+    ja: 'URL でツリーを並べ替え (Z-A)',
   },
   'menu.tab.sort_tree_by_time_asc': {
     en: 'Sort tree by access time (Old-Recent)',
@@ -1196,6 +1342,7 @@ export const commonTranslations: Translations = {
     ru: 'Сортировать дерево по времени доступа (Старые-Новые)',
     zh_CN: '按访问时间排序树（旧-新）',
     zh_TW: '依最近瀏覽時間對樹排序（舊-新）',
+    ja: '時間でツリーを並べ替え (古い順)',
   },
   'menu.tab.sort_tree_by_time_des': {
     en: 'Sort tree by access time (Recent-Old)',
@@ -1204,6 +1351,7 @@ export const commonTranslations: Translations = {
     ru: 'Сортировать дерево по времени доступа (Новые-Старые)',
     zh_CN: '按访问时间排序树（新-旧）',
     zh_TW: '依最近瀏覽時間對樹排序（新-舊）',
+    ja: '時間でツリーを並べ替え (新しい順)',
   },
   'menu.tab.pin': {
     en: 'Pin',
@@ -1212,6 +1360,7 @@ export const commonTranslations: Translations = {
     ru: 'Закрепить',
     zh_CN: '固定标签页',
     zh_TW: '釘選分頁',
+    ja: 'ピン留め',
   },
   'menu.tab.unpin': {
     en: 'Unpin',
@@ -1220,6 +1369,7 @@ export const commonTranslations: Translations = {
     ru: 'Открепить',
     zh_CN: '取消固定标签页',
     zh_TW: '取消釘選分頁',
+    ja: 'ピン留め解除',
   },
   'menu.tab.duplicate': {
     en: 'Duplicate',
@@ -1228,6 +1378,7 @@ export const commonTranslations: Translations = {
     ru: 'Дублировать',
     zh_CN: '复制标签页',
     zh_TW: '複製分頁',
+    ja: '複製',
   },
   'menu.tab.discard': {
     en: 'Unload',
@@ -1236,6 +1387,7 @@ export const commonTranslations: Translations = {
     ru: 'Выгрузить',
     zh_CN: '卸载标签页',
     zh_TW: '卸載分頁',
+    ja: 'アンロード',
   },
   'menu.tab.edit_title': {
     en: 'Edit title',
@@ -1243,6 +1395,7 @@ export const commonTranslations: Translations = {
     ru: 'Редактировать заголовок',
     zh_CN: '编辑标题',
     zh_TW: '編輯標題',
+    ja: 'タイトルを編集',
   },
   'menu.tab.group': {
     en: 'Group',
@@ -1251,6 +1404,7 @@ export const commonTranslations: Translations = {
     ru: 'Сгруппировать',
     zh_CN: '分配给组',
     zh_TW: '分給群組',
+    ja: 'グループ',
   },
   'menu.tab.flatten': {
     en: 'Flatten',
@@ -1259,6 +1413,7 @@ export const commonTranslations: Translations = {
     ru: 'Сбросить вложенность',
     zh_CN: '树序列化',
     zh_TW: '樹序列化',
+    ja: 'フラット化',
   },
   'menu.tab.url_conf': {
     en: 'Configure site...',
@@ -1266,6 +1421,7 @@ export const commonTranslations: Translations = {
     ru: 'Настроить сайт...',
     zh_CN: '配置站点...',
     zh_TW: '設定網站...',
+    ja: 'サイトの設定...',
   },
   'menu.tab.clear_cookies': {
     en: 'Clear cookies',
@@ -1273,6 +1429,7 @@ export const commonTranslations: Translations = {
     hu: 'Sütik törlése',
     ru: 'Удалить cookies',
     zh: '清除 Cookie',
+    ja: 'Cookie をクリア',
   },
   'menu.tab.close': {
     en: 'Close',
@@ -1281,6 +1438,7 @@ export const commonTranslations: Translations = {
     ru: 'Закрыть',
     zh_CN: '关闭标签页',
     zh_TW: '關閉分頁',
+    ja: '閉じる',
   },
   'menu.tab.open_in_ctr_': {
     en: 'Open in container...',
@@ -1288,6 +1446,7 @@ export const commonTranslations: Translations = {
     ru: 'Открыть в контейнере...',
     zh_CN: '用容器打开...',
     zh_TW: '用容器開啟...',
+    ja: 'コンテナで開く...',
   },
   'menu.tab.open_in_default_container': {
     en: 'Open in default container',
@@ -1295,6 +1454,7 @@ export const commonTranslations: Translations = {
     ru: 'Открыть в новом контейнере',
     zh_CN: '用默认容器打开',
     zh_TW: '用預設容器開啟',
+    ja: 'デフォルトコンテナで開く',
   },
   'menu.tab.open_in_': {
     en: 'Open in ',
@@ -1302,6 +1462,7 @@ export const commonTranslations: Translations = {
     ru: 'Открыть в ',
     zh_CN: '打开在 ',
     zh_TW: '開啟於容器：',
+    ja: '開く：',
   },
   'menu.tab.close_descendants': {
     en: 'Close descendants',
@@ -1310,6 +1471,7 @@ export const commonTranslations: Translations = {
     ru: 'Закрыть потомки',
     zh_CN: '关闭子选项',
     zh_TW: '關閉子孫分頁',
+    ja: '子孫を閉じる',
   },
   'menu.tab.close_branch': {
     en: 'Close branch',
@@ -1318,6 +1480,7 @@ export const commonTranslations: Translations = {
     ru: 'Закрыть ветку',
     zh_CN: '关闭分支',
     zh_TW: '關閉分支',
+    ja: 'ブランチを閉じる',
   },
   'menu.tab.close_above': {
     en: 'Close tabs above',
@@ -1326,6 +1489,7 @@ export const commonTranslations: Translations = {
     ru: 'Закрыть вкладки сверху',
     zh_CN: '关闭上侧标签页',
     zh_TW: '關閉上側分頁',
+    ja: '上側のタブを閉じる',
   },
   'menu.tab.close_below': {
     en: 'Close tabs below',
@@ -1334,6 +1498,7 @@ export const commonTranslations: Translations = {
     ru: 'Закрыть вкладки снизу',
     zh_CN: '关闭下侧标签页',
     zh_TW: '關閉下側分頁',
+    ja: '下側のタブを閉じる',
   },
   'menu.tab.close_other': {
     en: 'Close other tabs',
@@ -1342,6 +1507,7 @@ export const commonTranslations: Translations = {
     ru: 'Закрыть другие вкладки',
     zh_CN: '关闭其他标签页',
     zh_TW: '關閉其他分頁',
+    ja: '他のタブを閉じる',
   },
   // - Tabs panel
   'menu.tabs_panel.mute_all_audible': {
@@ -1351,6 +1517,7 @@ export const commonTranslations: Translations = {
     ru: 'Выключить звук',
     zh_CN: '静音全部有声标签页',
     zh_TW: '靜音全部有聲分頁',
+    ja: 'すべての音声タブをミュート',
   },
   'menu.tabs_panel.reload': {
     en: 'Reload tabs',
@@ -1359,6 +1526,7 @@ export const commonTranslations: Translations = {
     ru: 'Перезагрузить вкладки',
     zh_CN: '重新加载标签页',
     zh_TW: '重新載入分頁',
+    ja: 'タブをリロード',
   },
   'menu.tabs_panel.discard': {
     en: 'Unload tabs',
@@ -1367,6 +1535,7 @@ export const commonTranslations: Translations = {
     ru: 'Выгрузить вкладки',
     zh_CN: '卸载标签页',
     zh_TW: '卸載分頁',
+    ja: 'タブをアンロード',
   },
   'menu.tabs_panel.sort_all_sub_menu_name': {
     en: 'Sort all tabs',
@@ -1375,6 +1544,7 @@ export const commonTranslations: Translations = {
     ru: 'Сортировать все вкладки',
     zh_CN: '对全部选项卡进行排序',
     zh_TW: '排序全部分頁',
+    ja: 'すべてのタブを並べ替え',
   },
   'menu.tabs_panel.sort_all_by_title_asc': {
     en: 'Sort all tabs by title (A-z)',
@@ -1383,6 +1553,7 @@ export const commonTranslations: Translations = {
     ru: 'Сортировать все вкладки по названию (А-я)',
     zh_CN: '按标题对全部选项卡进行排序 (A-z)',
     zh_TW: '依名稱排序全部分頁 (A-z)',
+    ja: 'すべてのタブをタイトルで並べ替え (A-Z)',
   },
   'menu.tabs_panel.sort_all_by_title_des': {
     en: 'Sort all tabs by title (z-A)',
@@ -1391,6 +1562,7 @@ export const commonTranslations: Translations = {
     ru: 'Сортировать все вкладки по названию (я-А)',
     zh_CN: '按标题对全部选项卡进行排序 (z-A)',
     zh_TW: '依名稱排序全部分頁 (z-A)',
+    ja: 'すべてのタブをタイトルで並べ替え (Z-A)',
   },
   'menu.tabs_panel.sort_all_by_url_asc': {
     en: 'Sort all tabs by URL (A-z)',
@@ -1399,6 +1571,7 @@ export const commonTranslations: Translations = {
     ru: 'Сортировать все вкладки по URL (А-я)',
     zh_CN: '按 URL 对全部选项卡进行排序 (A-z)',
     zh_TW: '依網址排序全部分頁 (A-z)',
+    ja: 'すべてのタブを URL で並べ替え (A-Z)',
   },
   'menu.tabs_panel.sort_all_by_url_des': {
     en: 'Sort all tabs by URL (z-A)',
@@ -1407,6 +1580,7 @@ export const commonTranslations: Translations = {
     ru: 'Сортировать все вкладки по URL (я-А)',
     zh_CN: '按 URL 对全部选项卡进行排序 (z-A)',
     zh_TW: '依網址排序全部分頁 (z-A)',
+    ja: 'すべてのタブを URL で並べ替え (Z-A)',
   },
   'menu.tabs_panel.sort_all_by_time_asc': {
     en: 'Sort all tabs by access time (Old-Recent)',
@@ -1415,6 +1589,7 @@ export const commonTranslations: Translations = {
     ru: 'Сортировать все вкладки по времени доступа (Старые-Новые)',
     zh_CN: '按访问时间对全部选项卡进行排序（旧-新）',
     zh_TW: '依最近瀏覽時間排序全部分頁（舊-新）',
+    ja: 'すべてのタブを時間で並べ替え (古い順)',
   },
   'menu.tabs_panel.sort_all_by_time_des': {
     en: 'Sort all tabs by access time (Recent-Old)',
@@ -1423,6 +1598,7 @@ export const commonTranslations: Translations = {
     ru: 'Сортировать все вкладки по времени доступа (Новые-Старые)',
     zh_CN: '按访问时间对全部选项卡进行排序（新-旧）',
     zh_TW: '依最近瀏覽時間排序全部分頁（新-舊）',
+    ja: 'すべてのタブを時間で並べ替え (新しい順)',
   },
   'menu.tabs_panel.sel_all': {
     en: 'Select all tabs',
@@ -1431,6 +1607,7 @@ export const commonTranslations: Translations = {
     ru: 'Выделить все вкладки',
     zh_CN: '选择全部标签页',
     zh_TW: '選取全部分頁',
+    ja: 'すべてのタブを選択',
   },
   'menu.tabs_panel.collapse_inact_branches': {
     en: 'Collapse inactive branches',
@@ -1439,6 +1616,7 @@ export const commonTranslations: Translations = {
     ru: 'Свернуть неактивные ветки',
     zh_CN: '折叠非活动分支',
     zh_TW: '折疊非作用中分支',
+    ja: '非アクティブブランチを折りたたむ',
   },
   'menu.tabs_panel.dedup': {
     en: 'Close duplicate tabs',
@@ -1447,6 +1625,7 @@ export const commonTranslations: Translations = {
     ru: 'Закрыть дубликаты',
     zh_CN: '关闭复制标签页',
     zh_TW: '關閉重複分頁',
+    ja: '重複タブを閉じる',
   },
   'menu.tabs_panel.close': {
     en: 'Close tabs',
@@ -1455,6 +1634,7 @@ export const commonTranslations: Translations = {
     ru: 'Закрыть вкладки',
     zh_CN: '关闭标签页',
     zh_TW: '關閉分頁',
+    ja: 'タブを閉じる',
   },
   'menu.tabs_panel.bookmark': {
     en: 'Save to bookmarks',
@@ -1463,6 +1643,7 @@ export const commonTranslations: Translations = {
     ru: 'Сохранить в закладки',
     zh_CN: '保存到书签',
     zh_TW: '儲存到書籤',
+    ja: 'ブックマークに保存',
   },
   'menu.tabs_panel.restore_from_bookmarks': {
     en: 'Restore from bookmarks',
@@ -1471,6 +1652,7 @@ export const commonTranslations: Translations = {
     ru: 'Восстановить из закладок',
     zh_CN: '从书签中恢复',
     zh_TW: '從書籤中復原',
+    ja: 'ブックマークから復元',
   },
   'menu.tabs_panel.convert_to_bookmarks_panel': {
     en: 'Convert to bookmarks panel',
@@ -1479,6 +1661,7 @@ export const commonTranslations: Translations = {
     ru: 'Конвертировать в панель закладок',
     zh_CN: '转换为书签面板',
     zh_TW: '轉換為書籤面板',
+    ja: 'ブックマークパネルに変換',
   },
   'menu.tabs_panel.remove_panel': {
     en: 'Remove panel',
@@ -1486,6 +1669,7 @@ export const commonTranslations: Translations = {
     hu: 'Panel törlése',
     ru: 'Удалить панель',
     zh: '移除面板',
+    ja: 'パネルを削除',
   },
   // - History
   'menu.history.open': {
@@ -1495,6 +1679,7 @@ export const commonTranslations: Translations = {
     ru: 'Открыть',
     zh_CN: '打开',
     zh_TW: '開啟',
+    ja: '開く',
   },
   'menu.history.delete_visits': {
     en: n => (n === 1 ? 'Forget visit' : 'Forget visits'),
@@ -1503,6 +1688,7 @@ export const commonTranslations: Translations = {
     ru: n => (n === 1 ? 'Забыть запись' : 'Забыть записи'),
     zh_CN: '删除记录',
     zh_TW: '刪除頁面',
+    ja: '記録を削除',
   },
   'menu.history.delete_sites': {
     en: n => (n === 1 ? 'Forget site' : 'Forget sites'),
@@ -1511,6 +1697,7 @@ export const commonTranslations: Translations = {
     ru: n => (n === 1 ? 'Забыть сайт' : 'Забыть сайты'),
     zh_CN: '删除该站点的全部访问记录',
     zh_TW: '刪除與此網站有關的紀錄',
+    ja: 'このサイトの記録を削除',
   },
   // - Common
   'menu.copy_urls': {
@@ -1520,6 +1707,7 @@ export const commonTranslations: Translations = {
     ru: n => (n === 1 || n === undefined ? 'Копировать адрес' : 'Копировать адреса'),
     zh_CN: n => (n === 1 || n === undefined ? '复制网址' : '复制全部网址'),
     zh_TW: n => (n === 1 || n === undefined ? '複製網址' : '複製全部網址'),
+    ja: 'URLをコピー',
   },
   'menu.copy_titles': {
     en: n => (n === 1 || n === undefined ? 'Copy title' : 'Copy titles'),
@@ -1528,6 +1716,7 @@ export const commonTranslations: Translations = {
     ru: n => (n === 1 || n === undefined ? 'Копировать заголовок' : 'Копировать заголовки'),
     zh_CN: n => (n === 1 || n === undefined ? '复制标题' : '复制全部标题'),
     zh_TW: n => (n === 1 || n === undefined ? '複製標題' : '複製全部標題'),
+    ja: 'タイトルをコピー',
   },
   'menu.common.pin_panel': {
     en: 'Pin panel',
@@ -1536,6 +1725,7 @@ export const commonTranslations: Translations = {
     ru: 'Закрепить панель',
     zh_CN: '固定标签页',
     zh_TW: '釘選分頁',
+    ja: 'パネルをピン留め',
   },
   'menu.common.unpin_panel': {
     en: 'Unpin panel',
@@ -1544,6 +1734,7 @@ export const commonTranslations: Translations = {
     ru: 'Открепить панель',
     zh_CN: '取消固定标签页',
     zh_TW: '取消釘選分頁',
+    ja: 'パネルのピン留め解除',
   },
   'menu.panels.unload': {
     en: 'Unload',
@@ -1552,6 +1743,7 @@ export const commonTranslations: Translations = {
     ru: 'Выгрузить',
     zh_CN: '卸载面板',
     zh_TW: '卸載面板',
+    ja: 'アンロード',
   },
   'menu.common.conf': {
     en: 'Configure panel',
@@ -1560,6 +1752,7 @@ export const commonTranslations: Translations = {
     ru: 'Настройки панели',
     zh_CN: '配置面板',
     zh_TW: '設定面板',
+    ja: 'パネルの設定',
   },
   'menu.common.conf_tooltip': {
     en: 'Configure panel\nAlt: Basic panel config',
@@ -1568,6 +1761,7 @@ export const commonTranslations: Translations = {
     ru: 'Настройки панели\nAlt: Базовые настройки панели',
     zh_CN: '配置面板\nAlt: 基本面板配置',
     zh_TW: '設定面板\nAlt: 基本面板設定',
+    ja: 'パネルの設定\nAlt: 基本パネル設定',
   },
   'menu.common.conf_in_sidebar': {
     en: 'Configure panel in sidebar',
@@ -1576,6 +1770,7 @@ export const commonTranslations: Translations = {
     ru: 'Быстрые настройки панели',
     zh_CN: '在侧边栏中配置面板',
     zh_TW: '在側邊欄中設定面板',
+    ja: 'サイドバーでパネルを設定',
   },
   'menu.panels.hide_panel': {
     en: 'Hide panel',
@@ -1584,6 +1779,7 @@ export const commonTranslations: Translations = {
     ru: 'Скрыть панель',
     zh_CN: '隐藏面板',
     zh_TW: '隱藏面板',
+    ja: 'パネルを非表示',
   },
   // - Menu Editor
   'menu.editor.reset': {
@@ -1593,6 +1789,7 @@ export const commonTranslations: Translations = {
     ru: 'Сброс',
     zh_CN: '重置',
     zh_TW: '重設',
+    ja: 'リセット',
   },
   'menu.editor.create_separator': {
     en: 'Create separator',
@@ -1601,6 +1798,7 @@ export const commonTranslations: Translations = {
     ru: 'Создать разделитель',
     zh_CN: '新建分隔条',
     zh_TW: '新增分隔線',
+    ja: 'セパレータを作成',
   },
   'menu.editor.create_sub_tooltip': {
     en: 'Create sub-menu',
@@ -1609,6 +1807,7 @@ export const commonTranslations: Translations = {
     ru: 'Создать подменю',
     zh_CN: '创建子菜单',
     zh_TW: '建立子選單',
+    ja: 'サブメニューを作成',
   },
   'menu.editor.down_tooltip': {
     en: 'Move down',
@@ -1617,6 +1816,7 @@ export const commonTranslations: Translations = {
     ru: 'Вниз',
     zh_CN: '向下移动',
     zh_TW: '向下移動',
+    ja: '下に移動',
   },
   'menu.editor.up_tooltip': {
     en: 'Move up',
@@ -1625,6 +1825,7 @@ export const commonTranslations: Translations = {
     ru: 'Вверх',
     zh_CN: '向上移动',
     zh_TW: '向上移動',
+    ja: '上に移動',
   },
   'menu.editor.disable_tooltip': {
     en: 'Disable',
@@ -1632,6 +1833,7 @@ export const commonTranslations: Translations = {
     hu: 'Tiltás',
     ru: 'Отключить',
     zh: '禁用',
+    ja: '無効',
   },
   'menu.editor.tabs_title': {
     en: 'Tabs',
@@ -1640,6 +1842,7 @@ export const commonTranslations: Translations = {
     ru: 'Вкладки',
     zh_CN: '标签页',
     zh_TW: '分頁',
+    ja: 'タブ',
   },
   'menu.editor.tabs_panel_title': {
     en: 'Tabs panel',
@@ -1648,6 +1851,7 @@ export const commonTranslations: Translations = {
     ru: 'Панель вкладок',
     zh_CN: '标签页面板',
     zh_TW: '分頁面板',
+    ja: 'タブパネル',
   },
   'menu.editor.bookmarks_title': {
     en: 'Bookmarks',
@@ -1656,6 +1860,7 @@ export const commonTranslations: Translations = {
     ru: 'Закладки',
     zh_CN: '书签',
     zh_TW: '書籤',
+    ja: 'ブックマーク',
   },
   'menu.editor.bookmarks_panel_title': {
     en: 'Bookmarks panel',
@@ -1664,6 +1869,7 @@ export const commonTranslations: Translations = {
     ru: 'Панель закладок',
     zh_CN: '书签面板',
     zh_TW: '書籤面板',
+    ja: 'ブックマークパネル',
   },
   'menu.editor.inline_group_title': {
     en: 'Sub-menu label...',
@@ -1672,6 +1878,7 @@ export const commonTranslations: Translations = {
     ru: 'Название подменю...',
     zh_CN: '子菜单标签...',
     zh_TW: '子選單標籤...',
+    ja: 'サブメニューのラベル...',
   },
 
   // ---
@@ -1684,6 +1891,7 @@ export const commonTranslations: Translations = {
     ru: 'вкл',
     zh_CN: '打开',
     zh_TW: '啟用',
+    ja: 'オン',
   },
   'settings.opt_false': {
     en: 'off',
@@ -1692,6 +1900,7 @@ export const commonTranslations: Translations = {
     ru: 'выкл',
     zh_CN: '关闭',
     zh_TW: '停用',
+    ja: 'オフ',
   },
 
   // ---
@@ -1703,6 +1912,7 @@ export const commonTranslations: Translations = {
     hu: 'január',
     ru: 'Январь',
     zh: '一月',
+    ja: '1月',
   },
   'time.month_1': {
     en: 'February',
@@ -1710,6 +1920,7 @@ export const commonTranslations: Translations = {
     hu: 'február',
     ru: 'Февраль',
     zh: '二月',
+    ja: '2月',
   },
   'time.month_2': {
     en: 'March',
@@ -1717,12 +1928,14 @@ export const commonTranslations: Translations = {
     hu: 'március',
     ru: 'Март',
     zh: '三月',
+    ja: '3月',
   },
   'time.month_3': {
     en: 'April',
     hu: 'április',
     ru: 'Апрель',
     zh: '四月',
+    ja: '4月',
   },
   'time.month_4': {
     en: 'May',
@@ -1730,6 +1943,7 @@ export const commonTranslations: Translations = {
     hu: 'május',
     ru: 'Май',
     zh: '五月',
+    ja: '5月',
   },
   'time.month_5': {
     en: 'June',
@@ -1737,6 +1951,7 @@ export const commonTranslations: Translations = {
     hu: 'június',
     ru: 'Июнь',
     zh: '六月',
+    ja: '6月',
   },
   'time.month_6': {
     en: 'July',
@@ -1744,18 +1959,21 @@ export const commonTranslations: Translations = {
     hu: 'július',
     ru: 'Июль',
     zh: '七月',
+    ja: '7月',
   },
   'time.month_7': {
     en: 'August',
     hu: 'augusztus',
     ru: 'Август',
     zh: '八月',
+    ja: '8月',
   },
   'time.month_8': {
     en: 'September',
     hu: 'szeptember',
     ru: 'Сентябрь',
     zh: '九月',
+    ja: '9月',
   },
   'time.month_9': {
     en: 'October',
@@ -1763,12 +1981,14 @@ export const commonTranslations: Translations = {
     hu: 'október',
     ru: 'Октябрь',
     zh: '十月',
+    ja: '10月',
   },
   'time.month_10': {
     en: 'November',
     hu: 'november',
     ru: 'Ноябрь',
     zh: '十一月',
+    ja: '11月',
   },
   'time.month_11': {
     en: 'December',
@@ -1776,6 +1996,7 @@ export const commonTranslations: Translations = {
     hu: 'december',
     ru: 'Декабрь',
     zh: '十二月',
+    ja: '12月',
   },
   'time.today': {
     en: 'Today',
@@ -1783,6 +2004,7 @@ export const commonTranslations: Translations = {
     hu: 'Ma',
     ru: 'Сегодня',
     zh: '今日',
+    ja: '今日',
   },
   'time.yesterday': {
     en: 'Yesterday',
@@ -1790,6 +2012,7 @@ export const commonTranslations: Translations = {
     hu: 'Tegnap',
     ru: 'Вчера',
     zh: '昨日',
+    ja: '昨日',
   },
   'time.this_week': {
     en: 'This week',
@@ -1798,6 +2021,7 @@ export const commonTranslations: Translations = {
     ru: 'Эта неделя',
     zh_CN: '本周',
     zh_TW: '本週',
+    ja: '今週',
   },
   'time.passed_short': {
     en: ms => {
@@ -1950,6 +2174,31 @@ export const commonTranslations: Translations = {
       if (rh > 0) return `${d}天, ${rh}小時`
       else return `${d}天`
     },
+    ja: ms => {
+      if (ms === undefined || typeof ms === 'string') return '?'
+
+      const s = Math.trunc(ms / 1000)
+      if (s < 60) return `${s}秒`
+
+      const rs = s % 60
+      const m = (s - rs) / 60
+      if (m < 60) {
+        if (rs > 0) return `${m}分, ${rs}秒`
+        else return `${m}分`
+      }
+
+      const rm = m % 60
+      const h = (m - rm) / 60
+      if (h < 24) {
+        if (rm > 0) return `${h}時, ${rm}分`
+        else return `${h}時`
+      }
+
+      const rh = h % 24
+      const d = (h - rh) / 24
+      if (rh > 0) return `${d}日, ${rh}時`
+      else return `${d}日`
+    },
   },
 
   // ---
@@ -1962,6 +2211,7 @@ export const commonTranslations: Translations = {
     ru: 'Обновление',
     zh_CN: '升级',
     zh_TW: '升級',
+    ja: 'アップグレード中',
   },
   'upgrade.btn.backup': {
     en: 'Save backup',
@@ -1970,6 +2220,7 @@ export const commonTranslations: Translations = {
     ru: 'Сохранить резервную копию данных',
     zh_CN: '保存备份',
     zh_TW: '儲存備份',
+    ja: 'バックアップを保存',
   },
   'upgrade.btn.continue': {
     en: 'Continue',
@@ -1978,6 +2229,7 @@ export const commonTranslations: Translations = {
     ru: 'Продолжить',
     zh_CN: '继续',
     zh_TW: '繼續',
+    ja: '続行',
   },
   'upgrade.status.done': {
     en: 'Done',
@@ -1985,6 +2237,7 @@ export const commonTranslations: Translations = {
     hu: 'Kész',
     ru: 'Готово',
     zh: '已完成',
+    ja: '完了',
   },
   'upgrade.status.in_progress': {
     en: 'In progress',
@@ -1993,6 +2246,7 @@ export const commonTranslations: Translations = {
     ru: 'В процессе',
     zh_CN: '进行中',
     zh_TW: '進行中',
+    ja: '進行中',
   },
   'upgrade.status.pending': {
     en: 'Pending',
@@ -2000,6 +2254,7 @@ export const commonTranslations: Translations = {
     hu: 'Függőben',
     ru: 'Ожидание',
     zh: '等待中',
+    ja: '保留中',
   },
   'upgrade.status.err': {
     en: 'Error',
@@ -2008,6 +2263,7 @@ export const commonTranslations: Translations = {
     ru: 'Ошибка',
     zh_CN: '错误',
     zh_TW: '錯誤',
+    ja: 'エラー',
   },
   'upgrade.status.no': {
     en: 'No data',
@@ -2016,6 +2272,7 @@ export const commonTranslations: Translations = {
     ru: 'Нет данных',
     zh_CN: '没有数据',
     zh_TW: '沒有資料',
+    ja: 'データなし',
   },
   'upgrade.initializing': {
     en: 'Initializing',
@@ -2023,6 +2280,7 @@ export const commonTranslations: Translations = {
     hu: 'Előkészítés',
     ru: 'Инициализация',
     zh: '正在初始化',
+    ja: '初期化中',
   },
   'upgrade.settings': {
     en: 'Settings',
@@ -2031,6 +2289,7 @@ export const commonTranslations: Translations = {
     ru: 'Настройки',
     zh_CN: '设置',
     zh_TW: '設定',
+    ja: '設定',
   },
   'upgrade.panels_nav': {
     en: 'Panels and navigation',
@@ -2039,6 +2298,7 @@ export const commonTranslations: Translations = {
     ru: 'Панели и навигация',
     zh_CN: '面板和导航',
     zh_TW: '面板和導覽',
+    ja: 'パネルとナビゲーション',
   },
   'upgrade.ctx_menu': {
     en: 'Context menu',
@@ -2047,6 +2307,7 @@ export const commonTranslations: Translations = {
     ru: 'Контекстное меню',
     zh_CN: '上下文菜单',
     zh_TW: '快捷選單',
+    ja: 'コンテキストメニュー',
   },
   'upgrade.snapshots': {
     en: 'Snapshots',
@@ -2054,6 +2315,7 @@ export const commonTranslations: Translations = {
     hu: 'Pillanatképek',
     ru: 'Снепшоты',
     zh: '快照',
+    ja: 'スナップショット',
   },
   'upgrade.fav_cache': {
     en: 'Favicons cache',
@@ -2062,6 +2324,7 @@ export const commonTranslations: Translations = {
     ru: 'Кэш иконок',
     zh_CN: '网站图标缓存',
     zh_TW: '網站圖示快取',
+    ja: 'ファビコンキャッシュ',
   },
   'upgrade.styles': {
     en: 'Custom styles',
@@ -2070,6 +2333,7 @@ export const commonTranslations: Translations = {
     ru: 'Стили',
     zh_CN: '自定义样式',
     zh_TW: '自訂樣式',
+    ja: 'カスタムスタイル',
   },
   'upgrade.data_ready': {
     en: 'All data prepared',
@@ -2078,6 +2342,7 @@ export const commonTranslations: Translations = {
     ru: 'Все данные подготовлены',
     zh_CN: '全部数据准备就绪',
     zh_TW: '全部資料準備就緒',
+    ja: 'すべてのデータが準備完了',
   },
   'upgrade.data_ready_note': {
     en: 'You can save a backup and continue',
@@ -2086,6 +2351,7 @@ export const commonTranslations: Translations = {
     ru: 'Вы можете сохранить резервную копию и продолжить',
     zh_CN: '你可以保存备份并继续',
     zh_TW: '你可以儲存備份並繼續',
+    ja: 'バックアップを保存して続行できます',
   },
   'upgrade.links': {
     en: 'Updating Sidebery pages',
@@ -2094,6 +2360,7 @@ export const commonTranslations: Translations = {
     ru: 'Обновление страниц Sidebery',
     zh_CN: '正在更新 Sidebery 页面',
     zh_TW: '正在更新 Sidebery 頁面',
+    ja: 'Sidebery ページを更新中',
   },
   'upgrade.err.backup': {
     en: 'Cannot prepare backup',
@@ -2102,6 +2369,7 @@ export const commonTranslations: Translations = {
     ru: 'Невозможно подготовить резервную копию',
     zh_CN: '无法准备备份',
     zh_TW: '無法準備備份',
+    ja: 'バックアップを準備できません',
   },
   'upgrade.err.backup_note': {
     en: 'Unable to get stored data',
@@ -2110,6 +2378,7 @@ export const commonTranslations: Translations = {
     ru: 'Невозможно получить сохраненные данные',
     zh_CN: '无法获取存储的数据',
     zh_TW: '無法讀取儲存的資料',
+    ja: '保存されたデータを取得できません',
   },
   'upgrade.err.get_stored': {
     en: 'Cannot get stored data',
@@ -2118,6 +2387,7 @@ export const commonTranslations: Translations = {
     ru: 'Невозможно получить данные старой версии',
     zh_CN: '无法获取存储的数据',
     zh_TW: '無法讀取儲存的資料',
+    ja: '保存されたデータを取得できません',
   },
   'upgrade.err.clear_stored': {
     en: 'Cannot clear old data',
@@ -2126,6 +2396,7 @@ export const commonTranslations: Translations = {
     ru: 'Невозможно удалить старые данные',
     zh_CN: '无法清除旧数据',
     zh_TW: '無法清除舊資料',
+    ja: '古いデータを削除できません',
   },
   'upgrade.err.set_stored': {
     en: 'Cannot save new data',
@@ -2134,6 +2405,7 @@ export const commonTranslations: Translations = {
     ru: 'Невозможно сохранить новые данные',
     zh_CN: '无法保存新数据',
     zh_TW: '無法儲存新資料',
+    ja: '新しいデータを保存できません',
   },
   'upgrade.err.finish': {
     en: 'Sidebery is unable to finish the upgrade. Try to manually remove the old version of Sidebery, reload the browser and install the new version of Sidebery.',
@@ -2144,6 +2416,7 @@ export const commonTranslations: Translations = {
       'Sidebery 无法完成升级。请尝试手动删除旧版本的 Sidebery，重新加载浏览器并安装新版本的 Sidebery。',
     zh_TW:
       'Sidebery 無法完成升級。請嘗試手動刪除舊版本的 Sidebery，重新開啟瀏覽器並安裝新版本的 Sidebery。',
+    ja: 'Sidebery はアップグレードを完了できません。古いバージョンの Sidebery を手動で削除し、ブラウザをリロードして新しいバージョンの Sidebery をインストールしてください。',
   },
   'upgrade.done': {
     en: 'Sidebery successfully upgraded',
@@ -2152,6 +2425,7 @@ export const commonTranslations: Translations = {
     ru: 'Sidebery успешно обновлен',
     zh_CN: 'Sidebery 升级成功',
     zh_TW: 'Sidebery 升級成功',
+    ja: 'Sidebery は正常にアップグレードされました',
   },
   'upgrade.done_note': {
     en: 'Reloading...',
@@ -2160,6 +2434,7 @@ export const commonTranslations: Translations = {
     ru: 'Перезагрузка...',
     zh_CN: '重新加载...',
     zh_TW: '重新載入...',
+    ja: 'リロード中...',
   },
 }
 
