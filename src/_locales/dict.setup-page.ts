@@ -3024,7 +3024,7 @@ Például: „*”, „ctrl+$”, „ctrl+alt+g”`,
     ru: 'в боковой панели после вкладки',
     zh_CN: '侧边栏中选项卡下方',
     zh_TW: '側邊欄中分頁下方',
-    ja: 'タブの後ろのサイドバー',
+    ja: 'サイドバー内タブの後ろ',
   },
   'settings.tabs.preview_mode_p': {
     en: 'popup in page',
