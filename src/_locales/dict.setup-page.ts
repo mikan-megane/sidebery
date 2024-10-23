@@ -1202,7 +1202,7 @@ export const setupPageTranslations: Translations = {
     en: 'Required for:\n- Cleaning cookies\n- Proxy and URL rules of containers\n- Screenshots for the group page and windows selection panel\n- Changing the User-Agent per container',
     de: 'Benötigt für:\n- Cookies löschen\n- Proxy- und URL-Regeln für Umgebungen\n- Bildschirmfotos für die Gruppenseite und das Fensterauswahlmenü\n- User-Agent per Umgebung ändern',
     hu: 'A következő funkciókhoz szükséges:\n– Sütik törlése\n– A konténerek proxy- és URL-szabályainak beállítása\n– Képernyőképek a csoportoldalhoz és az ablakválasztóhoz\n– Konténerenkénti böngészőazonosító megadása',
-    pl: 'Wymagane dla:\n- Czyszczenia ciasteczek\n- Zasady proxy i URL dla kontenerów\n- Zrzuty ekranu dla grup stron i panelu zaznaczenia okna\n- Zmiana User-Agent\'a dla kontenera',
+    pl: "Wymagane dla:\n- Czyszczenia ciasteczek\n- Zasady proxy i URL dla kontenerów\n- Zrzuty ekranu dla grup stron i panelu zaznaczenia okna\n- Zmiana User-Agent'a dla kontenera",
     ru: 'Необходимо для:\n- Удаления cookies\n- Прокси и url-правил контейнеров\n- Скриншотов на групповой странице и на панели выбора окна',
     zh_CN:
       '用于：\n- 清除 Cookie\n- 容器的代理和 URL 规则\n- 分组页面和窗口选择面板的缩略图\n- 更改每个容器的用户代理',
@@ -5383,7 +5383,7 @@ Przykłady: "*", "ctrl+$", "ctrl+alt+g"`,
 %Y - Jahr; %M - Monat; %D - Tag; %h - Stunde; %m - Minute; %s - Sekunde`,
     hu: `Megjegyzés: az elérési út a letöltések mappájához képest relatív.
 %Y: év; %M: hónap; %D: nap; %h: óra; %m: perc; %s: másodperc`,
-  pl: `Info: Ścieżka jest relatywna do folderu pobrane i Firefox nie pozwala ustawić ścieżki poza nim.
+    pl: `Info: Ścieżka jest relatywna do folderu pobrane i Firefox nie pozwala ustawić ścieżki poza nim.
   %Y - rok; %M - miesiąc; %D - dzień; %h - godzina; %m - minuta; %s - sekunda`,
     ru: `Примечание: Путь указывается относительно папки загрузок и Firefox не позволяет устанавливать путь за ее пределами.
 %Y - год; %M - месяц; %D - день; %h - час; %m - минута; %s - секунда`,

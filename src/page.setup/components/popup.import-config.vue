@@ -59,7 +59,7 @@ import { getSidebarConfigFromV4 } from 'src/services/sidebar-config'
 const props = defineProps({
   importedData: {
     type: Object as PropType<BackupData>,
-    default: () => ({} as BackupData),
+    default: (): BackupData => ({}),
   },
 })
 

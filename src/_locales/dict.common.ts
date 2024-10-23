@@ -1877,7 +1877,7 @@ export const commonTranslations: Translations = {
     en: n => (n === 1 ? 'Forget visit' : 'Forget visits'),
     de: n => (n === 1 ? 'Besuch vergessen' : 'Besuche vergessen'),
     hu: n => (n === 1 ? 'Megtekintés törlése' : 'Megtekintések törlése'),
-    pl: n => (n === 1 ? 'Zapomnij wizytę' : "Zapomnij wizyty"),
+    pl: n => (n === 1 ? 'Zapomnij wizytę' : 'Zapomnij wizyty'),
     ru: n => (n === 1 ? 'Забыть запись' : 'Забыть записи'),
     zh_CN: '删除记录',
     zh_TW: '刪除頁面',

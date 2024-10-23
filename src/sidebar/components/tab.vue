@@ -237,7 +237,7 @@ function onMouseDown(e: MouseEvent): void {
         Tabs.discardTabs(selectedTabs)
         return
       } else if (Settings.state.tabMiddleClickCtrl === 'discard_or_close') {
-        discardOrCloseTabs(selectedTabs);
+        discardOrCloseTabs(selectedTabs)
         return
       } else if (Settings.state.tabMiddleClickCtrl === 'duplicate') {
         Tabs.duplicateTabs([tab.id])
@@ -256,7 +256,7 @@ function onMouseDown(e: MouseEvent): void {
         Tabs.discardTabs(selectedTabs)
         return
       } else if (Settings.state.tabMiddleClickShift === 'discard_or_close') {
-        discardOrCloseTabs(selectedTabs);
+        discardOrCloseTabs(selectedTabs)
         return
       } else if (Settings.state.tabMiddleClickShift === 'duplicate') {
         Tabs.duplicateTabs([tab.id])
@@ -279,7 +279,7 @@ function onMouseDown(e: MouseEvent): void {
       } else if (Settings.state.tabMiddleClick === 'discard') {
         Tabs.discardTabs(selectedTabs)
       } else if (Settings.state.tabMiddleClick === 'discard_or_close') {
-        discardOrCloseTabs(selectedTabs);
+        discardOrCloseTabs(selectedTabs)
       } else if (Settings.state.tabMiddleClick === 'duplicate') {
         Tabs.duplicateTabs([tab.id])
       } else if (Settings.state.tabMiddleClick === 'dup_child') {
@@ -558,9 +558,9 @@ function onAudioMouseUp(e: MouseEvent, tab: Tab) {
 
 function discardOrCloseTabs(selectedTabs: ID[]): void {
   if (tab.discarded) {
-    Tabs.removeTabs(selectedTabs);
+    Tabs.removeTabs(selectedTabs)
   } else {
-    Tabs.discardTabs(selectedTabs);
+    Tabs.discardTabs(selectedTabs)
   }
 }
 
