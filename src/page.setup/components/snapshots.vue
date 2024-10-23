@@ -293,7 +293,7 @@ function onTabDragStart(e: DragEvent): void {
 
 function selectRange(tabAId: ID, tabBId?: ID, deselectActually = false): void {
   if (!state.activeSnapshot) return
-  if (!tabBId === undefined) tabBId = tabAId
+  if (tabBId === undefined) tabBId = tabAId
   const oneTab = tabAId === tabBId
   let inRange = false
 
