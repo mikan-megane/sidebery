@@ -50,6 +50,7 @@ export default [
         xdescribe: true,
         xit: true,
         DOMEvent: true,
+        ScrollToOptions: true,
         defineExpose: true,
         defineProps: true,
         defineEmits: true,
