@@ -31,7 +31,8 @@
     "menus",
     "menus.overrideContext",
     "search",
-    "theme"
+    "theme",
+    "identity"
   ],
   "optional_permissions": [
     "<all_urls>",

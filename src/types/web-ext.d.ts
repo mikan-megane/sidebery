@@ -1406,4 +1406,15 @@ declare namespace browser {
 
     const onUpdated: EventTarget<ThemeUpdatedListener>
   }
+
+  namespace identity {
+    interface LaunchWebAuthDetails {
+      url: string
+      redirect_uri?: string
+      interactive?: boolean
+    }
+
+    function getRedirectURL(): string
+    function launchWebAuthFlow(details: LaunchWebAuthDetails): Promise<string>
+  }
 }
