@@ -999,10 +999,7 @@ export class AsyncQueue {
     fn: T,
     ...args: Parameters<T>
   ): Promise<Awaited<ReturnType<T>>> {
-    console.log('[DEBUG] AsyncQueue.add()')
-
     if (this._waitingQueue) {
-      console.log('[DEBUG] AsyncQueue.add(): Wait...')
       return new Promise<Awaited<ReturnType<T>>>((ok, err) => {
         this._queue.push({ ok, err, fn, args })
       })
@@ -1010,7 +1007,6 @@ export class AsyncQueue {
 
     this._waitingQueue = true
 
-    console.log('[DEBUG] AsyncQueue.add(): Call the function...')
     const result = args ? await fn(...args) : await fn()
 
     if (this._queue.length) this._processQueue()
@@ -1023,7 +1019,6 @@ export class AsyncQueue {
   private async _processQueue() {
     let nextTask = this._queue.shift()
     while (nextTask) {
-      console.log('[DEBUG] AsyncQueue._processQueue(): Call the next queued function...')
       try {
         /* eslint @typescript-eslint/no-unsafe-argument: off */
         if (nextTask.args) nextTask.ok(await nextTask.fn(...nextTask.args))
