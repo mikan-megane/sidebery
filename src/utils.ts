@@ -169,11 +169,35 @@ export function uDate(ms: number, delimiter?: string, dayStartTime?: number): st
   return `${dt.getFullYear()}${delimiter}${dtmth}${delimiter}${dtday}`
 }
 
+export function dDate(dt: Date, delimiter?: string, dayStartTime?: number): string {
+  if (!delimiter) delimiter = '.'
+
+  const ms = dt.getTime()
+
+  if (dayStartTime) {
+    if (ms > dayStartTime) return translate('time.today')
+    if (ms > dayStartTime - 86400000) return translate('time.yesterday')
+  }
+
+  // const dt = new Date(ms)
+  const dtday = `${dt.getDate()}`.padStart(2, '0')
+  const dtmth = `${dt.getMonth() + 1}`.padStart(2, '0')
+  return `${dt.getFullYear()}${delimiter}${dtmth}${delimiter}${dtday}`
+}
+
 /**
  * Get time string from unix seconds
  */
 export function uTime(ms: number, delimiter = ':', sec = true): string {
   const dt = new Date(ms)
+  let time = `${dt.getHours()}`.padStart(2, '0')
+  time += delimiter + `${dt.getMinutes()}`.padStart(2, '0')
+  if (sec) time += delimiter + `${dt.getSeconds()}`.padStart(2, '0')
+
+  return time
+}
+
+export function dTime(dt: Date, delimiter = ':', sec = true): string {
   let time = `${dt.getHours()}`.padStart(2, '0')
   time += delimiter + `${dt.getMinutes()}`.padStart(2, '0')
   if (sec) time += delimiter + `${dt.getSeconds()}`.padStart(2, '0')
