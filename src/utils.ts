@@ -990,46 +990,56 @@ interface QueueItem {
   fn: AnyAsyncFunc
   args?: any[]
 }
-let _waitingQueue = false
-const _asyncQueue: QueueItem[] = []
 
-export async function inQueue<T extends AnyAsyncFunc>(
-  fn: T,
-  ...args: Parameters<T>
-): Promise<Awaited<ReturnType<T>>> {
-  if (_waitingQueue) {
-    return new Promise<Awaited<ReturnType<T>>>((ok, err) => {
-      _asyncQueue.push({ ok, err, fn, args })
-    })
-  }
+export class AsyncQueue {
+  private _waitingQueue = false
+  private _queue: QueueItem[] = []
 
-  _waitingQueue = true
+  public async add<T extends AnyAsyncFunc>(
+    fn: T,
+    ...args: Parameters<T>
+  ): Promise<Awaited<ReturnType<T>>> {
+    console.log('[DEBUG] AsyncQueue.add()')
 
-  const result = args ? await fn(...args) : await fn()
-
-  if (_asyncQueue.length) _processQueue()
-  else _waitingQueue = false
-
-  /* eslint @typescript-eslint/no-unsafe-return: off */
-  return result
-}
-
-async function _processQueue() {
-  let nextTask = _asyncQueue.shift()
-  while (nextTask) {
-    try {
-      /* eslint @typescript-eslint/no-unsafe-argument: off */
-      if (nextTask.args) nextTask.ok(await nextTask.fn(...nextTask.args))
-      else nextTask.ok(await nextTask.fn())
-    } catch (err) {
-      nextTask.err(err)
+    if (this._waitingQueue) {
+      console.log('[DEBUG] AsyncQueue.add(): Wait...')
+      return new Promise<Awaited<ReturnType<T>>>((ok, err) => {
+        this._queue.push({ ok, err, fn, args })
+      })
     }
 
-    nextTask = _asyncQueue.shift()
+    this._waitingQueue = true
+
+    console.log('[DEBUG] AsyncQueue.add(): Call the function...')
+    const result = args ? await fn(...args) : await fn()
+
+    if (this._queue.length) this._processQueue()
+    else this._waitingQueue = false
+
+    /* eslint @typescript-eslint/no-unsafe-return: off */
+    return result
   }
 
-  _waitingQueue = false
+  private async _processQueue() {
+    let nextTask = this._queue.shift()
+    while (nextTask) {
+      console.log('[DEBUG] AsyncQueue._processQueue(): Call the next queued function...')
+      try {
+        /* eslint @typescript-eslint/no-unsafe-argument: off */
+        if (nextTask.args) nextTask.ok(await nextTask.fn(...nextTask.args))
+        else nextTask.ok(await nextTask.fn())
+      } catch (err) {
+        nextTask.err(err)
+      }
+
+      nextTask = this._queue.shift()
+    }
+
+    this._waitingQueue = false
+  }
 }
+
+export const GLOBAL_QUEUE = new AsyncQueue()
 
 export function getRandomFrom<T>(arr: T[]): T {
   const index = Math.round(Math.random() * (arr.length - 1))

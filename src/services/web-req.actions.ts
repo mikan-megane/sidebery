@@ -289,7 +289,7 @@ function proxyReqHandler(info: browser.proxy.RequestDetails): browser.proxy.Prox
         }
 
         incHistory[rule.ctx] = info.url
-        return Utils.inQueue(recreateTab, tab, info, rule.ctx)
+        return Utils.GLOBAL_QUEUE.add(recreateTab, tab, info, rule.ctx)
       }
     }
 
@@ -302,7 +302,7 @@ function proxyReqHandler(info: browser.proxy.RequestDetails): browser.proxy.Prox
 
         if (ok) {
           incHistory['firefox-default'] = info.url
-          return Utils.inQueue(recreateTab, tab, info)
+          return Utils.GLOBAL_QUEUE.add(recreateTab, tab, info)
         }
       }
     }

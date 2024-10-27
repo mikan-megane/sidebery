@@ -786,7 +786,7 @@ function moveTabToPanel(tab: Tab, panelId: ID) {
   const index = moveToPanelStart ? panel.startTabIndex : panel.nextTabIndex
   const src: SrcPlaceInfo = { windowId: Windows.id, pinned: tab.pinned }
   const dst: DstPlaceInfo = { panelId, index }
-  Utils.inQueue(Tabs.move, [tab], src, dst)
+  Utils.GLOBAL_QUEUE.add(Tabs.move, [tab], src, dst)
 
   if (tab.active && Settings.state.tabsPanelSwitchActMoveAuto) {
     Sidebar.switchToPanel(panelId, true, true)
