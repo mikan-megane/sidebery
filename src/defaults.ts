@@ -55,6 +55,7 @@ export const BTN_ICONS: Record<string, string> = {
   bookmarks_panel: 'icon_bookmarks',
   settings: 'icon_settings',
   history: 'icon_clock',
+  sync: 'icon_sync',
   sp: 'icon_ellipsis',
   sd: 'icon_ellipsis',
   hdn: 'icon_hide',
