@@ -1,6 +1,6 @@
 import { GroupConfig, AnyFunc, NavItem, NavBtn, NavSpace, Panel, PanelConfig, Tab } from './types'
-import { TabsPanel, BookmarksPanel, PanelType, NavItemClass, HistoryPanel } from './types'
-import { SubListTitleInfo, RGBA, RGB, AnyAsyncFunc } from './types'
+import { TabsPanel, BookmarksPanel, PanelType, HistoryPanel, SyncPanel } from './types'
+import { NavItemClass, SubListTitleInfo, RGBA, RGB, AnyAsyncFunc } from './types'
 import { DOMAIN_RE, URL_PAGE_RE, URL_URL } from './defaults'
 import { translate } from './dict'
 
@@ -996,6 +996,10 @@ export function isBookmarksPanel(panel?: object): panel is BookmarksPanel {
 export function isHistoryPanel(panel?: PanelConfig): panel is HistoryPanel {
   if (!panel) return false
   return panel.type === PanelType.history
+}
+export function isSyncPanel(panel?: PanelConfig): panel is SyncPanel {
+  if (!panel) return false
+  return panel.type === PanelType.sync
 }
 export function isSubListTitle(something: any): something is SubListTitleInfo {
   if (!something) return false
