@@ -1659,6 +1659,9 @@ export const setupPageTranslations: Translations = {
     zh_TW: '歷史面板',
     ja: '履歴パネル',
   },
+  'settings.nav_bar_btn_sync': {
+    en: 'Sync panel',
+  },
   'settings.nav_bar_btn_search': {
     en: 'Search',
     de: 'Suche',
@@ -5667,6 +5670,16 @@ Przykłady: "*", "ctrl+$", "ctrl+alt+g"`,
     ja: `- Sidebery は Firefox 同期を使用しているため、次のようになります：
 - この機能を使用するには Firefox アカウントにログインする必要があります
 - データが Firefox 同期サーバーにアップロードされたことを確認するには、Firefox 設定またはメインメニュー（三行ボタン）内のプロファイルで「今すぐ同期」ボタンを押す必要があります`,
+  },
+  'settings.sync_ff_note': {
+    en: `Notes:
+- You need to login to Firefox account to get it working
+- To be sure that data is uploaded to Firefox sync server you need to press the "Sync now" button in the Firefox settings or in your profile in the main menu (the three-line button)`,
+  },
+  'settings.sync_gd_note': {
+    en: `Notes:
+- Sidebery doesn't have access to your files on Google Drive
+- Sidebery files are stored in JSON, so Google can read their contents (encryption is planned)`,
   },
   'settings.sync_update_btn': {
     en: 'Update synced data',

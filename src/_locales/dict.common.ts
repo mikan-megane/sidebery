@@ -206,6 +206,13 @@ export const commonTranslations: Translations = {
   },
 
   // ---
+  // -- Sync panel
+  // -
+  'panel.sync.title': {
+    en: 'Sync',
+  },
+
+  // ---
   // -- Popups
   // -
   // - Bookmarks popup
@@ -1502,6 +1509,9 @@ export const commonTranslations: Translations = {
     zh_CN: '按访问时间排序树（新-旧）',
     zh_TW: '依最近瀏覽時間對樹排序（新-舊）',
     ja: '時間でツリーを並べ替え (新しい順)',
+  },
+  'menu.tab.sync': {
+    en: 'Sync',
   },
   'menu.tab.pin': {
     en: 'Pin',
