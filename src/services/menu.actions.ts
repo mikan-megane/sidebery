@@ -18,6 +18,8 @@ import { Snapshots } from './snapshots'
 import { translate, LANG } from 'src/dict'
 import { Search } from 'src/services/search'
 import * as Preview from 'src/services/tabs.preview'
+import { Logs, Sync } from './_services'
+import { Notifications } from './notifications'
 
 export type OpenCallback = (blocks: MenuBlock[], x?: number, y?: number) => void
 
@@ -32,30 +34,7 @@ let ctxMenuBlockTimeout: number | undefined
 export async function loadCtxMenu(): Promise<void> {
   // prettier-ignore
   const storage = await browser.storage.local.get<Stored>('contextMenu')
-
-  if (storage.contextMenu?.tabs?.length) {
-    Menu.tabsConf = storage.contextMenu.tabs
-  } else {
-    Menu.tabsConf = Utils.cloneArray(TABS_MENU)
-  }
-
-  if (storage.contextMenu?.tabsPanel?.length) {
-    Menu.tabsPanelConf = storage.contextMenu.tabsPanel
-  } else {
-    Menu.tabsPanelConf = Utils.cloneArray(TABS_PANEL_MENU)
-  }
-
-  if (storage.contextMenu?.bookmarks?.length) {
-    Menu.bookmarksConf = storage.contextMenu.bookmarks
-  } else {
-    Menu.bookmarksConf = Utils.cloneArray(BOOKMARKS_MENU)
-  }
-
-  if (storage.contextMenu?.bookmarksPanel?.length) {
-    Menu.bookmarksPanelConf = storage.contextMenu.bookmarksPanel
-  } else {
-    Menu.bookmarksPanelConf = Utils.cloneArray(BOOKMARKS_PANEL_MENU)
-  }
+  setCtxMenu(storage.contextMenu)
 }
 
 export function upgradeMenuConf(oldConf: ContextMenuConfig_v4): MenuConf {
@@ -76,21 +55,7 @@ export function upgradeMenuConf(oldConf: ContextMenuConfig_v4): MenuConf {
   return conf
 }
 
-export function saveCtxMenu(delay?: number): void {
-  const storage: Stored = {
-    contextMenu: {
-      tabs: Utils.cloneArray(Menu.tabsConf),
-      tabsPanel: Utils.cloneArray(Menu.tabsPanelConf),
-      bookmarks: Utils.cloneArray(Menu.bookmarksConf),
-      bookmarksPanel: Utils.cloneArray(Menu.bookmarksPanelConf),
-    },
-  }
-  Store.set(storage, delay)
-
-  if (Settings.state.syncSaveCtxMenu) saveCtxMenuToSync()
-}
-
-export async function saveCtxMenuToSync(): Promise<void> {
+export function getCtxMenuConf() {
   const contextMenu: MenuConfs = {}
 
   if (Menu.tabsConf) contextMenu.tabs = Menu.tabsConf
@@ -98,8 +63,52 @@ export async function saveCtxMenuToSync(): Promise<void> {
   if (Menu.bookmarksConf) contextMenu.bookmarks = Menu.bookmarksConf
   if (Menu.bookmarksPanelConf) contextMenu.bookmarksPanel = Menu.bookmarksPanelConf
 
-  const value: Stored = Utils.cloneObject({ contextMenu })
-  await Store.sync('ctxMenu', value)
+  return Utils.cloneObject(contextMenu)
+}
+
+export function saveCtxMenu(delay?: number): void {
+  Logs.info('Menu.saveCtxMenu')
+
+  const storage: Stored = {
+    contextMenu: getCtxMenuConf(),
+  }
+  Store.set(storage, delay)
+
+  if (Settings.state.syncSaveCtxMenu) saveCtxMenuToSync()
+}
+
+export async function saveCtxMenuToSync(): Promise<void> {
+  Logs.info('Menu.saveCtxMenuToSync()')
+
+  const contextMenu = getCtxMenuConf()
+  await Sync.save(Sync.SyncedEntryType.CtxMenu, contextMenu)
+}
+
+export async function importSyncedCtxMenu(entry: Sync.SyncedEntry) {
+  Logs.info('Menu.importSyncedCtxMenu(): entry:', entry)
+
+  const prevCtxMenu = getCtxMenuConf()
+  const ctxMenu = await Sync.getData<MenuConfs>(entry)
+  if (!ctxMenu) {
+    Logs.err('Menu.importSyncedCtxMenu(): No data')
+    return
+  }
+
+  await importCtxMenu(ctxMenu)
+
+  Notifications.notify({
+    icon: '#icon_sync',
+    title: 'Context menu has been successfully imported',
+    ctrl: translate('notif.undo_ctrl'),
+    callback: () => importCtxMenu(prevCtxMenu),
+  })
+}
+
+export async function importCtxMenu(ctxMenu: MenuConfs) {
+  Logs.info('Menu.importCtxMenu(): ctxMenu:', ctxMenu)
+
+  await Store.set({ contextMenu: ctxMenu })
+  Menu.setCtxMenu(ctxMenu)
 }
 
 export function createSettingsMenu(): void {
@@ -128,21 +137,24 @@ function onMenuHiddenBg(): void {
   createSettingsMenu()
 }
 
+export function setCtxMenu(conf?: MenuConfs) {
+  if (!conf) return
+  if (conf?.tabs?.length) Menu.tabsConf = conf.tabs
+  else Menu.tabsConf = Utils.cloneArray(TABS_MENU)
+  if (conf?.tabsPanel?.length) Menu.tabsPanelConf = conf.tabsPanel
+  else Menu.tabsPanelConf = Utils.cloneArray(TABS_PANEL_MENU)
+  if (conf?.bookmarks?.length) Menu.bookmarksConf = conf.bookmarks
+  else Menu.bookmarksConf = Utils.cloneArray(BOOKMARKS_MENU)
+  if (conf?.bookmarksPanel?.length) Menu.bookmarksPanelConf = conf.bookmarksPanel
+  else Menu.bookmarksPanelConf = Utils.cloneArray(BOOKMARKS_PANEL_MENU)
+}
+
 export function setupListeners(): void {
   if (Info.isBg) {
     browser.menus.onHidden.addListener(onMenuHiddenBg)
   } else {
     browser.menus.onHidden.addListener(onMenuHiddenFg)
-    Store.onKeyChange('contextMenu', menuConfigs => {
-      if (menuConfigs?.tabs?.length) Menu.tabsConf = menuConfigs.tabs
-      else Menu.tabsConf = Utils.cloneArray(TABS_MENU)
-      if (menuConfigs?.tabsPanel?.length) Menu.tabsPanelConf = menuConfigs.tabsPanel
-      else Menu.tabsPanelConf = Utils.cloneArray(TABS_PANEL_MENU)
-      if (menuConfigs?.bookmarks?.length) Menu.bookmarksConf = menuConfigs.bookmarks
-      else Menu.bookmarksConf = Utils.cloneArray(BOOKMARKS_MENU)
-      if (menuConfigs?.bookmarksPanel?.length) Menu.bookmarksPanelConf = menuConfigs.bookmarksPanel
-      else Menu.bookmarksPanelConf = Utils.cloneArray(BOOKMARKS_PANEL_MENU)
-    })
+    Store.onKeyChange('contextMenu', menuConfigs => setCtxMenu(menuConfigs))
   }
 }
 
