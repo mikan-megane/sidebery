@@ -162,6 +162,7 @@ import {
   createTabsPanelConfig,
   createBookmarksPanelConfig,
   createHistoryPanelConfig,
+  createSyncPanelConfig,
 } from 'src/services/sidebar-config'
 import { Permissions } from 'src/services/permissions'
 import { SetupPage } from 'src/services/setup-page'
@@ -221,9 +222,8 @@ const availableBtns = computed<Btn[]>(() => {
   const result: Btn[] = []
   // prettier-ignore
   const ids = [
-    'tabs_panel', 'bookmarks_panel', 'sp', 'sd', 'hdn',
-    'history', 'search', 'add_tp', 'create_snapshot',
-    'collapse', 'remute_audio_tabs', 'settings',
+    'tabs_panel', 'bookmarks_panel', 'history', 'sync', 'sp', 'sd', 'hdn', 'search',
+    'add_tp', 'create_snapshot', 'collapse', 'remute_audio_tabs', 'settings',
   ]
 
   for (const id of ids) {
@@ -285,6 +285,10 @@ async function createNavElement(id?: ID): Promise<ID | undefined> {
       if (!result) return
     }
     const panelConf = createHistoryPanelConfig()
+    SidebarConfigRState.panels[panelConf.id] = panelConf
+    return panelConf.id
+  } else if (id === 'sync') {
+    const panelConf = createSyncPanelConfig()
     SidebarConfigRState.panels[panelConf.id] = panelConf
     return panelConf.id
   } else if (id === 'sp') id = 'sp-' + Utils.uid()

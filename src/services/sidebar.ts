@@ -61,6 +61,7 @@ export const Sidebar = {
   hasTabs: false,
   hasBookmarks: false,
   hasHistory: false,
+  hasSync: false,
   lastTabsPanelId: NOID,
   scrollPositions: {} as Record<ID, number>,
   convertingPanelLock: false,

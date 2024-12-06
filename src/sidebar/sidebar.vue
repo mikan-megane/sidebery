@@ -135,6 +135,7 @@ import WindowsPopup from './components/popup.windows.vue'
 import TabsPanel from './components/panel.tabs.vue'
 import BookmarksPanel from './components/panel.bookmarks.vue'
 import HistoryPanel from './components/panel.history.vue'
+import SyncPanel from './components/panel.sync.vue'
 import SearchBar from './components/bar.search.vue'
 import BookmarksPopup from 'src/components/popup.bookmarks.vue'
 import PanelConfigPopup from './components/popup.panel-config.vue'
@@ -166,7 +167,8 @@ let navBarRight = navBarVertical && Settings.state.navBarSide === 'right'
 let bottomBar =
   Settings.state.subPanelRecentlyClosedBar ||
   Settings.state.subPanelBookmarks ||
-  Settings.state.subPanelHistory
+  Settings.state.subPanelHistory ||
+  Settings.state.subPanelSync
 
 function recalcStaticVars() {
   animations = !Settings.state.animations ? 'none' : Settings.state.animationSpeed || 'fast'
@@ -181,7 +183,8 @@ function recalcStaticVars() {
   bottomBar =
     Settings.state.subPanelRecentlyClosedBar ||
     Settings.state.subPanelBookmarks ||
-    Settings.state.subPanelHistory
+    Settings.state.subPanelHistory ||
+    Settings.state.subPanelSync
 }
 
 Sidebar.reMountSidebar = () => {
@@ -221,6 +224,7 @@ function getPanelComponent(panel: Panel): Component | undefined {
   if (panel.type === PanelType.tabs) return TabsPanel
   if (panel.type === PanelType.bookmarks) return BookmarksPanel
   if (panel.type === PanelType.history) return HistoryPanel
+  if (panel.type === PanelType.sync) return SyncPanel
 }
 
 function onFocusIn(e: FocusEvent): void {

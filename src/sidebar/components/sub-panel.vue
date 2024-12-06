@@ -17,6 +17,7 @@
     ClosedTabsSubPanel(v-if="isRecentlyClosedTabs")
     BookmarksSubPanel(v-else-if="isBookmarks && Sidebar.subPanels.bookmarks" :bookmarksPanel="Sidebar.subPanels.bookmarks")
     HistoryPanel(v-else-if="isHistory" :isSubPanel="true")
+    SyncPanel(v-else-if="isSync" :isSubPanel="true")
 </template>
 
 <script lang="ts" setup>
@@ -32,12 +33,14 @@ import { Sidebar } from 'src/services/sidebar'
 import ClosedTabsSubPanel from './sub-panel.closed-tabs.vue'
 import BookmarksSubPanel from './sub-panel.bookmarks.vue'
 import HistoryPanel from './panel.history.vue'
+import SyncPanel from './panel.sync.vue'
 
 const titles: Record<SubPanelType, string> = {
   [SubPanelType.Null]: '',
   [SubPanelType.RecentlyClosedTabs]: translate('sub_panel.rct_panel.title'),
   [SubPanelType.Bookmarks]: translate('sub_panel.bookmarks_panel.title'),
   [SubPanelType.History]: translate('sub_panel.history_panel.title'),
+  [SubPanelType.Sync]: 'Sync',
 }
 
 const isRecentlyClosedTabs = computed<boolean>(() => {
@@ -47,6 +50,7 @@ const isBookmarks = computed<boolean>(() => {
   return Sidebar.reactive.subPanelType === SubPanelType.Bookmarks
 })
 const isHistory = computed<boolean>(() => Sidebar.reactive.subPanelType === SubPanelType.History)
+const isSync = computed<boolean>(() => Sidebar.reactive.subPanelType === SubPanelType.Sync)
 
 function onDrop(): void {
   DnD.reactive.dstType = DropType.Tabs

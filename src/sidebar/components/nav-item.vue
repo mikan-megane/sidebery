@@ -35,7 +35,7 @@
     svg.-muted: use(xlink:href="#icon_mute_badge")
   .name-box: .name {{item.reactive.name}}
   .len(v-if="Settings.state.navBtnCount && (item.reactive.filteredLen ?? item.reactive.len)") {{item.reactive.filteredLen ?? item.reactive.len}}
-//- Bookmarks/HistoryPanel
+//- Bookmarks/History/SyncPanel
 .nav-item(
   v-else-if="Utils.isNavPanel(item)"
   draggable="true"
