@@ -9,6 +9,7 @@ import { Settings } from 'src/services/settings'
 import * as IPC from './ipc'
 import { Containers } from './containers'
 import { Sidebar } from './sidebar'
+import { Info } from './info'
 
 export async function loadWindows(): Promise<void> {
   const windows = await browser.windows.getAll({ windowTypes: ['normal'], populate: false })
@@ -28,8 +29,9 @@ export async function loadWindowInfo(): Promise<void> {
   let uniqWinId = winData[1] as string | undefined
 
   // Workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=1660564
-  if (currentWindow.type !== 'normal') {
-    throw 'This code should not be launched in a window with a type other than "normal"'
+  if (Info.isSidebar && currentWindow.type !== 'normal') {
+    throw `This code should not be launched in a window with a type other than "normal".
+See https://bugzilla.mozilla.org/show_bug.cgi?id=1660564`
   }
 
   // Generate unique window id
