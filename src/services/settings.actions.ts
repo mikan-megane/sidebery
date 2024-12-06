@@ -15,9 +15,14 @@ import * as IPC from './ipc'
 import * as Preview from 'src/services/tabs.preview'
 import { updateWebReqHandlers } from './web-req.fg'
 import { Search } from './search'
+import { Logs, Sync } from './_services'
+import { Notifications } from './notifications'
+import { translate } from 'src/dict'
 
 type Opts = typeof SETTINGS_OPTIONS
 export async function loadSettings(): Promise<void> {
+  Logs.info('Settings.loadSettings()')
+
   const stored = await browser.storage.local.get<Stored>('settings')
 
   if (!stored.settings) {
@@ -42,11 +47,15 @@ export async function loadSettings(): Promise<void> {
 }
 
 export async function saveSettings(): Promise<void> {
+  Logs.info('Settings.saveSettings')
+
   const clone = Utils.cloneObject(Settings.state)
   const settings = Utils.recreateNormalizedObject(clone, DEFAULT_SETTINGS)
   await Store.set({ settings })
 
-  if (settings.syncSaveSettings) saveSettingsToSync()
+  if (settings.syncSaveSettings) {
+    Sync.save(Sync.SyncedEntryType.Settings, settings)
+  }
 }
 
 let saveSettingsTimeout: number | undefined
@@ -57,18 +66,51 @@ export function saveDebounced(delay = 500): void {
   }, delay)
 }
 
-async function saveSettingsToSync(settings?: SettingsState): Promise<void> {
-  if (!settings) settings = Utils.recreateNormalizedObject(Settings.state, DEFAULT_SETTINGS)
-  await Store.sync('settings', { settings })
-}
-
 export function setupSettingsChangeListener(): void {
   if (Info.isBg) Store.onKeyChange('settings', updateSettingsBg)
   else Store.onKeyChange('settings', updateSettingsFg)
 }
 
+export async function importSyncedSettings(entry: Sync.SyncedEntry) {
+  Logs.info('Settings.importSyncedSettings(): entry:', entry)
+
+  const prevSettings = Utils.clone(Settings.state)
+  const settings = await Sync.getData<SettingsState>(entry)
+  if (!settings) {
+    Logs.err('Settings.importSyncedSettings(): No data')
+    return
+  }
+
+  // Keep sync settings
+  settings.syncName = Settings.state.syncName
+  settings.syncSaveSettings = Settings.state.syncSaveSettings
+  settings.syncSaveCtxMenu = Settings.state.syncSaveCtxMenu
+  settings.syncSaveStyles = Settings.state.syncSaveStyles
+  settings.syncSaveKeybindings = Settings.state.syncSaveKeybindings
+
+  await importSettings(settings)
+
+  Notifications.notify({
+    icon: '#icon_sync',
+    title: 'Settings have been successfully imported',
+    ctrl: translate('notif.undo_ctrl'),
+    callback: () => importSettings(prevSettings),
+  })
+}
+
+export async function importSettings(settings: SettingsState) {
+  Logs.info('Settings.importSettings: settings:', settings)
+
+  await Store.set({ settings: settings })
+
+  if (Info.isBg) Settings.updateSettingsBg(settings)
+  else Settings.updateSettingsFg(settings)
+}
+
 export function updateSettingsBg(settings?: SettingsState | null): void {
   if (!settings) return
+
+  Logs.info('Settings.updateSettingsBg()')
 
   const prev = Settings.state
   const next = settings
@@ -106,6 +148,8 @@ export function updateSettingsBg(settings?: SettingsState | null): void {
 
 export function updateSettingsFg(settings?: SettingsState | null): void {
   if (!settings) return
+
+  Logs.info('Settings.updateSettingsFg()')
 
   const prev = Settings.state
   const next = settings
