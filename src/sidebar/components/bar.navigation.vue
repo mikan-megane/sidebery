@@ -94,6 +94,7 @@ import { Search } from 'src/services/search'
 import { Snapshots } from 'src/services/snapshots'
 import * as Popups from 'src/services/popups'
 import NavItemComponent from './nav-item.vue'
+import { Sync } from 'src/services/_services'
 
 const HIDDEN_PANELS_BTN: NavBtn = {
   id: 'hidden_panels_btn',
@@ -421,6 +422,11 @@ async function onNavMouseDown(e: MouseEvent, item: NavItem) {
         const tabsPanel = Sidebar.panelsById[panelId]
         if (tabsPanel?.hidden) Sidebar.showPanel(panelId)
       }
+    }
+
+    // TODO: tmp shit, remove/update later
+    if (item.type === PanelType.sync) {
+      Sync.openSyncWindow()
     }
 
     if (item.type === ButtonType.create_snapshot) SetupPage.open('snapshots')
