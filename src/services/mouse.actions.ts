@@ -25,6 +25,7 @@ type TargetType =
   | 'menu.option'
   | 'closedTab'
   | 'closedTab.branch'
+  | 'sync.tab'
 type ResizingCallback = (start: number, delta: number) => void
 type LongClickTargetType = 'tab' | 'bookmark' | 'panel'
 
