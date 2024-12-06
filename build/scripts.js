@@ -294,6 +294,7 @@ async function main() {
         'src/bg/background.ts',
         'src/sidebar/sidebar.ts',
         'src/page.setup/setup.ts',
+        'src/popup.sync/sync.ts',
         'src/popup.proxy/proxy.ts',
         'src/popup.search/search.ts',
         'src/_locales/dict.common.ts',

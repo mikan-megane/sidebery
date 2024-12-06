@@ -13,6 +13,7 @@ const THEMES = {
     './src/styles/themes/proton/page.group/group.styl',
     './src/styles/themes/proton/page.setup/setup.styl',
     './src/styles/themes/proton/popup.proxy/proxy.styl',
+    './src/styles/themes/proton/popup.sync/sync.styl',
   ],
 }
 
