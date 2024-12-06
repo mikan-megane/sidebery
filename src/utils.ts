@@ -554,6 +554,16 @@ export function cloneObject<T extends object>(obj: T): T {
   return out
 }
 
+export function clone<T>(value: T): T {
+  if (Array.isArray(value)) {
+    return cloneArray(value) as T
+  } else if (typeof value === 'object' && value !== null) {
+    return cloneObject(value)
+  } else {
+    return value
+  }
+}
+
 /**
  * Prepare url to be opened by sidebery
  */
