@@ -1,4 +1,4 @@
-import { CustomCssTarget, CustomCssFieldName, Stored, RGBA, RGB } from 'src/types'
+import { CustomCssTarget, CustomCssFieldName, Stored, RGBA, RGB, CustomStyles } from 'src/types'
 import { ColorSchemeVariant, ParsedTheme, SrcVars, Styles } from 'src/services/styles'
 import { Settings } from 'src/services/settings'
 import { Store } from 'src/services/storage'
@@ -8,6 +8,9 @@ import { Sidebar } from './sidebar'
 import { Windows } from './windows'
 import { NOID } from 'src/defaults'
 import * as Logs from 'src/services/logs'
+import { Sync } from './_services'
+import { Notifications } from './notifications'
+import { translate } from 'src/dict'
 
 const SRC_VARS: (keyof SrcVars)[] = [
   'frame_bg',
@@ -674,10 +677,70 @@ export async function loadCustomCSS(): Promise<void> {
 }
 
 export async function saveStylesToSync(): Promise<void> {
-  const value: Stored = {}
+  const value: CustomStyles = {}
 
-  if (Settings.state.sidebarCSS && Styles.sidebarCSS) value.sidebarCSS = Styles.sidebarCSS
-  if (Settings.state.groupCSS && Styles.groupCSS) value.groupCSS = Styles.groupCSS
+  if (Styles.sidebarCSS) value.sidebarCSS = Styles.sidebarCSS
+  if (Styles.groupCSS) value.groupCSS = Styles.groupCSS
+
+  await Sync.save(Sync.SyncedEntryType.Styles, value)
+}
+
+export async function importSyncedStyles(entry: Sync.SyncedEntry) {
+  Logs.info('Styles.importSyncedStyles(): entry:', entry)
+
+  const prevStyles: CustomStyles = {}
+  const stored = await browser.storage.local.get<Stored>(['sidebarCSS', 'groupCSS'])
+  if (stored.sidebarCSS) prevStyles.sidebarCSS = stored.sidebarCSS
+  if (stored.groupCSS) prevStyles.groupCSS = stored.groupCSS
+
+  const styles = await Sync.getData<CustomStyles>(entry)
+  if (!styles) {
+    Logs.err('Styles.importSyncedStyles(): No data')
+    return
+  }
+
+  await importStyles(styles)
+
+  Notifications.notify({
+    icon: '#icon_sync',
+    title: 'Styles have been successfully imported',
+    ctrl: translate('notif.undo_ctrl'),
+    callback: () => importStyles(prevStyles),
+  })
+}
+
+export async function importStyles(styles: CustomStyles) {
+  Logs.info('Styles.importStyles(): styles:', styles)
+
+  await Store.set({
+    sidebarCSS: styles.sidebarCSS ?? '',
+    groupCSS: styles.groupCSS ?? '',
+  })
+
+  let settingsChanged = false
+
+  const sidebarCSSEnabled = !!styles.sidebarCSS
+  if (Settings.state.sidebarCSS !== sidebarCSSEnabled) {
+    Settings.state.sidebarCSS = sidebarCSSEnabled
+    settingsChanged = true
+  }
+  Settings.state.sidebarCSS = !!styles.sidebarCSS
+
+  const groupCSSEnabled = !!styles.groupCSS
+  if (Settings.state.groupCSS !== groupCSSEnabled) {
+    Settings.state.groupCSS = groupCSSEnabled
+    settingsChanged = true
+  }
+  Settings.state.groupCSS = !!styles.groupCSS
+
+  if (Info.isSidebar) {
+    if (styles.sidebarCSS) applyCustomCSS(styles.sidebarCSS)
+    else removeCustomCSS()
+    Sidebar.recalcElementSizesDebounced()
+  }
+
+  if (settingsChanged) Settings.saveSettings()
+}
 
 export function updateGlobalFontSize(): void {
   const htmlEl = document.documentElement
