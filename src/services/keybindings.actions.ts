@@ -18,6 +18,9 @@ import * as IPC from 'src/services/ipc'
 import * as Logs from 'src/services/logs'
 import { By as SortBy, sort as sortTabs } from 'src/services/tabs.fg.sorting'
 import { SetupPage } from './setup-page'
+import { Sync } from './_services'
+import { Notifications } from './notifications'
+import { translate } from 'src/dict'
 
 const VALID_SHORTCUT =
   /^((Ctrl|Alt|Command|MacCtrl)\+)((Shift|Alt|Ctrl|Command|MacCtrl)\+)?([A-Z0-9]|Comma|Period|Home|End|PageUp|PageDown|Space|Insert|Delete|Up|Down|Left|Right|F\d\d?)$|^((Ctrl|Alt|Command|MacCtrl)\+)?((Shift|Alt|Ctrl|Command|MacCtrl)\+)?(F\d\d?)$/
@@ -46,9 +49,58 @@ export async function saveKeybindingsToSync(): Promise<void> {
     if (cmd.name && cmd.shortcut) keybindings[cmd.name] = cmd.shortcut
   })
 
-  await Store.sync('kb', { keybindings })
+  await Sync.save(Sync.SyncedEntryType.Keybindings, keybindings)
 }
 export const saveKeybindingsToSyncDebounced = Utils.debounce(saveKeybindingsToSync)
+
+export async function importSyncedKeybindings(entry: Sync.SyncedEntry) {
+  Logs.info('Keybindings.importSyncedKeybindings(): entry:', entry)
+
+  const prevKeybindings: Record<string, string> = {}
+  const commands = await browser.commands.getAll()
+  for (const k of commands as Command[]) {
+    if (k.name && k.shortcut) prevKeybindings[k.name] = k.shortcut
+  }
+
+  const keybindings = await Sync.getData<Record<string, string>>(entry)
+  if (!keybindings) {
+    Logs.err('Keybindings.importSyncedKeybindings(): No data')
+    return
+  }
+
+  await importKeybindings(keybindings)
+
+  Notifications.notify({
+    icon: '#icon_sync',
+    title: 'Keybindings have been successfully imported',
+    ctrl: translate('notif.undo_ctrl'),
+    callback: () => importKeybindings(prevKeybindings),
+  })
+}
+
+export async function importKeybindings(keybindings: Record<string, string>) {
+  Logs.info('Keybindings.importKeybindings(): keybindings:', keybindings)
+
+  const waiting = []
+  const commands = await browser.commands.getAll()
+  for (const k of commands as Command[]) {
+    if (!k.name) continue
+
+    const name = k.name
+    const shortcut = keybindings[k.name]
+
+    // Find conflicting shortcuts
+    const toReset = commands.find(k => k.shortcut === shortcut && k.name !== name)
+    if (toReset?.name) await browser.commands.update({ name: toReset.name, shortcut: '' })
+
+    // Set or remove shortcut
+    if (shortcut) waiting.push(browser.commands.update({ name, shortcut }))
+    else waiting.push(browser.commands.update({ name, shortcut: '' }))
+  }
+
+  await Promise.allSettled(waiting)
+  Keybindings.loadKeybindings()
+}
 
 /**
  * Reset addon's keybindings
