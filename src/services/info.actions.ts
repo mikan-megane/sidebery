@@ -50,6 +50,7 @@ export function getInstanceName(instance?: InstanceType): string {
   else if (instance === InstanceType.url) return 'url'
   else if (instance === InstanceType.search) return 'search'
   else if (instance === InstanceType.preview) return 'preview'
+  else if (instance === InstanceType.sync) return 'sync'
   return 'unknown'
 }
 
