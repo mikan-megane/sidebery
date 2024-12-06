@@ -20,6 +20,7 @@ export const enum InstanceType {
   url = 5,
   proxy = 6,
   preview = 7,
+  sync = 8,
 }
 
 export interface Message<T extends InstanceType, A extends ActionsKeys<T>> {
