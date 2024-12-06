@@ -333,6 +333,8 @@ onMounted(() => {
   SetupPage.registerEl('menu_editor_bookmarks_panel', menuEditorBookmarksPanelEl.value)
 })
 
+const saveDebounced = Utils.debounce(Menu.saveCtxMenu)
+
 function parseMenuConf(conf: MenuConf): MenuEditorGroup[] {
   let out: MenuEditorGroup[] = []
   let group: MenuEditorGroup | null = null
@@ -392,11 +394,11 @@ function moveSelected(e: WheelEvent, type: string): void {
 function resetTabsMenu(): void {
   Menu.tabsConf = Utils.cloneArray(TABS_MENU)
   state.tabsConf = Menu.tabsConf
-  Menu.saveCtxMenu()
+  saveDebounced(250)
 }
 function resetTabsPanelMenu(): void {
   Menu.tabsPanelConf = Utils.cloneArray(TABS_PANEL_MENU)
-  Menu.saveCtxMenu()
+  saveDebounced(250)
   state.tabsPanelConf = Menu.tabsPanelConf
 }
 
@@ -406,12 +408,12 @@ function resetTabsPanelMenu(): void {
 function resetBookmarksMenu(): void {
   Menu.bookmarksConf = Utils.cloneArray(BOOKMARKS_MENU)
   state.bookmarksConf = Menu.bookmarksConf
-  Menu.saveCtxMenu()
+  saveDebounced(250)
 }
 function resetBookmarksPanelMenu(): void {
   Menu.bookmarksPanelConf = Utils.cloneArray(BOOKMARKS_PANEL_MENU)
   state.bookmarksPanelConf = Menu.bookmarksPanelConf
-  Menu.saveCtxMenu()
+  saveDebounced(250)
 }
 
 /**
@@ -422,7 +424,7 @@ function restoreOption(type: string, opt: string): void {
   if (!menuConfig) return
 
   menuConfig.push(opt)
-  Menu.saveCtxMenu()
+  saveDebounced(250)
 }
 
 /**
@@ -449,7 +451,7 @@ function disableOpt(type: string, opt: string): void {
 
   normalizeMenu(menuConfig)
 
-  Menu.saveCtxMenu()
+  saveDebounced(250)
 }
 
 /**
@@ -466,7 +468,7 @@ function createSubMenu(type: string, opt: string): void {
     }
   }
 
-  Menu.saveCtxMenu()
+  saveDebounced(250)
 }
 
 /**
@@ -481,10 +483,7 @@ function onSubMenuNameInput(type: string, i: number, value: string): void {
 
   optConf.name = value
 
-  clearTimeout(menuNameTimeout)
-  menuNameTimeout = setTimeout(() => {
-    Menu.saveCtxMenu()
-  }, 500)
+  saveDebounced(1000)
 }
 
 /**
@@ -521,7 +520,7 @@ function downOpt(type: string, opt: string): void {
   }
 
   normalizeMenu(menuConfig)
-  Menu.saveCtxMenu(500)
+  saveDebounced(640)
 }
 
 /**
@@ -558,7 +557,7 @@ function upOpt(type: string, opt: string): void {
   }
 
   normalizeMenu(menuConfig)
-  Menu.saveCtxMenu(500)
+  saveDebounced(640)
 }
 
 /**
