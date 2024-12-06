@@ -254,18 +254,6 @@ export function recalcSidebarSize(): void {
   }, 500)
 }
 
-export function updateFontSize(): void {
-  const htmlEl = document.documentElement
-  if (Settings.state.fontSize === 'xxs') htmlEl.style.fontSize = '14.5px'
-  else if (Settings.state.fontSize === 'xs') htmlEl.style.fontSize = '15px'
-  else if (Settings.state.fontSize === 's') htmlEl.style.fontSize = '15.5px'
-  else if (Settings.state.fontSize === 'm') htmlEl.style.fontSize = '16px'
-  else if (Settings.state.fontSize === 'l') htmlEl.style.fontSize = '16.5px'
-  else if (Settings.state.fontSize === 'xl') htmlEl.style.fontSize = '17px'
-  else if (Settings.state.fontSize === 'xxl') htmlEl.style.fontSize = '17.5px'
-  else htmlEl.style.fontSize = '16px'
-}
-
 export function recalcTabsPanels(reset?: boolean): void {
   // Logs.info('Sidebar.recalcTabsPanels', reset)
   const pinnedTabIds: ID[] = []

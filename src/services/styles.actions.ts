@@ -679,7 +679,16 @@ export async function saveStylesToSync(): Promise<void> {
   if (Settings.state.sidebarCSS && Styles.sidebarCSS) value.sidebarCSS = Styles.sidebarCSS
   if (Settings.state.groupCSS && Styles.groupCSS) value.groupCSS = Styles.groupCSS
 
-  await Store.sync('styles', value)
+export function updateGlobalFontSize(): void {
+  const htmlEl = document.documentElement
+  if (Settings.state.fontSize === 'xxs') htmlEl.style.fontSize = '14.5px'
+  else if (Settings.state.fontSize === 'xs') htmlEl.style.fontSize = '15px'
+  else if (Settings.state.fontSize === 's') htmlEl.style.fontSize = '15.5px'
+  else if (Settings.state.fontSize === 'm') htmlEl.style.fontSize = '16px'
+  else if (Settings.state.fontSize === 'l') htmlEl.style.fontSize = '16.5px'
+  else if (Settings.state.fontSize === 'xl') htmlEl.style.fontSize = '17px'
+  else if (Settings.state.fontSize === 'xxl') htmlEl.style.fontSize = '17.5px'
+  else htmlEl.style.fontSize = '16px'
 }
 
 export function setupListeners(): void {

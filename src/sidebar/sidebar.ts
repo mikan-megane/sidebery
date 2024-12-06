@@ -98,7 +98,7 @@ async function main(): Promise<void> {
   Styles.reactive = reactive(Styles.reactive)
   initUpgrading(reactive)
 
-  Sidebar.updateFontSize()
+  Styles.updateGlobalFontSize()
 
   const app = createApp(SidebarRoot)
   app.mount('#root_container')

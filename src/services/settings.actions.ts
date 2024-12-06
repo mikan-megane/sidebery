@@ -201,7 +201,7 @@ export function updateSettingsFg(settings?: SettingsState | null): void {
     }
   }
   if (ctxMenuCtrIgnore) Menu.parseContainersRules()
-  if (fontSize) Sidebar.updateFontSize()
+  if (fontSize) Styles.updateGlobalFontSize()
 
   if (colorScheme) Styles.updateColorScheme()
 
