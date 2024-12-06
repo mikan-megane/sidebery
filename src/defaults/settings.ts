@@ -241,6 +241,8 @@ export const DEFAULT_SETTINGS: SettingsState = {
 
   // Sync
   syncName: '',
+  syncUseFirefox: true,
+  syncUseGoogleDrive: false,
   syncSaveSettings: false,
   syncSaveCtxMenu: false,
   syncSaveStyles: false,
