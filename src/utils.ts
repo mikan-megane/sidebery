@@ -172,14 +172,12 @@ export function uDate(ms: number, delimiter?: string, dayStartTime?: number): st
 export function dDate(dt: Date, delimiter?: string, dayStartTime?: number): string {
   if (!delimiter) delimiter = '.'
 
-  const ms = dt.getTime()
-
   if (dayStartTime) {
+    const ms = dt.getTime()
     if (ms > dayStartTime) return translate('time.today')
     if (ms > dayStartTime - 86400000) return translate('time.yesterday')
   }
 
-  // const dt = new Date(ms)
   const dtday = `${dt.getDate()}`.padStart(2, '0')
   const dtmth = `${dt.getMonth() + 1}`.padStart(2, '0')
   return `${dt.getFullYear()}${delimiter}${dtmth}${delimiter}${dtday}`
