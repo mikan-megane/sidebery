@@ -4,6 +4,7 @@ import {
   OldPanelConfig,
   SidebarConfig,
   Stored,
+  SyncPanelConfig,
   TabToPanelMoveRuleConfig,
   TabsPanelConfig,
 } from 'src/types'
@@ -14,6 +15,7 @@ import {
   BKM_ROOT_ID,
   BOOKMARKS_PANEL_CONFIG,
   HISTORY_PANEL_CONFIG,
+  SYNC_PANEL_CONFIG,
   TABS_PANEL_CONFIG,
 } from 'src/defaults'
 import { translate } from 'src/dict'
@@ -41,6 +43,7 @@ export async function loadSidebarConfig() {
       if (Utils.isTabsPanel(conf)) Utils.normalizeObject(conf, TABS_PANEL_CONFIG)
       else if (Utils.isBookmarksPanel(conf)) Utils.normalizeObject(conf, BOOKMARKS_PANEL_CONFIG)
       else if (Utils.isHistoryPanel(conf)) Utils.normalizeObject(conf, HISTORY_PANEL_CONFIG)
+      else if (Utils.isSyncPanel(conf)) Utils.normalizeObject(conf, SYNC_PANEL_CONFIG)
     }
 
     SidebarConfigRState.panels = storage.sidebar.panels
@@ -150,6 +153,10 @@ export function createHistoryPanelConfig(): HistoryPanelConfig {
   return Utils.cloneObject(HISTORY_PANEL_CONFIG)
 }
 
+export function createSyncPanelConfig(): SyncPanelConfig {
+  return Utils.cloneObject(SYNC_PANEL_CONFIG)
+}
+
 export function createDefaultSidebarConfig(): SidebarConfig {
   const defaultTabsPanelConfig = createTabsPanelConfig()
 
@@ -173,6 +180,7 @@ function updateSidebarConfig(newConfig?: SidebarConfig | null): void {
       if (Utils.isTabsPanel(conf)) Utils.normalizeObject(conf, TABS_PANEL_CONFIG)
       else if (Utils.isBookmarksPanel(conf)) Utils.normalizeObject(conf, BOOKMARKS_PANEL_CONFIG)
       else if (Utils.isHistoryPanel(conf)) Utils.normalizeObject(conf, HISTORY_PANEL_CONFIG)
+      else if (Utils.isSyncPanel(conf)) Utils.normalizeObject(conf, SYNC_PANEL_CONFIG)
     }
 
     SidebarConfigRState.panels = newConfig.panels
