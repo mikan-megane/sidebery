@@ -36,6 +36,7 @@ export interface SettingsState {
   subPanelRecentlyClosedBar: boolean
   subPanelBookmarks: boolean
   subPanelHistory: boolean
+  subPanelSync: boolean
 
   // Group page
   groupLayout: (typeof SETTINGS_OPTIONS.groupLayout)[number]

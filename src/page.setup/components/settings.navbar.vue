@@ -59,6 +59,10 @@ section(
       label="settings.sub_panel.history"
       v-model:value="Settings.state.subPanelHistory"
       @update:value="Settings.saveDebounced(150)")
+    ToggleField(
+      label="Sync sub-panel"
+      v-model:value="Settings.state.subPanelSync"
+      @update:value="Settings.saveDebounced(150)")
 
   InfoField(label="settings.nav_bar_enabled" :inactive="!availableBtns.length").-sub-title
   .sub-fields

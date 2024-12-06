@@ -33,6 +33,7 @@ export const DEFAULT_SETTINGS: SettingsState = {
   subPanelRecentlyClosedBar: true,
   subPanelBookmarks: true,
   subPanelHistory: true,
+  subPanelSync: false,
 
   // Group page
   groupLayout: 'grid',
