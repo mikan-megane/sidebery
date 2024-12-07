@@ -21,6 +21,18 @@
         .fav(v-for="fav in state.faviconsCache" :key="fav.tooltip" :title="fav.tooltip")
           img(:src="fav.favicon")
 
+  section(v-if="Settings.state.syncUseGoogleDrive")
+    h2 Google Drive Files
+
+    .storage-section
+      .storage-prop(v-for="info in state.googleDriveFiles" @click="openStoredData(info.name)")
+        .name {{info.name}}
+        .size {{info.sizeStr}}
+        .btn.-warn(@click.stop="deleteGoogleDriveFile(info.id)") {{translate('settings.storage_delete_prop')}}
+
+    .ctrls
+      .btn(@click="loadGoogleDriveFiles") Update
+
   FooterSection
 </template>
 
@@ -31,14 +43,17 @@ import * as Utils from 'src/utils'
 import { Stored } from 'src/types'
 import { Store } from 'src/services/storage'
 import { SetupPage } from 'src/services/setup-page'
+import { Settings } from 'src/services/settings'
 import * as Logs from 'src/services/logs'
 import FooterSection from './footer-section.vue'
+import { Google } from 'src/services/_services'
 
 const el = ref<HTMLElement | null>(null)
 const state = reactive({
   storedProps: [] as { name: string; size: number; sizeStr: string; len: string }[],
   storageOveral: '-',
   faviconsCache: [] as { favicon: string; tooltip: string }[],
+  googleDriveFiles: [] as { id: string; name: string; size: number; sizeStr: string }[],
 })
 
 onMounted(() => {
@@ -145,5 +160,28 @@ async function clearStorage(): Promise<void> {
     return Logs.err('clearStorage: Cannot clean storage', err)
   }
   browser.runtime.reload()
+}
+
+async function loadGoogleDriveFiles(): Promise<void> {
+  const files = await Google.Drive.listFiles({ fields: ['id', 'name', 'size'] })
+  if (!files) return
+
+  state.googleDriveFiles = files.map(f => {
+    let size = 0
+    if (f.size) size = parseInt(f.size)
+    if (isNaN(size)) size = 0
+    return {
+      id: f.id ?? '',
+      name: f.name ?? '???',
+      size: size,
+      sizeStr: Utils.bytesToStr(size),
+    }
+  })
+}
+
+async function deleteGoogleDriveFile(id: string) {
+  await Google.Drive.deleteFile(id)
+  await Utils.sleep(250)
+  await loadGoogleDriveFiles()
 }
 </script>
