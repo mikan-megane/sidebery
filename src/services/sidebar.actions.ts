@@ -4,9 +4,9 @@ import { PanelConfig, Panel, Stored, ItemBounds, Tab, Bookmark, DstPlaceInfo } f
 import { Notification, SidebarConfig, BookmarksPanelConfig, MediaState } from 'src/types'
 import { PanelType, TabsPanel, BookmarksPanel, ScrollBoxComponent, SubPanelType } from 'src/types'
 import { TabsPanelConfig, ItemBoundsType, DialogConfig } from 'src/types'
-import { BOOKMARKS_PANEL_STATE, TABS_PANEL_STATE, NOID, Err } from 'src/defaults'
+import { BOOKMARKS_PANEL_STATE, TABS_PANEL_STATE, NOID, Err, SYNC_PANEL_CONFIG } from 'src/defaults'
 import { BOOKMARKS_PANEL_CONFIG, TABS_PANEL_CONFIG, DEFAULT_CONTAINER_ID } from 'src/defaults'
-import { BKM_ROOT_ID, BKM_OTHER_ID } from 'src/defaults'
+import { BKM_ROOT_ID, BKM_OTHER_ID, SYNC_PANEL_STATE } from 'src/defaults'
 import { HISTORY_PANEL_CONFIG, HISTORY_PANEL_STATE, FOLDER_NAME_DATA_RE } from 'src/defaults'
 import { BKM_MENU_ID, BKM_MOBILE_ID, BKM_TLBR_ID } from 'src/defaults'
 import * as Logs from 'src/services/logs'
@@ -29,6 +29,7 @@ import { Notifications } from './notifications'
 import * as Popups from './popups'
 import { turnOffBeforeRequestHandler, turnOnBeforeRequestHandler } from './web-req.fg'
 import { createDefaultSidebarConfig } from './sidebar-config'
+import { Sync } from './_services'
 
 interface PanelElements {
   scrollBox: HTMLElement
@@ -146,6 +147,7 @@ function parseNav(config: SidebarConfig): void {
   Sidebar.hasTabs = false
   Sidebar.hasBookmarks = false
   Sidebar.hasHistory = false
+  Sidebar.hasSync = false
 
   for (const id of config.nav) {
     const panel = config.panels[id]
@@ -154,6 +156,7 @@ function parseNav(config: SidebarConfig): void {
     if (!Sidebar.hasTabs && panel.type === PanelType.tabs) Sidebar.hasTabs = true
     if (!Sidebar.hasBookmarks && panel.type === PanelType.bookmarks) Sidebar.hasBookmarks = true
     if (!Sidebar.hasHistory && panel.type === PanelType.history) Sidebar.hasHistory = true
+    if (!Sidebar.hasSync && panel.type === PanelType.sync) Sidebar.hasSync = true
   }
 }
 
@@ -756,6 +759,7 @@ export function recalcPanels(): void {
   Sidebar.hasTabs = false
   Sidebar.hasBookmarks = false
   Sidebar.hasHistory = false
+  Sidebar.hasSync = false
 
   for (const id of Sidebar.reactive.nav) {
     if ((id as string).startsWith('sp-')) continue
@@ -780,6 +784,7 @@ export function recalcPanels(): void {
     if (!Sidebar.hasTabs) Sidebar.hasTabs = panel.type === PanelType.tabs
     if (!Sidebar.hasBookmarks) Sidebar.hasBookmarks = panel.type === PanelType.bookmarks
     if (!Sidebar.hasHistory) Sidebar.hasHistory = panel.type === PanelType.history
+    if (!Sidebar.hasSync) Sidebar.hasSync = panel.type === PanelType.sync
   }
 
   Sidebar.panels = panels
@@ -819,6 +824,7 @@ export function createPanelFromConfig(config: PanelConfig): Panel | null {
   else if (config.type === PanelType.tabs) panelDefs = TABS_PANEL_STATE
   else if (config.type === PanelType.bookmarks) panelDefs = BOOKMARKS_PANEL_STATE
   else if (config.type === PanelType.history) panelDefs = HISTORY_PANEL_STATE
+  else if (config.type === PanelType.sync) panelDefs = SYNC_PANEL_STATE
   else return null
 
   const panel = Utils.recreateNormalizedObject(config as Panel, panelDefs)
@@ -846,6 +852,8 @@ function createPanelConfigFromPanel(srcPanel: Panel): PanelConfig {
     return Utils.recreateNormalizedObject(srcPanel, BOOKMARKS_PANEL_CONFIG)
   } else if (Utils.isHistoryPanel(srcPanel)) {
     return Utils.recreateNormalizedObject(srcPanel, HISTORY_PANEL_CONFIG)
+  } else if (Utils.isSyncPanel(srcPanel)) {
+    return Utils.recreateNormalizedObject(srcPanel, SYNC_PANEL_CONFIG)
   }
   throw Logs.err('Sidebar: createPanelConfigFromPanel: Unknown panel type')
 }
@@ -899,6 +907,7 @@ async function updateSidebar(newConfig?: SidebarConfig): Promise<void> {
   const prevHasTabsPanels = Sidebar.hasTabs
   const prevHasBookmarksPanels = Sidebar.hasBookmarks
   const prevHasHistoryPanel = Sidebar.hasHistory
+  const prevHasSyncPanel = Sidebar.hasSync
 
   let tabsSaveNeeded = false
   let tabsPanelId: ID | undefined
@@ -1007,6 +1016,9 @@ async function updateSidebar(newConfig?: SidebarConfig): Promise<void> {
   if (!prevHasHistoryPanel && Sidebar.hasHistory) History.load()
   else if (prevHasHistoryPanel && !Sidebar.hasHistory) History.unload()
 
+  if (!prevHasSyncPanel && Sidebar.hasSync) Sync.load()
+  else if (prevHasSyncPanel && !Sidebar.hasSync) Sync.unload()
+
   if (Sidebar.hasTabs) {
     // Get rearrangements for tabs
     const moves: [Tab, number][] = []
@@ -1096,8 +1108,9 @@ export function activatePanel(panelId: ID, loadPanels = true, keepSearching?: bo
   let loading: Promise<void> | undefined
   if (loadPanels && !panel.ready) {
     if (isTabsPanel) loading = Tabs.load()
-    if (panel.type === PanelType.bookmarks) loading = Bookmarks.load()
-    if (panel.type === PanelType.history) loading = History.load()
+    else if (panel.type === PanelType.bookmarks) loading = Bookmarks.load()
+    else if (panel.type === PanelType.history) loading = History.load()
+    else if (panel.type === PanelType.sync) loading = Sync.load()
   }
 
   if (prevPanel) Sidebar.lastActivePanelId = Sidebar.activePanelId
@@ -1118,7 +1131,8 @@ export function activatePanel(panelId: ID, loadPanels = true, keepSearching?: bo
   }
 
   if (isPrevTabsPanel) Sidebar.lastTabsPanelId = prevPanel.id
-  if (Utils.isHistoryPanel(prevPanel)) History.unloadAfter(30_000)
+  else if (Utils.isHistoryPanel(prevPanel)) History.unloadAfter(30_000)
+  else if (Utils.isSyncPanel(prevPanel)) Sync.unloadAfter(30_000)
 
   if (DnD.reactive.isStarted) DnD.reactive.dstPanelId = panelId
 
@@ -1562,6 +1576,7 @@ export function getActivePanelConfig(): PanelConfig | undefined {
   if (Utils.isTabsPanel(panel)) defaults = TABS_PANEL_CONFIG
   else if (Utils.isBookmarksPanel(panel)) defaults = BOOKMARKS_PANEL_CONFIG
   else if (Utils.isHistoryPanel(panel)) defaults = HISTORY_PANEL_CONFIG
+  else if (Utils.isSyncPanel(panel)) defaults = SYNC_PANEL_CONFIG
   if (!defaults) return
 
   return Utils.cloneObject(Utils.recreateNormalizedObject(panel, defaults))
@@ -1764,6 +1779,7 @@ export async function removePanel(panelId: ID, conf?: RemovingPanelConf): Promis
   if (Utils.isTabsPanel(panel) && !Sidebar.hasTabs) Tabs.unload()
   if (Utils.isBookmarksPanel(panel) && !Sidebar.hasBookmarks) Bookmarks.unload()
   if (Utils.isHistoryPanel(panel) && !Sidebar.hasHistory) History.unload()
+  if (Utils.isSyncPanel(panel) && !Sidebar.hasSync) Sync.unload()
 
   if (tabsSaveNeeded) {
     Tabs.list.forEach(t => Tabs.saveTabData(t.id))
@@ -1839,6 +1855,7 @@ export function createBookmarksPanel(conf?: Partial<BookmarksPanelConfig>): Book
   return panel
 }
 
+// TODO: Remove
 /**
  * Creates history-panel object.
  */
@@ -1894,6 +1911,7 @@ export function unloadPanelType(type: PanelType): void {
 
   if (type === PanelType.bookmarks) Bookmarks.unload()
   else if (type === PanelType.history) History.unload()
+  else if (type === PanelType.sync) Sync.unload()
 }
 
 export async function bookmarkTabsPanel(
@@ -2604,6 +2622,7 @@ export function openSubPanel(type: SubPanelType, hostPanel?: Panel) {
   Sidebar.subPanelType = type
 
   if (type === SubPanelType.History && !History.ready) History.load()
+  if (type === SubPanelType.Sync && !Sync.ready) Sync.load()
 
   if (Menu.isOpen) Menu.close()
   if (Selection.isSet()) Selection.resetSelection()
@@ -2615,6 +2634,8 @@ export function closeSubPanel() {
 
   if (Sidebar.subPanelType === SubPanelType.History && Sidebar.activePanelId !== 'history') {
     History.unloadAfter(30_000)
+  } else if (Sidebar.subPanelType === SubPanelType.Sync && Sidebar.activePanelId !== 'sync') {
+    Sync.unloadAfter(30_000)
   }
 
   Sidebar.subPanelActive = false
