@@ -182,6 +182,7 @@ const TABS_MENU_OPTS: Record<string, string> = {
   group: 'menu.tab.group',
   flatten: 'menu.tab.flatten',
   urlConf: 'menu.tab.url_conf',
+  syncTabs: 'menu.tab.sync',
   sortTabsByTitleAscending: 'menu.tab.sort_by_title_asc',
   sortTabsByTitleDescending: 'menu.tab.sort_by_title_des',
   sortTabsByUrlAscending: 'menu.tab.sort_by_url_asc',

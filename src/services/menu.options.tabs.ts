@@ -10,10 +10,10 @@ import { Settings } from 'src/services/settings'
 import { Sidebar } from 'src/services/sidebar'
 import { Menu } from 'src/services/menu'
 import { Containers } from 'src/services/containers'
-import { ItemInfo } from 'src/types/tabs'
 import * as Logs from './logs'
 import * as Popups from 'src/services/popups'
 import * as TabsSorting from 'src/services/tabs.fg.sorting'
+import { TabsSync } from './_services.fg'
 
 export const tabsMenuOptions: Record<string, () => MenuOption | MenuOption[] | undefined> = {
   undoRmTab: () => ({
@@ -639,6 +639,16 @@ export const tabsMenuOptions: Record<string, () => MenuOption | MenuOption[] | u
     }
     if (ids.length === 1 && !Tabs.byId[ids[0]]?.isParent) option.inactive = true
     if (!Settings.state.ctxMenuRenderInact && option.inactive) return
+    return option
+  },
+
+  syncTabs: () => {
+    const ids = Selection.get()
+    const option: MenuOption = {
+      label: translate('menu.tab.sync'),
+      icon: 'icon_sync',
+      onClick: () => TabsSync.sync(ids),
+    }
     return option
   },
 
