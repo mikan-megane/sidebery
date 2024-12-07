@@ -68,14 +68,21 @@
 .Settings .title-note
   position: relative
   width: 0
-  font-size: rem(16)
   color: var(--toolbar-fg)
   text-align: center
   white-space: pre
   opacity: .7
+.Settings h2 > .title-note
+  font-size: rem(16)
+.Settings .sub-title > .title-note
+  font-size: rem(14)
+  margin: 0 0 8px 8px
 
 .Settings .sub-title
   position: sticky
+  display: flex
+  justify-content: flex-start
+  align-items: flex-end
   top: 45px
   margin: 40px 8px 16px 2px
   color: var(--toolbar-fg)
