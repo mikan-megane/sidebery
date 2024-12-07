@@ -1,8 +1,7 @@
-import { Stored, StoredSync, Entries, IPCNodeInfo, SyncedData } from 'src/types'
+import { Stored, Entries, IPCNodeInfo } from 'src/types'
 import { Info } from './info'
 import * as IPC from './ipc'
 import * as Logs from './logs'
-import { Settings } from './settings'
 import { Windows } from './windows'
 
 type ChangeHandler = <K extends keyof Stored>(newVal: Stored[K]) => void
@@ -15,7 +14,6 @@ type StorageEntries = (Iterator<Stored> &
 export const Store = {
   set,
   setFromRemoteFg,
-  sync,
   storageChangeListener,
   onKeyChange,
 }
@@ -111,20 +109,4 @@ function onKeyChange<K extends keyof Stored, H extends ChangeHandlerG<K>>(key: K
   }
 
   changeHandlers[key] = cb as ChangeHandler
-}
-
-export async function sync(name: string, value: SyncedData): Promise<void> {
-  const keys = Object.keys(value)
-  const profileId = await Info.getProfileId()
-  const syncPropName = profileId + '::' + name
-
-  if (keys.length) {
-    const time = Date.now()
-    const ver = Info.reactive.addonVer
-    await browser.storage.sync.set<StoredSync>({
-      [syncPropName]: { value, time, name: Settings.state.syncName, ver },
-    })
-  } else {
-    await browser.storage.sync.remove(syncPropName)
-  }
 }
