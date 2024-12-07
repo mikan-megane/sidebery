@@ -48,33 +48,8 @@ export interface Stored {
   expandedBookmarks?: ID[][] // DEPR
   expandedBookmarkFolders?: Record<ID, Record<ID, boolean>>
   bookmarksRecentFolders?: ID[]
-}
 
-export interface SyncedData {
-  settings?: SettingsState
-
-  contextMenu?: MenuConfs
-  tabsMenu?: ContextMenuConfig_v4 // DEPR
-  bookmarksMenu?: ContextMenuConfig_v4 // DEPR
-  tabsPanelMenu?: ContextMenuConfig_v4 // DEPR
-  bookmarksPanelMenu?: ContextMenuConfig_v4 // DEPR
-
-  cssVars?: CssVars // DEPR
-  sidebarCSS?: string
-  groupCSS?: string
-
-  keybindings?: { [name: string]: string }
-}
-
-export interface StoredSyncValue {
-  ver?: string
-  name: string
-  time: number
-  value: SyncedData
-}
-
-export interface StoredSync {
-  [name: string]: StoredSyncValue
+  googleDriveFileIds?: Record<string, string | null>
 }
 
 export type StorageChanges = {
