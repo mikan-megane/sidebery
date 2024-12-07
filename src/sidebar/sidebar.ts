@@ -26,6 +26,7 @@ import SidebarRoot from './sidebar.vue'
 import { Snapshots } from 'src/services/snapshots'
 import { updateWebReqHandlers } from 'src/services/web-req.fg'
 import { initUpgrading, showUpgradingScreen } from 'src/services/upgrading'
+import { Sync } from 'src/services/_services'
 
 async function main(): Promise<void> {
   Info.setInstanceType(InstanceType.sidebar)
@@ -96,6 +97,7 @@ async function main(): Promise<void> {
   History.initHistory(reactive)
   Search.reactive = reactive(Search.reactive)
   Styles.reactive = reactive(Styles.reactive)
+  Sync.initSync(reactive)
   initUpgrading(reactive)
 
   Styles.updateGlobalFontSize()
@@ -121,6 +123,7 @@ async function main(): Promise<void> {
   const actPanel = Sidebar.panelsById[Sidebar.activePanelId]
   const initBookmarks = !Settings.state.loadBookmarksOnDemand || Utils.isBookmarksPanel(actPanel)
   const initHistory = !Settings.state.loadHistoryOnDemand || Utils.isHistoryPanel(actPanel)
+  const initSync = Utils.isSyncPanel(actPanel)
 
   IPC.connectTo(InstanceType.bg)
 
@@ -128,6 +131,7 @@ async function main(): Promise<void> {
   else await Tabs.loadInShadowMode()
   if (Sidebar.hasBookmarks && initBookmarks) Bookmarks.load()
   if (Sidebar.hasHistory && initHistory) History.load()
+  if (Sidebar.hasSync && initSync) Sync.load()
 
   updateWebReqHandlers()
 
@@ -150,7 +154,7 @@ async function main(): Promise<void> {
     return {
       IPC, Info, Settings, Containers, Sidebar, Windows, Favicons,
       Bookmarks, Tabs, DnD, Permissions, Notifications, History,
-      Search, Styles, Menu, Snapshots,
+      Sync, Search, Styles, Menu, Snapshots,
     }
   }
 
