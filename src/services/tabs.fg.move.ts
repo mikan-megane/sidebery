@@ -169,6 +169,7 @@ export async function move(
   let panelIsChanged = false
   let isActive = false
   let isMediaActive = false
+  let isUpdated = false
   let mediaPrevPanelId
   let srcPanelId
   for (const tab of tabs) {
@@ -200,10 +201,16 @@ export async function move(
     if (dst.panelId !== undefined && tab.panelId !== dst.panelId) {
       if (!panelIsChanged) panelIsChanged = true
       srcPanelId = tab.panelId
+
+      // Check if the media state of the panels needs to be updated
       if (!isMediaActive && (tab.audible || tab.mutedInfo?.muted || tab.mediaPaused)) {
         isMediaActive = true
         mediaPrevPanelId = tab.panelId
       }
+
+      // Check if the "updated" state of the panels needs to be updated
+      if (!isUpdated && tab.updated) isUpdated = true
+
       tab.panelId = dst.panelId
     }
 
@@ -236,6 +243,16 @@ export async function move(
   if (isMediaActive && mediaPrevPanelId && dst.panelId) {
     Sidebar.updateMediaStateOfPanelDebounced(100, mediaPrevPanelId)
     Sidebar.updateMediaStateOfPanelDebounced(100, dst.panelId)
+  }
+
+  // Recalc "updated" badge of panels
+  if (isUpdated) {
+    if (srcPanelId) {
+      Sidebar.updateUpdatedStateOfPanel(Sidebar.panelsById[srcPanelId])
+    }
+    if (dst.panelId && dst.panelId !== srcPanelId) {
+      Sidebar.updateUpdatedStateOfPanel(Sidebar.panelsById[dst.panelId])
+    }
   }
 
   // Switch panel
@@ -408,6 +425,7 @@ export async function moveToThisWin(
   const dstParent = Tabs.byId[dst.parentId ?? NOID]
   const panelIsActive = panel.id === Sidebar.activePanelId
   const groups: Tab[] = []
+  const updatedTabIds: ID[] = []
 
   let updMediaBadges = false
   let updNativeTabsVisibility = Settings.state.hideInact && !panelIsActive
@@ -455,6 +473,11 @@ export async function moveToThisWin(
       updMediaBadges = true
     }
 
+    // Collect ids of tabs with updated title
+    if (tab.updated) {
+      updatedTabIds.push(tab.id)
+    }
+
     // Set tab to activate
     if (panelIsActive && activateTabId === NOID && tab.active) {
       activateTabId = tab.id
@@ -499,9 +522,9 @@ export async function moveToThisWin(
   Sidebar.recalcTabsPanels()
   if (!probeTab.pinned) Sidebar.recalcVisibleTabs(panel.id)
 
-  // Remove updated flag
-  if (Utils.isTabsPanel(panel) && panel.updatedTabs.length) {
-    panel.updatedTabs = panel.updatedTabs.filter(id => !tabIds.includes(id))
+  // Recalc updated flag
+  if (Utils.isTabsPanel(panel) && updatedTabIds.length) {
+    panel.updatedTabs.push(...updatedTabIds)
     panel.reactive.updated = panel.updatedTabs.length > 0
   }
 

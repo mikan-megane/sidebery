@@ -2747,6 +2747,16 @@ export function updateMediaStateOfPanel(panelId: ID, tab?: Tab) {
   else if (Tabs.ready) panel.reactive.mediaState = MediaState.Silent
 }
 
+export function updateUpdatedStateOfPanel(panel?: Panel) {
+  if (!Utils.isTabsPanel(panel)) return
+
+  const updatedTabIds: ID[] = []
+  panel.pinnedTabs.forEach(t => t.updated && updatedTabIds.push(t.id))
+  panel.tabs.forEach(t => t.updated && updatedTabIds.push(t.id))
+  panel.updatedTabs = updatedTabIds
+  panel.reactive.updated = updatedTabIds.length > 0
+}
+
 export function getRecentTabsPanelId(): ID {
   let panelId = Sidebar.activePanelId
   let panel: Panel | undefined = Sidebar.panelsById[panelId]
