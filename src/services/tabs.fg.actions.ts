@@ -2408,7 +2408,11 @@ export function tabFlip() {
   }
 
   const history = Tabs.getActiveTabsHistory(panelId)
-  const prevTabId = Utils.findLast(history.actTabs, id => id !== Tabs.activeId)
+  const prevTabId = Utils.findLast(history.actTabs, id => {
+    const tab = Tabs.byId[id]
+    if (Settings.state.tabsSecondClickActPrevNoUnload && tab?.discarded) return false
+    return id !== Tabs.activeId
+  })
   if (prevTabId !== undefined) browser.tabs.update(prevTabId, { active: true })
 }
 

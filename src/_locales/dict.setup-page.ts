@@ -4641,6 +4641,9 @@ Przykłady: "*", "ctrl+$", "ctrl+alt+g"`,
     zh_TW: '僅在當前面板中',
     ja: 'アクティブなパネルのみ',
   },
+  'settings.tabs_second_click_act_prev_no_unload': {
+    en: 'Skip unloaded tabs',
+  },
   'settings.activate_on_mouseup': {
     en: 'Activate tab on mouse button release',
     de: 'Aktiviere Tab beim Loslassen der Maustaste',

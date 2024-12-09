@@ -216,6 +216,7 @@ export interface SettingsState {
   tabDoubleClick: (typeof SETTINGS_OPTIONS.tabDoubleClick)[number]
   tabsSecondClickActPrev: boolean
   tabsSecondClickActPrevPanelOnly: boolean
+  tabsSecondClickActPrevNoUnload: boolean
   shiftSelAct: boolean
   activateOnMouseUp: boolean
   tabLongLeftClick: (typeof SETTINGS_OPTIONS.tabLongLeftClick)[number]

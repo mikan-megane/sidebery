@@ -213,6 +213,7 @@ export const DEFAULT_SETTINGS: SettingsState = {
   tabDoubleClick: 'none',
   tabsSecondClickActPrev: false,
   tabsSecondClickActPrevPanelOnly: false,
+  tabsSecondClickActPrevNoUnload: false,
   shiftSelAct: true,
   activateOnMouseUp: false,
   tabLongLeftClick: 'none',
