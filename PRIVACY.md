@@ -15,7 +15,7 @@ You can choose what data will be synchronized (hence, sent to a third-party prov
 - Custom styles for Sidebery
 - Selected tabs:
   - Data that will be sent: Title, URL, site icon, container configs, custom color/title + technical data.
-  - You can check what data is used [here](https://github.com/mbnuqw/sidebery/blob/7b2e359aa357d421e6c534d9b0c8dad1c7efa8a6/src/services/tabs.fg.sync.ts#L16).
+  - You can check what data is used [here](https://github.com/mbnuqw/sidebery/blob/v5/src/services/tabs.fg.sync.ts).
 
 ## Email
 
