@@ -102,7 +102,7 @@ void (async function main() {
   IPC.onDisconnected(InstanceType.sidebar, winId => {
     Logs.info('IPC.onDisconnected sidebar', winId)
 
-    if (Windows.byId[winId]) {
+    if (Settings.state.markWindow && Windows.byId[winId]) {
       browser.windows.update(winId, { titlePreface: '' })
     }
   })
