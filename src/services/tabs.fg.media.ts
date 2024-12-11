@@ -100,7 +100,7 @@ export async function pauseTabMedia(id?: ID): Promise<void> {
 
   browser.tabs
     .executeScript(tab.id, {
-      file: '../injections/pauseMedia.js',
+      file: '../injections/pause-media.js',
       runAt: 'document_start',
       allFrames: true,
     })
@@ -133,7 +133,7 @@ export async function playTabMedia(id?: ID): Promise<void> {
 
   browser.tabs
     .executeScript(tab.id, {
-      file: '../injections/playMedia.js',
+      file: '../injections/play-media.js',
       runAt: 'document_start',
       allFrames: true,
     })
@@ -164,7 +164,7 @@ export async function pauseTabsMediaOfPanel(panelId: ID): Promise<void> {
   if (!Utils.isTabsPanel(panel)) return
 
   const injectionConfig: browser.tabs.ExecuteOpts = {
-    file: '../injections/pauseMedia.js',
+    file: '../injections/pause-media.js',
     runAt: 'document_start',
     allFrames: true,
   }
@@ -223,7 +223,7 @@ export async function playTabsMediaOfPanel(panelId: ID): Promise<void> {
   if (!Utils.isTabsPanel(panel)) return
 
   const injectionConfig: browser.tabs.ExecuteOpts = {
-    file: '../injections/playMedia.js',
+    file: '../injections/play-media.js',
     runAt: 'document_start',
     allFrames: true,
   }
@@ -272,7 +272,7 @@ export async function pauseAllAudibleTabsMedia(): Promise<void> {
   }
 
   const injectionConfig: browser.tabs.ExecuteOpts = {
-    file: '../injections/pauseMedia.js',
+    file: '../injections/pause-media.js',
     runAt: 'document_start',
     allFrames: true,
   }
@@ -305,7 +305,7 @@ export async function playAllPausedTabsMedia(): Promise<void> {
   }
 
   const injectionConfig: browser.tabs.ExecuteOpts = {
-    file: '../injections/playMedia.js',
+    file: '../injections/play-media.js',
     runAt: 'document_start',
     allFrames: true,
   }

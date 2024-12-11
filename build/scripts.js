@@ -309,8 +309,8 @@ async function main() {
     const buildingBundledScripts = esbuild.build({
       ...PROD_ESBUILD_BASE_CONF,
       entryPoints: [
-        'src/injections/playMedia.ts',
-        'src/injections/pauseMedia.ts',
+        'src/injections/play-media.ts',
+        'src/injections/pause-media.ts',
         'src/injections/group.ts',
         'src/injections/url.ts',
       ],
