@@ -115,7 +115,7 @@ async function main(): Promise<void> {
   Containers.setupContainersListeners()
   Sidebar.setupListeners()
 
-  if (Settings.state.sidebarCSS) Styles.loadCustomSidebarCSS()
+  Styles.loadCustomSidebarCSS()
   Styles.initColorScheme()
 
   await Sidebar.loadPanels()

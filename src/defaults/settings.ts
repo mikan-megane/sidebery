@@ -177,8 +177,6 @@ export const DEFAULT_SETTINGS: SettingsState = {
   theme: 'proton',
   density: 'default',
   colorScheme: 'ff',
-  sidebarCSS: false,
-  groupCSS: false,
 
   // Snapshots
   snapNotify: true,

@@ -180,8 +180,6 @@ export interface SettingsState {
   density: (typeof SETTINGS_OPTIONS.density)[number]
   colorScheme: (typeof SETTINGS_OPTIONS.colorScheme)[number]
   style?: string // DEPR
-  sidebarCSS: boolean
-  groupCSS: boolean
 
   // Snapshots
   snapNotify: boolean
