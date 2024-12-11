@@ -44,7 +44,7 @@ import { Menu } from 'src/services/menu'
 import { Tabs } from 'src/services/tabs.fg'
 import { Mouse } from 'src/services/mouse'
 import { Containers } from 'src/services/containers'
-import { CONTAINER_ID, DOMAIN_RE, NEWID } from 'src/defaults'
+import { CONTAINER_ID, DOMAIN_RE, INITIAL_TITLE_RE, NEWID } from 'src/defaults'
 import * as Favicons from 'src/services/favicons.fg'
 import * as Utils from 'src/utils'
 import * as Logs from 'src/services/logs'
@@ -328,6 +328,9 @@ async function applyBtnRules(btn?: NewTabBtn): Promise<void> {
     else if (tab.cookieStoreId !== targetContainerId) {
       const info: ItemInfo = Utils.cloneObject(tab)
       if (btn?.url) info.url = btn.url
+      else if (info.url === 'about:blank' && tab.title && INITIAL_TITLE_RE.test(tab.title)) {
+        info.url = 'https://' + tab.title
+      }
       if (info.url === 'about:blank') info.url = 'about:newtab'
       toReopen.push(info)
     }
