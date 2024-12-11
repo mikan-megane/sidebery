@@ -270,6 +270,26 @@ function onMouseDown(e: MouseEvent): void {
       }
     }
 
+    if (tab.pinned) {
+      if (Settings.state.tabPinnedMiddleClick === 'discard') {
+        Tabs.discardTabs(selectedTabs)
+        return
+      } else if (Settings.state.tabPinnedMiddleClick === 'close') {
+        if (shouldBeConvertedToGroup()) convertToGroup()
+        else Tabs.removeTabs(selectedTabs)
+        return
+      } else if (Settings.state.tabPinnedMiddleClick === 'discard_or_close') {
+        discardOrCloseTabs(selectedTabs)
+        return
+      } else if (Settings.state.tabPinnedMiddleClick === 'duplicate') {
+        Tabs.duplicateTabs([tab.id])
+        return
+      } else if (Settings.state.tabPinnedMiddleClick === 'unpin') {
+        Tabs.unpinTabs([tab.id])
+        return
+      }
+    }
+
     if (Settings.state.multipleMiddleClose && Settings.state.tabMiddleClick === 'close') {
       Mouse.startMultiSelection(e, tab.id, selectedTabs)
     } else {
@@ -330,6 +350,7 @@ function onMouseUp(e: MouseEvent): void {
     const preselectedTabs = Mouse.stopMultiSelection()
 
     if (
+      tab.pinned ||
       (e.ctrlKey && Settings.state.tabMiddleClickCtrl !== 'none') ||
       (e.shiftKey && Settings.state.tabMiddleClickShift !== 'none')
     ) {
