@@ -374,6 +374,22 @@ section(ref="el")
       :or="0"
       :inactive="!Settings.state.previewTabs || Settings.state.previewTabsMode === 'i'"
       @update:value="Settings.saveDebounced(500)")
+
+    NumField.-inline(
+      label="settings.tabs.preview_title"
+      v-model:value="Settings.state.previewTabsTitle"
+      :or="0"
+      :allowNegative="false"
+      :inactive="!Settings.state.previewTabs || Settings.state.previewTabsMode === 'i'"
+      @update:value="Settings.saveDebounced(500)")
+    NumField.-inline(
+      label="settings.tabs.preview_url"
+      v-model:value="Settings.state.previewTabsUrl"
+      :or="0"
+      :allowNegative="false"
+      :inactive="!Settings.state.previewTabs || Settings.state.previewTabsMode === 'i'"
+      @update:value="Settings.saveDebounced(500)")
+
     SelectField(
       label="settings.tabs.preview_side"
       optLabel="settings.tabs.preview_side_"

@@ -39,7 +39,6 @@ export const state = {
 }
 
 const approxFFToolbarsHeight = 70
-const approxPopupHeaderHeight = 40
 const inlinePreviewConf = {
   format: 'jpeg' as const,
   quality: 90,
@@ -194,6 +193,8 @@ function getTabPreviewInitData(tabId: ID, y?: number): TabPreviewInitData {
     offsetX: Settings.state.previewTabsInPageOffsetX,
     atTheLeft: Settings.state.previewTabsSide === 'right',
     rCrop: Settings.state.previewTabsCropRight,
+    tMax: Settings.state.previewTabsTitle,
+    uMax: Settings.state.previewTabsUrl,
   }
 }
 
@@ -298,13 +299,17 @@ export async function showPreveiwPopupWindow(tabId: ID, y?: number) {
     winId: Windows.id.toString(),
     title: tab.title,
     url: tab.url,
+    tMax: Settings.state.previewTabsTitle.toString(),
+    uMax: Settings.state.previewTabsUrl.toString(),
   }
 
   const pageWidth = currentWinWidth - Sidebar.width
+  const approxPageHeight = currentWinHeight - approxFFToolbarsHeight
 
   // Calc preview height
-  let previewHeight = Math.round((currentWinHeight / pageWidth) * previewWidth)
+  let previewHeight = Math.round((approxPageHeight / pageWidth) * previewWidth)
   if (previewHeight > previewWidth) previewHeight = previewWidth
+  previewData.ph = previewHeight.toString()
 
   // Calc preview scale
   const w = pageWidth / previewWidth
@@ -313,7 +318,8 @@ export async function showPreveiwPopupWindow(tabId: ID, y?: number) {
   if (scale > window.devicePixelRatio) scale = window.devicePixelRatio
 
   // Append height of header to previewHeight
-  previewHeight += approxPopupHeaderHeight
+  if (Settings.state.previewTabsTitle > 0) previewHeight += 22
+  if (Settings.state.previewTabsUrl > 0) previewHeight += 18
 
   previewData.scale = String(scale)
 

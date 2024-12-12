@@ -3472,6 +3472,12 @@ Przykłady: "*", "ctrl+$", "ctrl+alt+g"`,
     zh_TW: '預覽寬度（px）',
     ja: 'プレビューの幅（px）',
   },
+  'settings.tabs.preview_title': {
+    en: 'Max number of title lines',
+  },
+  'settings.tabs.preview_url': {
+    en: 'Max number of URL lines',
+  },
   'settings.tabs.preview_side': {
     en: 'Sidebar side (needed to correctly calculate position of the popup)',
     de: 'Position der Seitenleiste (Wird benötigt, um die Position des Popups korrekt zu berechnen)',

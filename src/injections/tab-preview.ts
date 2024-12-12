@@ -19,6 +19,8 @@ export interface TabPreviewInitData {
   offsetX: number
   atTheLeft: boolean
   rCrop: number
+  tMax: number
+  uMax: number
 }
 
 const MARGIN = 2
@@ -267,37 +269,57 @@ async function main() {
 `
 
   // Create title element
-  state.titleEl = document.createElement('div')
-  state.titleEl.classList.add('title')
-  headerEl.appendChild(state.titleEl)
-  state.titleEl.style.cssText = `
+  const maxTitleLines = initData.tMax
+  if (maxTitleLines > 0) {
+    state.titleEl = document.createElement('div')
+    state.titleEl.classList.add('title')
+    headerEl.appendChild(state.titleEl)
+    state.titleEl.style.cssText = `
     position: relative;
     margin: 6px 8px 4px;
     padding: 0;
     font-size: .875em;
     font-weight: 700;
     line-height: 1.2em;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-`
+    overflow: hidden;`
+    if (maxTitleLines === 1) {
+      state.titleEl.style.cssText += `
+      text-overflow: ellipsis;
+      white-space: nowrap;`
+    } else {
+      state.titleEl.style.cssText += `
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: ${maxTitleLines};`
+    }
+  }
 
   // Create url element
-  state.urlEl = document.createElement('div')
-  state.urlEl.classList.add('url')
-  headerEl.appendChild(state.urlEl)
-  state.urlEl.style.cssText = `
-    position: relative;
-    margin: 0 8px 8px;
-    padding: 0;
-    font-size: .8125em;
-    font-weight: 400;
-    line-height: 1.2em;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    opacity: .75;
-`
+  const maxUrlLines = initData.uMax
+  if (maxUrlLines > 0) {
+    state.urlEl = document.createElement('div')
+    state.urlEl.classList.add('url')
+    headerEl.appendChild(state.urlEl)
+    state.urlEl.style.cssText = `
+      position: relative;
+      margin: ${maxTitleLines > 0 ? '0' : '8px'} 8px 8px;
+      padding: 0;
+      font-size: .8125em;
+      font-weight: 400;
+      line-height: 1.2em;
+      overflow: hidden;
+      opacity: ${maxTitleLines ? '.75' : '1'};`
+    if (maxUrlLines === 1) {
+      state.urlEl.style.cssText += `
+      text-overflow: ellipsis;
+      white-space: nowrap;`
+    } else {
+      state.urlEl.style.cssText += `
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: ${maxUrlLines};`
+    }
+  }
 
   // Create preview box element
   const previewBoxEl = document.createElement('div')

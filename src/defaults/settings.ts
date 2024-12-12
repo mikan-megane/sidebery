@@ -140,6 +140,8 @@ export const DEFAULT_SETTINGS: SettingsState = {
   previewTabsPageModeFallback: 'w',
   previewTabsInlineHeight: 70,
   previewTabsPopupWidth: 280,
+  previewTabsTitle: 2,
+  previewTabsUrl: 1,
   previewTabsSide: 'right',
   previewTabsDelay: 500,
   previewTabsFollowMouse: true,

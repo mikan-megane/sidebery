@@ -6,6 +6,7 @@ const state = {
   tabId: NOID,
   winId: NOID,
   unloaded: false,
+  previewHeight: 0,
 
   titleEl: null as HTMLElement | null,
   urlEl: null as HTMLElement | null,
@@ -40,6 +41,35 @@ async function main() {
   const scale = parseFloat(params.get('scale') ?? '')
   if (!isNaN(scale)) previewConf.scale = scale
 
+  const previewHeight = parseFloat(params.get('ph') ?? '')
+  if (!isNaN(previewHeight)) state.previewHeight = previewHeight
+
+  let tMax = parseInt(params.get('tMax') ?? '')
+  if (isNaN(tMax)) tMax = 2
+  if (state.titleEl) {
+    if (tMax > 0) {
+      setLinesLimitStyles(state.titleEl, tMax)
+    } else {
+      state.titleEl.style.display = 'none'
+      if (state.urlEl) {
+        state.urlEl.style.paddingTop = '8px'
+        state.urlEl.style.opacity = '1'
+      }
+    }
+  }
+
+  let uMax = parseInt(params.get('uMax') ?? '')
+  if (isNaN(uMax)) uMax = 1
+  if (state.urlEl) {
+    if (uMax > 0) {
+      setLinesLimitStyles(state.urlEl, uMax)
+    } else {
+      state.urlEl.style.display = 'none'
+    }
+  }
+
+  updateWindowHeight()
+
   state.unloaded = !!params.get('off')
   if (!state.unloaded) {
     const preview = await browser.tabs.captureTab(state.tabId, previewConf).catch(() => '')
@@ -57,6 +87,16 @@ async function main() {
   IPC.setInstanceType(InstanceType.preview)
   IPC.connectTo(InstanceType.sidebar, state.winId)
   IPC.registerActions({ updatePreview, setY: () => {}, close: () => {} })
+}
+
+function setLinesLimitStyles(el: HTMLElement, maxCount: number) {
+  if (maxCount === 1) {
+    el.style.whiteSpace = 'nowrap'
+  } else {
+    el.style.display = '-webkit-box'
+    el.style.webkitBoxOrient = 'vertical'
+    el.style.webkitLineClamp = maxCount.toString()
+  }
 }
 
 let previewElN = 0
@@ -82,6 +122,8 @@ async function updatePreview(tabId: ID, title: string, url: string, unloaded: bo
   if (state.titleEl) state.titleEl.innerText = title
   if (state.urlEl) state.urlEl.innerText = url
 
+  updateWindowHeight()
+
   state.tabId = tabId
   state.unloaded = unloaded
 
@@ -91,6 +133,17 @@ async function updatePreview(tabId: ID, title: string, url: string, unloaded: bo
   } else {
     setPreview('')
   }
+}
+
+function updateWindowHeight() {
+  if (!state.titleEl || !state.urlEl || !state.previewHeight) return
+
+  const tHeight = state.titleEl.offsetHeight
+  const uHeight = state.urlEl.offsetHeight
+
+  browser.windows.update(browser.windows.WINDOW_ID_CURRENT, {
+    height: tHeight + uHeight + state.previewHeight,
+  })
 }
 
 main()

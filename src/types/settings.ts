@@ -139,6 +139,8 @@ export interface SettingsState {
   previewTabsPageModeFallback: (typeof SETTINGS_OPTIONS.previewTabsPageModeFallback)[number]
   previewTabsInlineHeight: number
   previewTabsPopupWidth: number
+  previewTabsTitle: number
+  previewTabsUrl: number
   previewTabsSide: (typeof SETTINGS_OPTIONS.previewTabsSide)[number]
   previewTabsDelay: number
   previewTabsFollowMouse: boolean
