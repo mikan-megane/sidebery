@@ -200,7 +200,7 @@ export function updateSettingsFg(settings?: SettingsState | null): void {
     Tabs.list.forEach(t => Tabs.updateTooltip(t.id))
   }
 
-  if (previewTabsMode) {
+  if (previewTabs || previewTabsMode) {
     Preview.resetMode()
   }
 
