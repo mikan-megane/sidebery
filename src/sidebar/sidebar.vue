@@ -82,19 +82,16 @@
             svg: use(xlink:href="#icon_trash")
           .tool-btn.-bookmarks(
             v-if="Settings.state.subPanelBookmarks"
-            :data-disabled="!Utils.isTabsPanel(activePanel)"
             @dragleave="onBSPBDragLeave"
             @click="Sidebar.openSubPanel(SubPanelType.Bookmarks, activePanel)")
             .dnd-layer(data-dnd-type="bspb")
             svg: use(xlink:href="#icon_bookmarks")
           .tool-btn(
             v-if="Settings.state.subPanelHistory"
-            :data-disabled="!Utils.isTabsPanel(activePanel)"
             @click="Sidebar.openSubPanel(SubPanelType.History, activePanel)")
             svg: use(xlink:href="#icon_clock")
           .tool-btn(
             v-if="Settings.state.subPanelSync"
-            :data-disabled="!Utils.isTabsPanel(activePanel)"
             @click="Sidebar.openSubPanel(SubPanelType.Sync, activePanel)")
             svg: use(xlink:href="#icon_sync")
 
