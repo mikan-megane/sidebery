@@ -1,11 +1,11 @@
 <template lang="pug">
-.SyncEntry
+.SyncEntry(:data-loading="entry.loading")
   .sync-header
+    .type(:title="title") {{title}}
     .info
-      .type(:title="title") {{title}}
       .profile(v-if="entry.sameProfile") This profile
       .profile(v-else :title="entry.profileName") {{entry.profileName}}
-  .date-time {{entry.dateYYYYMMDD}} - {{entry.timeHHMM}}
+      .date-time {{entry.dateYYYYMMDD}} - {{entry.timeHHMM}}
   .sync-content
     .sync-tab(
       v-for="t in entry.tabs"
@@ -23,13 +23,18 @@
           img.fav-icon(v-else :src="t.favicon" @error="onFavError(t)" draggable="false")
         .title {{(t.customTitle ?? t.title)}}
         .containerMark(v-if="t.containerId")
-    .btn(v-if="entry.type !== Sync.SyncedEntryType.Tabs" @click="onMainAction(entry)") Import
-    .btn(@click="onDelete(entry)") Delete
+    .btn(
+      v-if="entry.type !== Sync.SyncedEntryType.Tabs"
+      :class="{'-inactive': entry.loading}"
+      @click="onMainAction(entry)") Import
+    .btn(
+      :class="{'-inactive': entry.loading}"
+      @click="onDelete(entry)") Delete
 
 </template>
 
 <script lang="ts" setup>
-import { Logs, Sync } from 'src/services/_services'
+import { Logs, Sync, Utils } from 'src/services/_services'
 import { SyncedEntry } from 'src/services/sync'
 import { Keybindings } from 'src/services/keybindings'
 import { Menu } from 'src/services/menu'
@@ -58,26 +63,46 @@ function getTypeTitle() {
 async function onMainAction(entry: SyncedEntry) {
   Logs.info('panel.sync.entry.vue: onMainAction')
 
-  // TODO: Show some progress
+  if (entry.loading) return
 
-  if (entry.type === Sync.SyncedEntryType.Settings) {
-    await Settings.importSyncedSettings(entry)
+  entry.loading = true
+
+  await Utils.sleep(500)
+
+  try {
+    if (entry.type === Sync.SyncedEntryType.Settings) {
+      await Sync.q.add(Settings.importSyncedSettings, entry)
+    }
+    if (entry.type === Sync.SyncedEntryType.CtxMenu) {
+      await Sync.q.add(Menu.importSyncedCtxMenu, entry)
+    }
+    if (entry.type === Sync.SyncedEntryType.Keybindings) {
+      await Sync.q.add(Keybindings.importSyncedKeybindings, entry)
+    }
+    if (entry.type === Sync.SyncedEntryType.Styles) {
+      await Sync.q.add(Styles.importSyncedStyles, entry)
+    }
+  } catch (err) {
+    Logs.err('onMainAction', err, Utils.clone(entry))
   }
-  if (entry.type === Sync.SyncedEntryType.CtxMenu) {
-    await Menu.importSyncedCtxMenu(entry)
-  }
-  if (entry.type === Sync.SyncedEntryType.Keybindings) {
-    await Keybindings.importSyncedKeybindings(entry)
-  }
-  if (entry.type === Sync.SyncedEntryType.Styles) {
-    await Styles.importSyncedStyles(entry)
-  }
+
+  entry.loading = false
 }
 
 async function onDelete(entry: SyncedEntry) {
   Logs.info('panel.sync.entry.vue: onDelete')
 
-  await Sync.remove(entry)
+  if (entry.loading) return
+
+  entry.loading = true
+
+  try {
+    await Sync.q.add(Sync.remove, entry)
+  } catch (err) {
+    Logs.err('onDelete', err, Utils.clone(entry))
+  }
+
+  entry.loading = false
 }
 
 function onFavError(tab: Sync.EntryTab) {

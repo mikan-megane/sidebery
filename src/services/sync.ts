@@ -57,6 +57,7 @@ export interface SyncedEntry {
   timeHHMM?: string
   size?: string
   sameProfile?: boolean
+  loading?: boolean
 
   tabs?: EntryTab[]
   containers?: Record<string, EntryContainer>
@@ -79,6 +80,7 @@ export let reactive: SyncReactiveState = {
   loading: false,
   entries: [],
 }
+export const q = new Utils.AsyncQueue()
 
 let reactFn: (<T extends object>(rObj: T) => T) | undefined
 export function initSync(react: (rObj: object) => object) {
