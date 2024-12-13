@@ -5,11 +5,7 @@
       .type(:title="title") {{title}}
       .profile(v-if="entry.sameProfile") This profile
       .profile(v-else :title="entry.profileName") {{entry.profileName}}
-      //- .profile(:title="entry.profileName") <span style="opacity: 0.7">From:</span> {{entry.profileName}}
-    //- .opt-btn
-    //-   .icon
   .date-time {{entry.dateYYYYMMDD}} - {{entry.timeHHMM}}
-  //- .date-time Time: {{entry.dateYYYYMMDD}} - {{entry.timeHHMM}}
   .sync-content
     .sync-tab(
       v-for="t in entry.tabs"
