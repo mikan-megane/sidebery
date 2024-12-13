@@ -88,7 +88,7 @@ function onMouseUp(e: MouseEvent, visit: Visit): void {
   if (!sameTarget) return
 
   if (e.button === 0 || e.button === 1) {
-    if (Selection.isHistory() && !Search.rawValue) {
+    if (Selection.isHistory()) {
       return Selection.resetSelection()
     }
 
