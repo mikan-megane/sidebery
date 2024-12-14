@@ -309,6 +309,8 @@ export async function openSyncWindow() {
     state: 'normal',
     type: 'popup',
     url: '/popup.sync/sync.html',
+    // For userChrome modificatoins with `#main-window[titlepreface='Sync‎']`
+    titlePreface: 'Sync‎',
   })
 
   Logs.info('Sync.openSyncWindow():', syncWindow)
