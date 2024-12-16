@@ -92,10 +92,25 @@ async function onScrollBottom(): Promise<void> {
   if (isFiltering.value) return
   if (!History.ready) return
 
+  const contentBoxEl = scrollBox.value?.getScrollableBox()
+  const contentHeight = contentBoxEl?.offsetHeight
+
   state.historyLoading = true
   await Utils.sleep(250)
   await History.loadMore()
   state.historyLoading = false
+
+  // If the scroll height has not changed, scroll up a little bit
+  // to trigger the next "onScrollBottom" event.
+  if (contentHeight) {
+    const newContentHeight = contentBoxEl?.offsetHeight
+    if (newContentHeight === contentHeight) {
+      const scrollBoxEl = scrollBox.value?.getScrollBox()
+      if (scrollBoxEl) {
+        scrollBoxEl.scrollTop = scrollBoxEl.scrollTop - 1
+      }
+    }
+  }
 
   if (History.allLoaded) state.allLoaded = true
 }
