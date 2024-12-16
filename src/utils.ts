@@ -126,9 +126,9 @@ export function deadline<T>(deadline: number, fallback: T, promise: Promise<T>):
 }
 
 /**
- * Bytes to readable string
+ * Converts number of bytes into readable string
  */
-export function bytesToStr(bytes: number): string {
+export function sizeToString(bytes: number): string {
   if (bytes < 1000) return `${bytes} b`
 
   const kb = bytes / 1024
@@ -152,7 +152,7 @@ export function bytesToStr(bytes: number): string {
  */
 export function strSize(str: string): string {
   const bytes = new Blob([str]).size
-  return bytesToStr(bytes)
+  return sizeToString(bytes)
 }
 
 export function uDate(ms: number, delimiter?: string, dayStartTime?: number): string {

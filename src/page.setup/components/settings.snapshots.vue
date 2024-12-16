@@ -108,7 +108,7 @@ async function calcInfo(): Promise<void> {
 
   const snapshots = stored.snapshots ?? []
   state.snapshotsLen = snapshots.length.toString()
-  state.snapshotsSize = Utils.bytesToStr(new Blob([JSON.stringify(snapshots)]).size)
+  state.snapshotsSize = Utils.sizeToString(new Blob([JSON.stringify(snapshots)]).size)
 }
 
 async function toggleAutoExport() {

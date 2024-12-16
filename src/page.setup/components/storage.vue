@@ -100,7 +100,9 @@ async function calcStorageInfo(): Promise<void> {
       fav = fullList[i]
       domains = favsDomainsInfo[i]
       const tooltipInfo = []
-      if (fav) tooltipInfo.push(`${fav.substring(0, 32)}...\nSize: ${Utils.bytesToStr(fav.length)}`)
+      if (fav) {
+        tooltipInfo.push(`${fav.substring(0, 32)}...\nSize: ${Utils.sizeToString(fav.length)}`)
+      }
       if (domains?.length) {
         const index = domains[0].index
         tooltipInfo.push(`Index: ${index}`)
@@ -174,7 +176,7 @@ async function loadGoogleDriveFiles(): Promise<void> {
       id: f.id ?? '',
       name: f.name ?? '???',
       size: size,
-      sizeStr: Utils.bytesToStr(size),
+      sizeStr: Utils.sizeToString(size),
     }
   })
 }
