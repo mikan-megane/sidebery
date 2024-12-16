@@ -74,7 +74,7 @@ const isHidden = computed(() => {
   )
 })
 
-const isFiltering = computed<boolean>(() => !!Search.reactive.value)
+const isFiltering = computed<boolean>(() => !!Search.reactive.value && !History.reactive.loading)
 
 function toggleHistoryGroup(e: MouseEvent, index: number): void {
   if (e.altKey) {

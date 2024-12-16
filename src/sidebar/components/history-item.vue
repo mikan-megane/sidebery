@@ -19,7 +19,7 @@
       .time {{visit.timeStr}}
   template(v-if="visit.reactive.moreVisits")
     .body.-more(
-      v-if="!moreActive"
+      v-if="!visit.reactive.moreActive"
       @click="onMoreClick")
       .more {{translate('panel.history.show_more')}} {{visit.reactive.moreVisits.length}}
     HistoryItem(
@@ -49,7 +49,6 @@ import { DnD } from 'src/services/drag-and-drop'
 import { Windows } from 'src/services/windows'
 import * as Favicons from 'src/services/favicons.fg'
 
-const moreActive = ref(false)
 const props = defineProps<{ visit: Visit }>()
 
 const favicon = computed(() => {
@@ -118,7 +117,7 @@ function onMouseUp(e: MouseEvent, visit: Visit): void {
 }
 
 function onMoreClick() {
-  moreActive.value = true
+  props.visit.reactive.moreActive = true
 }
 
 function onFavMouseDown(e: MouseEvent, visit: Visit): void {

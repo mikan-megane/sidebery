@@ -167,6 +167,7 @@ export function recalcDays() {
     if (prevVisit && pvTitle && vTitle.length === pvTitle.length && vTitle === pvTitle) {
       if (!prevVisit.reactive.moreVisits) prevVisit.reactive.moreVisits = [visit.id]
       else prevVisit.reactive.moreVisits.push(visit.id)
+      visit.hiddenUnderParentId = prevVisit.id
       continue
     }
 
@@ -279,50 +280,58 @@ export async function normalizeHistory(
 
 export async function loadMore(): Promise<void> {
   if (History.allLoaded) return
+  History.loadingMore = true
 
   const before = getLastVisitTime() - 1
   const after = before - LOAD_RANGE
 
-  let result = await browser.history.search({
-    text: Search.reactive.value,
-    maxResults: UNLIMITED,
-    startTime: after,
-    endTime: before,
-  })
+  let result = await browser.history
+    .search({
+      text: Search.reactive.value,
+      maxResults: UNLIMITED,
+      startTime: after,
+      endTime: before,
+    })
+    .catch(() => [])
 
   // First check
   if (result.length) {
-    const newVisits = await normalizeHistory(result, true, after, before)
+    const newVisits = await normalizeHistory(result, true, after, before).catch(() => [])
     if (newVisits.length) {
       if (History.filtered) History.filtered.push(...newVisits)
       else History.visits.push(...newVisits)
       History.reactive.days = History.recalcDays()
+      History.loadingMore = false
       return
     }
   }
 
   // If got nothing, try to get next 100 items
-  result = await browser.history.search({
-    text: Search.reactive.value,
-    maxResults: 100,
-    startTime: 0,
-    endTime: before,
-  })
+  result = await browser.history
+    .search({
+      text: Search.reactive.value,
+      maxResults: 100,
+      startTime: 0,
+      endTime: before,
+    })
+    .catch(() => [])
 
   // Second check
   if (result.length) {
     // Find lowest time
     const oldestTime = result[result.length - 1]?.lastVisitTime ?? 0
-    const newVisits = await normalizeHistory(result, true, oldestTime, before)
+    const newVisits = await normalizeHistory(result, true, oldestTime, before).catch(() => [])
     if (newVisits.length) {
       if (History.filtered) History.filtered.push(...newVisits)
       else History.visits.push(...newVisits)
       History.reactive.days = History.recalcDays()
+      History.loadingMore = false
       return
     }
   }
 
   // Okay...
+  History.loadingMore = false
   History.allLoaded = true
 }
 

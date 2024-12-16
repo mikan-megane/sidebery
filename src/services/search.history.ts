@@ -2,13 +2,15 @@ import { History } from 'src/services/history'
 import { Sidebar } from 'src/services/sidebar'
 import { Search } from 'src/services/search'
 import { Selection } from 'src/services/selection'
-import * as Logs from 'src/services/logs'
+import { Utils, Logs } from './_services'
+import { Visit } from 'src/types'
 
 export async function onHistorySearch(noSel?: boolean): Promise<void> {
   History.ready = false
   History.allLoaded = false
   History.reactive.loading = true
-  History.reactive.days = []
+
+  await Utils.sleep(250)
 
   if (Search.reactive.value) {
     let first
@@ -20,7 +22,7 @@ export async function onHistorySearch(noSel?: boolean): Promise<void> {
       })
       const norm = await History.normalizeHistory(result, false, undefined, undefined, true)
       History.filtered = norm
-      first = History.filtered[0]
+      first = Utils.findFrom(History.filtered, 0, v => !v.noTitle)
     } catch (err) {
       History.filtered = undefined
     }
@@ -28,8 +30,10 @@ export async function onHistorySearch(noSel?: boolean): Promise<void> {
     History.reactive.days = History.recalcDays()
 
     if (first && !noSel) {
-      Selection.resetSelection()
-      Selection.selectHistory(first.id)
+      if (Search.reactive.barIsFocused) {
+        Selection.resetSelection()
+        Selection.selectHistory(first.id)
+      }
       History.scrollToHistoryItemDebounced(120, first.id)
     }
   } else {
@@ -43,24 +47,38 @@ export async function onHistorySearch(noSel?: boolean): Promise<void> {
 }
 
 export function onHistorySearchNext(): void {
-  if (!History.ready || !History.filtered) return
+  if (!History.ready || !History.filtered || History.loadingMore) return
 
   const selId = Selection.getFirst()
   let index = History.filtered.findIndex(t => t.id === selId)
 
   index += 1
+  if (index === History.filtered.length) {
+    if (!History.allLoaded) History.loadMore()
+    return
+  }
   if (index < 0 || index >= History.filtered.length) return
 
-  Selection.resetSelection()
-  const visit = History.filtered[index]
+  let visit: Visit | undefined = History.filtered[index]
+  if (visit?.noTitle) visit = Utils.findFrom(History.filtered, index + 1, v => !v.noTitle)
   if (visit) {
+    Selection.resetSelection()
+
+    if (visit.hiddenUnderParentId) {
+      const parentVisit = History.byId[visit.hiddenUnderParentId]
+      if (parentVisit && !parentVisit.reactive.moreActive) {
+        parentVisit.reactive.moreActive = true
+        visit.hiddenUnderParentId = undefined
+      }
+    }
+
     Selection.selectHistory(visit.id)
     History.scrollToHistoryItem(visit.id)
   }
 }
 
 export function onHistorySearchPrev(): void {
-  if (!History.ready || !History.filtered) return
+  if (!History.ready || !History.filtered || History.loadingMore) return
 
   const selId = Selection.getFirst()
   let index = History.filtered.findIndex(t => t.id === selId)
@@ -68,9 +86,19 @@ export function onHistorySearchPrev(): void {
   index -= 1
   if (index < 0 || index >= History.filtered.length) return
 
-  Selection.resetSelection()
-  const visit = History.filtered[index]
+  let visit: Visit | undefined = History.filtered[index]
+  if (visit?.noTitle) visit = Utils.findLastFrom(History.filtered, index - 1, v => !v.noTitle)
   if (visit) {
+    Selection.resetSelection()
+
+    if (visit.hiddenUnderParentId) {
+      const parentVisit = History.byId[visit.hiddenUnderParentId]
+      if (parentVisit && !parentVisit.reactive.moreActive) {
+        parentVisit.reactive.moreActive = true
+        visit.hiddenUnderParentId = undefined
+      }
+    }
+
     Selection.selectHistory(visit.id)
     History.scrollToHistoryItem(visit.id)
   }
