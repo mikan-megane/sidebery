@@ -22,6 +22,7 @@
   :data-search="!!Search.reactive.value"
   :data-sticky-bookmarks="Settings.state.pinOpenedBookmarksFolder"
   :data-colorized-branches="Settings.state.colorizeTabsBranches"
+  :data-syncing="Sync.reactive.syncing"
   @dragend="DnD.onDragEnd"
   @dragenter="DnD.onDragEnter"
   @dragleave="DnD.onDragLeave"
@@ -90,7 +91,7 @@
             v-if="Settings.state.subPanelHistory"
             @click="Sidebar.openSubPanel(SubPanelType.History, activePanel)")
             svg: use(xlink:href="#icon_clock")
-          .tool-btn(
+          .tool-btn.-sync(
             v-if="Settings.state.subPanelSync"
             @click="Sidebar.openSubPanel(SubPanelType.Sync, activePanel)")
             svg: use(xlink:href="#icon_sync")
@@ -122,6 +123,7 @@ import { Windows } from 'src/services/windows'
 import { Search } from 'src/services/search'
 import { SwitchingTabScope } from 'src/services/tabs.fg.actions'
 import { reactiveUpgrading } from 'src/services/upgrading'
+import { Sync } from 'src/services/_services'
 import ConfirmPopup from './components/popup.confirm.vue'
 import CtxMenuPopup from './components/popup.context-menu.vue'
 import DragAndDropTooltip from './components/dnd-tooltip.vue'

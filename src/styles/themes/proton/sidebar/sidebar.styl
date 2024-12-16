@@ -241,6 +241,8 @@ body
       opacity: .3
 .BottomBar[data-with-ntb="true"] .tool-btn
   width: var(--bottom-bar-height)
+.Sidebar[data-syncing="true"] .BottomBar .tool-btn.-sync svg
+  animation: syncing-animation 1s linear infinite
 
 .BottomBar[data-drop-target-bookmarks="true"]
   z-index: 300
@@ -421,6 +423,12 @@ for i in 1..16
   100%
     opacity: 0
     transform: rotateZ(45deg) scale(2, 2)
+
+@keyframes syncing-animation
+  0%
+    transform: rotateZ(0deg)
+  100%
+    transform: rotateZ(360deg)
 
 .dbg
   position: absolute

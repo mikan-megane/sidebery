@@ -68,6 +68,7 @@ export interface SyncedEntry {
 
 export interface SyncReactiveState {
   loading: boolean
+  syncing: boolean
   entries: SyncedEntry[]
 }
 
@@ -78,6 +79,7 @@ export const state = {
 }
 export let reactive: SyncReactiveState = {
   loading: false,
+  syncing: false,
   entries: [],
 }
 export const q = new Utils.AsyncQueue()
@@ -115,41 +117,50 @@ export async function save<T extends SyncedEntryType>(type: T, data: SyncedDataT
   Logs.info('Sync.save()')
   const entryId = Utils.uid()
 
-  if (type === Sync.SyncedEntryType.Settings) {
-    if (Settings.state.syncUseFirefox) {
-      await Sync.Firefox.save('settings', { settings: data }, entryId)
+  reactive.syncing = true
+
+  try {
+    if (type === Sync.SyncedEntryType.Settings) {
+      if (Settings.state.syncUseFirefox) {
+        await Sync.Firefox.save('settings', { settings: data }, entryId)
+      }
+      if (Settings.state.syncUseGoogleDrive) {
+        await Sync.Google.save(Sync.Google.FileType.Settings, data, { entryId })
+      }
+    } else if (type === Sync.SyncedEntryType.CtxMenu) {
+      if (Settings.state.syncUseFirefox) {
+        await Sync.Firefox.save('ctxMenu', { contextMenu: data }, entryId)
+      }
+      if (Settings.state.syncUseGoogleDrive) {
+        await Sync.Google.save(Sync.Google.FileType.CtxMenu, data, { entryId })
+      }
+    } else if (type === Sync.SyncedEntryType.Styles) {
+      if (Settings.state.syncUseFirefox) {
+        await Sync.Firefox.save('styles', data, entryId)
+      }
+      if (Settings.state.syncUseGoogleDrive) {
+        await Sync.Google.save(Sync.Google.FileType.Styles, data, { entryId })
+      }
+    } else if (type === Sync.SyncedEntryType.Keybindings) {
+      if (Settings.state.syncUseFirefox) {
+        await Sync.Firefox.save('kb', data, entryId)
+      }
+      if (Settings.state.syncUseGoogleDrive) {
+        await Sync.Google.save(Sync.Google.FileType.Keybindings, data, { entryId })
+      }
     }
-    if (Settings.state.syncUseGoogleDrive) {
-      await Sync.Google.save(Sync.Google.FileType.Settings, data, { entryId })
-    }
-  } else if (type === Sync.SyncedEntryType.CtxMenu) {
-    if (Settings.state.syncUseFirefox) {
-      await Sync.Firefox.save('ctxMenu', { contextMenu: data }, entryId)
-    }
-    if (Settings.state.syncUseGoogleDrive) {
-      await Sync.Google.save(Sync.Google.FileType.CtxMenu, data, { entryId })
-    }
-  } else if (type === Sync.SyncedEntryType.Styles) {
-    if (Settings.state.syncUseFirefox) {
-      await Sync.Firefox.save('styles', data, entryId)
-    }
-    if (Settings.state.syncUseGoogleDrive) {
-      await Sync.Google.save(Sync.Google.FileType.Styles, data, { entryId })
-    }
-  } else if (type === Sync.SyncedEntryType.Keybindings) {
-    if (Settings.state.syncUseFirefox) {
-      await Sync.Firefox.save('kb', data, entryId)
-    }
-    if (Settings.state.syncUseGoogleDrive) {
-      await Sync.Google.save(Sync.Google.FileType.Keybindings, data, { entryId })
-    }
+  } catch (err) {
+    Logs.err('Sync.save()', err)
+    // TODO: show notification about this
   }
+
+  reactive.syncing = false
 }
 
 export async function remove(entry: SyncedEntry) {
   Logs.info('Sync.remove():', entry)
 
-  // TODO: visualise progress
+  reactive.syncing = true
   // TODO: undo
 
   let removingInFirefoxSync
@@ -166,11 +177,19 @@ export async function remove(entry: SyncedEntry) {
     }
   }
 
-  await Promise.allSettled([removingInFirefoxSync, removingInGoogleDrive])
-  // TODO: error handling
+  try {
+    await Promise.allSettled([removingInFirefoxSync, removingInGoogleDrive])
+  } catch (err) {
+    Logs.info('Sync.remove()', err)
+    // TODO: show notification about this
+    reactive.syncing = false
+    return
+  }
 
   const rmIndex = reactive.entries.findIndex(e => e.id === entry.id)
   if (rmIndex !== -1) reactive.entries.splice(rmIndex, 1)
+
+  reactive.syncing = false
 }
 
 export async function getData<T>(entry: SyncedEntry): Promise<T | null | void> {
@@ -265,6 +284,7 @@ export async function unload() {
   Sync.Google.cachedTabFilesData.clear()
 
   reactive.entries = []
+  reactive.syncing = false
   reactive.loading = false
 
   ready = false
@@ -324,9 +344,21 @@ export async function saveTabs(
 
   if (!tabsBatch.tabs.length) return
 
-  if (Settings.state.syncUseGoogleDrive) {
-    const tabsEntry = await Sync.Google.saveTabs(tabsBatch, favicons)
-    Logs.info('Sync.saveTabs(): entry:', tabsEntry)
-    reactive.entries.splice(0, 0, tabsEntry)
+  reactive.syncing = true
+
+  // Load sync service
+  if (!Sync.ready) await Sync.load()
+  else Sync.resetUnloadTimeout()
+
+  try {
+    if (Settings.state.syncUseGoogleDrive) {
+      const tabsEntry = await Sync.Google.saveTabs(tabsBatch, favicons)
+      reactive.entries.splice(0, 0, tabsEntry)
+    }
+  } catch (err) {
+    Logs.info('Sync.saveTabs()', err)
+    // TODO: Show notification about this error
   }
+
+  reactive.syncing = false
 }

@@ -9,10 +9,6 @@ import { SubPanelType } from 'src/types'
 export async function sync(ids: ID[]) {
   Logs.info('TabsSync.sync():', ids)
 
-  // Load sync service
-  if (!Sync.ready) await Sync.load()
-  else Sync.resetUnloadTimeout()
-
   // Prepare tabs for sync
   const favicons: Record<string, string> = {}
   const syncedTabs: Sync.Google.SyncedTabsBatch = {
