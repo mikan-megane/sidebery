@@ -1005,6 +1005,28 @@ export function isSubListTitle(something: any): something is SubListTitleInfo {
   return false
 }
 
+export function findFrom<T>(
+  arr: T[],
+  index: number,
+  pred: (val: T, i: number) => unknown
+): T | undefined {
+  const len = arr.length
+  for (let i = index, v; i < len; i++) {
+    v = arr[i]
+    if (pred(v, i)) return v
+  }
+}
+export function findLastFrom<T>(
+  arr: T[],
+  index: number,
+  pred: (val: T, i: number) => unknown
+): T | undefined {
+  for (let i = index, v; i >= 0; i--) {
+    v = arr[i]
+    if (pred(v, i)) return v
+  }
+}
+
 // Temp, (v104, esr115 (2023-09-26))
 export function findLast<T>(arr: T[], pred: (val: T, i: number) => unknown): T | undefined {
   for (let i = arr.length, v; i--; ) {
