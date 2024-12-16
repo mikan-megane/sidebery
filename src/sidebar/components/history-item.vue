@@ -19,7 +19,7 @@
       .time {{visit.timeStr}}
   template(v-if="visit.reactive.moreVisits")
     .body.-more(
-      v-if="!moreActive && !Search.reactive.rawValue"
+      v-if="!moreActive"
       @click="onMoreClick")
       .more {{translate('panel.history.show_more')}} {{visit.reactive.moreVisits.length}}
     HistoryItem(

@@ -88,8 +88,11 @@ function toggleHistoryGroup(e: MouseEvent, index: number): void {
 }
 
 async function onScrollBottom(): Promise<void> {
-  if (state.historyLoading || History.allLoaded) return
-  if (isFiltering.value) return
+  if (state.historyLoading) return
+  if (History.allLoaded) {
+    state.allLoaded = true
+    return
+  }
   if (!History.ready) return
 
   const contentBoxEl = scrollBox.value?.getScrollableBox()

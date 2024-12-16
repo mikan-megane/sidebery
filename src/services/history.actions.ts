@@ -18,8 +18,6 @@ const UNLIMITED = 1234567
 const INITIAL_COUNT = 100
 const LOAD_RANGE = 432_000_000 // 1000*60*60*24*5 - 5 days
 
-let lastItemTime = 0
-
 let reactFn: (<T extends object>(rObj: T) => T) | undefined
 export function initHistory(react: (rObj: object) => object) {
   reactFn = react as <T extends object>(rObj: T) => T
@@ -105,7 +103,6 @@ export async function load(): Promise<void> {
 
   const lastItemVisitTime = result[result.length - 1]?.lastVisitTime
   const visits = await normalizeHistory(result, true, lastItemVisitTime)
-  lastItemTime = getLastVisitTime(visits) - 1
 
   if (!visits.length) await loadMore()
   else History.visits = visits
@@ -283,11 +280,11 @@ export async function normalizeHistory(
 export async function loadMore(): Promise<void> {
   if (History.allLoaded) return
 
-  const before = lastItemTime
-  const after = lastItemTime - LOAD_RANGE
+  const before = getLastVisitTime() - 1
+  const after = before - LOAD_RANGE
 
   let result = await browser.history.search({
-    text: '',
+    text: Search.reactive.value,
     maxResults: UNLIMITED,
     startTime: after,
     endTime: before,
@@ -297,16 +294,16 @@ export async function loadMore(): Promise<void> {
   if (result.length) {
     const newVisits = await normalizeHistory(result, true, after, before)
     if (newVisits.length) {
-      History.visits.push(...newVisits)
+      if (History.filtered) History.filtered.push(...newVisits)
+      else History.visits.push(...newVisits)
       History.reactive.days = History.recalcDays()
-      lastItemTime = getLastVisitTime() - 1
       return
     }
   }
 
   // If got nothing, try to get next 100 items
   result = await browser.history.search({
-    text: '',
+    text: Search.reactive.value,
     maxResults: 100,
     startTime: 0,
     endTime: before,
@@ -318,9 +315,9 @@ export async function loadMore(): Promise<void> {
     const oldestTime = result[result.length - 1]?.lastVisitTime ?? 0
     const newVisits = await normalizeHistory(result, true, oldestTime, before)
     if (newVisits.length) {
-      History.visits.push(...newVisits)
+      if (History.filtered) History.filtered.push(...newVisits)
+      else History.visits.push(...newVisits)
       History.reactive.days = History.recalcDays()
-      lastItemTime = getLastVisitTime() - 1
       return
     }
   }
@@ -330,7 +327,7 @@ export async function loadMore(): Promise<void> {
 }
 
 function getLastVisitTime(list?: Visit[]): number {
-  if (!list) list = History.visits
+  if (!list) list = History.filtered ?? History.visits
 
   const lastVisit = list[list.length - 1]
   if (!lastVisit) return Date.now()

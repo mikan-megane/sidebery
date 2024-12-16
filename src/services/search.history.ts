@@ -6,6 +6,7 @@ import * as Logs from 'src/services/logs'
 
 export async function onHistorySearch(noSel?: boolean): Promise<void> {
   History.ready = false
+  History.allLoaded = false
   History.reactive.loading = true
   History.reactive.days = []
 
