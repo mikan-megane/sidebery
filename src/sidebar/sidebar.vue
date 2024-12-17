@@ -75,7 +75,8 @@
         .BottomBar(
           v-if="bottomBar && Utils.isTabsPanel(activePanel)"
           @dragover.prevent.stop=""
-          :data-drop-target-bookmarks="DnD.reactive.dstType === DropType.BookmarksSubPanelBtn && DnD.reactive.dstPanelId === activePanel.id")
+          :data-drop-target-bookmarks="DnD.reactive.dstType === DropType.BookmarksSubPanelBtn && DnD.reactive.dstPanelId === activePanel.id"
+          :data-drop-target-sync="DnD.reactive.dstType === DropType.SyncSubPanelBtn")
           .tool-btn(
             v-if="Settings.state.subPanelRecentlyClosedBar"
             :data-disabled="!Tabs.reactive.recentlyRemovedLen"
@@ -94,6 +95,7 @@
           .tool-btn.-sync(
             v-if="Settings.state.subPanelSync"
             @click="Sidebar.openSubPanel(SubPanelType.Sync, activePanel)")
+            .dnd-layer(data-dnd-type="sspb")
             svg: use(xlink:href="#icon_sync")
 
       SubPanel

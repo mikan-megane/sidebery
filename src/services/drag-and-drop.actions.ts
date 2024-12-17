@@ -14,6 +14,7 @@ import { Bookmarks } from 'src/services/bookmarks'
 import { Tabs } from 'src/services/tabs.fg'
 import * as Logs from './logs'
 import * as IPC from './ipc'
+import { TabsSync } from './_services.fg'
 
 let lastDragStartTime = 0
 
@@ -122,6 +123,7 @@ export function reset(): void {
   DnD.srcIndex = -1
   DnD.dropMode = 'auto'
 
+  DnD.reactive.dstType = DropType.Nowhere
   DnD.reactive.dstIndex = -1
   DnD.reactive.dstPanelId = ''
   DnD.reactive.dstPin = false
@@ -414,9 +416,26 @@ export function onDragEnter(e: DragEvent): void {
     DnD.reactive.dstPanelId = panel.id
     DnD.reactive.dstType = DropType.BookmarksSubPanelBtn
     DnD.reactive.dstIndex = 0
+    DnD.reactive.pointerMode = DndPointerMode.None
 
     // Open sub-panel
     subPanelOpenTimeout(() => Sidebar.openSubPanel(SubPanelType.Bookmarks, panel), 500)
+  }
+
+  // Sync sub-panel button
+  if (type === 'sspb') {
+    DnD.reactive.dstPin = false
+    DnD.reactive.dstParentId = NOID
+
+    const panel = Sidebar.panelsById[Sidebar.activePanelId]
+    if (!Utils.isTabsPanel(panel)) {
+      DnD.reactive.dstType = DropType.Nowhere
+      return
+    }
+
+    DnD.reactive.dstType = DropType.SyncSubPanelBtn
+    DnD.reactive.dstIndex = 0
+    DnD.reactive.pointerMode = DndPointerMode.None
   }
 
   if (type === 'nav-item' && id) {
@@ -439,8 +458,10 @@ export function onDragEnter(e: DragEvent): void {
       const panel = Sidebar.panelsById[id]
       const isTabsPanel = Utils.isTabsPanel(panel)
       const isBookmarksPanel = Utils.isBookmarksPanel(panel)
+      const isSyncPanel = Utils.isSyncPanel(panel)
       if (isTabsPanel) DnD.reactive.dstType = DropType.TabsPanel
       else if (isBookmarksPanel) DnD.reactive.dstType = DropType.BookmarksPanel
+      else if (isSyncPanel) DnD.reactive.dstType = DropType.SyncPanel
       else DnD.reactive.dstType = DropType.NavItem
 
       if (panel) {
@@ -931,6 +952,7 @@ export async function onDrop(e: DragEvent): Promise<void> {
   const fromBookmarksPanel = srcType === DragType.BookmarksPanel
   const toBookmarksPanel =
     dstType === DropType.BookmarksPanel || dstType === DropType.BookmarksSubPanelBtn
+  const toSync = dstType === DropType.SyncSubPanelBtn || dstType === DropType.SyncPanel
   const fromNav = srcType === DragType.NavItem
   const toNav = dstType === DropType.NavItem
   const fromNewTabBar = srcType === DragType.NewTab
@@ -1050,6 +1072,12 @@ export async function onDrop(e: DragEvent): Promise<void> {
     await Bookmarks.createFrom(items, dstInfo)
 
     if (toRemove && !copyMode) Tabs.removeTabs(toRemove, true)
+  }
+
+  // Tabs to Sync
+  if (fromTabs && toSync) {
+    const ids = DnD.items.map(t => t.id)
+    TabsSync.sync(ids)
   }
 
   // Bookmarks to tabs

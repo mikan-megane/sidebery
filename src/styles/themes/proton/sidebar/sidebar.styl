@@ -245,10 +245,13 @@ body
   animation: syncing-animation 1s linear infinite
 
 .BottomBar[data-drop-target-bookmarks="true"]
+.BottomBar[data-drop-target-sync="true"]
   z-index: 300
 .BottomBar[data-drop-target-bookmarks="true"] .tool-btn
+.BottomBar[data-drop-target-sync="true"] .tool-btn
   opacity: 0
 .BottomBar[data-drop-target-bookmarks="true"] .tool-btn.-bookmarks
+.BottomBar[data-drop-target-sync="true"] .tool-btn.-sync
   opacity: 1
   background-color: var(--frame-el-bg, var(--frame-bg))
   box-shadow: var(--frame-el-shadow, var(--active-el-shadow))

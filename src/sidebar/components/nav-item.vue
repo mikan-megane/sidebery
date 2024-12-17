@@ -133,6 +133,7 @@ function dropPointerMode(id: ID): string {
   const dstIsNavItem =
     DnD.reactive.dstType === DropType.TabsPanel ||
     DnD.reactive.dstType === DropType.BookmarksPanel ||
+    DnD.reactive.dstType === DropType.SyncPanel ||
     DnD.reactive.dstType === DropType.NavItem
   const dstId = Sidebar.reactive.nav[DnD.reactive.dstIndex]
   if (dstIsNavItem && dstId === id) {
