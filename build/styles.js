@@ -14,6 +14,7 @@ const THEMES = {
     './src/styles/themes/proton/page.setup/setup.styl',
     './src/styles/themes/proton/popup.proxy/proxy.styl',
     './src/styles/themes/proton/popup.sync/sync.styl',
+    './src/styles/themes/proton/popup.panel-config/panel-config.styl',
   ],
 }
 

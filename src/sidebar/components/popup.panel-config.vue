@@ -44,7 +44,7 @@ import { Sidebar } from 'src/services/sidebar'
 import { PANEL_ICON_OPTS, COLOR_OPTS } from 'src/defaults'
 import TextInput from 'src/components/text-input.vue'
 import SelectInput from 'src/components/select-input.vue'
-import { SetupPage } from 'src/services/setup-page'
+import { SidebarConfig } from 'src/services/_services'
 import { InputOption, TextInputComponent, TabsPanelConfig, BookmarksPanelConfig } from 'src/types'
 import { Settings } from 'src/services/settings'
 
@@ -100,7 +100,7 @@ function onTitleKD(e: KeyboardEvent): void {
 function openFullConfig(): void {
   if (!Popups.reactive.panelConfigPopup || !panelExists.value) return
 
-  SetupPage.open(`settings_nav.${Popups.reactive.panelConfigPopup.config.id}`)
+  SidebarConfig.openPanelConfigWindow(Popups.reactive.panelConfigPopup.config.id)
   Popups.reactive.panelConfigPopup.done(null)
   Popups.reactive.panelConfigPopup = null
 }

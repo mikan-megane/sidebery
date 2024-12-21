@@ -1,5 +1,6 @@
 <template lang="pug">
 .SelectInput(ref="rootEl" :data-color="props.color" :data-folded="folded")
+  .focus-el(ref="focusEl" tabindex="-1")
   template(v-if="folded && activeOpt")
     .opt(
       :title="getTooltip(activeOpt)"
@@ -19,10 +20,11 @@
           .select-input-drop-down-content(ref="dropDownEl")
             .opt(
               v-for="opt in inactiveOpts"
+              :id="'opt' + ((opt as InputObjOpt).value ?? opt)"
               :title="getTooltip(opt)"
               :data-none="((opt as InputObjOpt).value ?? opt) === props.noneOpt"
               :data-color="getOptColor(opt) ?? false"
-              :data-active="isActive(opt)"
+              :data-active="((opt as InputObjOpt).value ?? opt) === preSelected"
               @mousedown.stop="select(opt)")
               svg(v-if="((opt as InputObjOpt).icon || props.icon)?.startsWith('#')")
                 use(:xlink:href="((opt as InputObjOpt).icon || props.icon)")
@@ -66,9 +68,11 @@ interface SelectInputProps {
   icon?: string
   noneOpt?: string | number
   folded?: boolean
+  preSelected?: string | number
 }
 
 const rootEl = ref<HTMLElement | null>(null)
+const focusEl = ref<HTMLElement | null>(null)
 const dropDownEl = ref<HTMLElement | null>(null)
 const disabledDropDownTeleport = ref(true)
 const isOpen = ref(false)
@@ -191,6 +195,7 @@ function close() {
 const publicInterface: SelectInputComponent = {
   open,
   close,
+  getFocusEl: () => focusEl.value ?? undefined,
 }
 defineExpose(publicInterface)
 </script>

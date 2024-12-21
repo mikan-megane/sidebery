@@ -29,6 +29,7 @@ const SETUP_LISTENED_KEYS = [
   'snapshots',
   'keybindings',
 ]
+const PANEL_CONFIG_LISTENED_KEYS = ['settings', 'sidebar', 'containers']
 
 function storageChangeListener(newValues: Stored): void {
   for (const [key, newValue] of Object.entries(newValues) as Entries<Stored>) {
@@ -43,6 +44,7 @@ async function _set(newValues: Stored, srcInfo?: IPCNodeInfo): Promise<void> {
   if (Info.isBg) {
     let changesForSidebar: Record<string, any> | undefined
     let changesForSetup: Record<string, any> | undefined
+    let changesForPanelConfig: Record<string, any> | undefined
 
     for (const [key, newValue] of Object.entries(newValues) as StorageEntries) {
       if (SIDEBAR_LISTENED_KEYS.includes(key)) {
@@ -53,6 +55,11 @@ async function _set(newValues: Stored, srcInfo?: IPCNodeInfo): Promise<void> {
       if (SETUP_LISTENED_KEYS.includes(key)) {
         if (!changesForSetup) changesForSetup = { [key]: newValue }
         else changesForSetup[key] = newValue
+      }
+
+      if (PANEL_CONFIG_LISTENED_KEYS.includes(key)) {
+        if (!changesForPanelConfig) changesForPanelConfig = { [key]: newValue }
+        else changesForPanelConfig[key] = newValue
       }
 
       // Call local handler
@@ -73,6 +80,14 @@ async function _set(newValues: Stored, srcInfo?: IPCNodeInfo): Promise<void> {
       for (const [id, con] of IPC.state.setupPageConnections) {
         if (srcInfo && srcInfo.type === con.type && srcInfo.tabId === con.id) continue
         IPC.setupPage(con.id, 'storageChanged', changesForSetup)
+      }
+    }
+
+    // Send changes to all connected panel config popups
+    if (changesForPanelConfig) {
+      for (const [id, con] of IPC.state.panelConfigConnections) {
+        if (srcInfo && srcInfo.type === con.type && srcInfo.winId === con.id) continue
+        IPC.panelConfigPopup(con.id, 'storageChanged', changesForPanelConfig)
       }
     }
 

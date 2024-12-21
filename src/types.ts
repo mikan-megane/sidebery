@@ -129,9 +129,14 @@ export const enum SubPanelType {
   Sync = 4,
 }
 
+export interface ToggleInputComponent {
+  getFocusEl: () => HTMLElement | undefined
+}
+
 export interface SelectInputComponent {
   open: () => void
   close: () => void
+  getFocusEl: () => HTMLElement | undefined
 }
 
 export interface ContextMenuComponent {
@@ -144,6 +149,7 @@ export interface TextInputComponent {
   focus: () => void
   error: () => void
   selectAll: () => void
+  getTextInput: () => HTMLInputElement | undefined
 }
 
 export interface BookmarksPanelComponent {

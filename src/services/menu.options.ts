@@ -13,6 +13,7 @@ import { bookmarksMenuOptions } from './menu.options.bookmarks'
 import { historyMenuOptions } from './menu.options.history'
 import { CONTAINER_ID } from 'src/defaults'
 import * as Popups from 'src/services/popups'
+import { SidebarConfig } from './_services'
 
 export const menuOptions: Record<string, () => MenuOption | MenuOption[] | undefined> = {
   ...tabsMenuOptions,
@@ -32,10 +33,12 @@ export const menuOptions: Record<string, () => MenuOption | MenuOption[] | undef
       label: translate('menu.common.conf'),
       tooltip: translate('menu.common.conf_tooltip'),
       icon: 'icon_panel_config',
-      onClick: () => SetupPage.open(`settings_nav.${panel.id}`),
+      onClick: () => {
+        SidebarConfig.openPanelConfigWindow(panel.id)
+      },
       onAltClick: () => {
         if (inSidebar) Popups.openPanelPopup({ id: panel.id })
-        else SetupPage.open(`settings_nav.${panel.id}`)
+        else SidebarConfig.openPanelConfigWindow(panel.id)
       },
     }
     if (!Settings.state.ctxMenuRenderInact && option.inactive) return
@@ -52,7 +55,10 @@ export const menuOptions: Record<string, () => MenuOption | MenuOption[] | undef
       icon: 'icon_panel_config',
       onClick: () => {
         if (inSidebar) Popups.openPanelPopup({ id: panel.id })
-        else SetupPage.open(`settings_nav.${panel.id}`)
+        else SidebarConfig.openPanelConfigWindow(panel.id)
+      },
+      onAltClick: () => {
+        SidebarConfig.openPanelConfigWindow(panel.id)
       },
     }
     if (!Settings.state.ctxMenuRenderInact && option.inactive) return

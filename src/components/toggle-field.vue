@@ -1,8 +1,12 @@
 <template lang="pug">
-.ToggleField(:data-inactive="props.inactive" @click="toggle")
+.ToggleField(
+  :data-inactive="props.inactive"
+  @click="toggle"
+  @keydown="onKeyDown")
+  .focus-fx
   .body
     .label(:style="{ color: props.color }") {{translate(props.label)}}
-    ToggleInput.input(:value="props.value")
+    ToggleInput.input(ref="inputComponent" :value="props.value")
   .note(v-if="props.note" @click.stop="") {{props.note}}
   .note(v-if="props.noteWithLinks" @click.stop="")
     template(v-for="v, i in getNoteWithLinksParts(props.noteWithLinks)")
@@ -12,7 +16,9 @@
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue'
 import { translate } from 'src/dict'
+import { ToggleInputComponent } from 'src/types'
 import ToggleInput from './toggle-input.vue'
 
 interface ToggleFieldProps {
@@ -27,6 +33,7 @@ interface ToggleFieldProps {
 
 const emit = defineEmits(['toggle', 'update:value'])
 const props = defineProps<ToggleFieldProps>()
+const inputComponent = ref<ToggleInputComponent | null>(null)
 
 function toggle(): void {
   if (props.inactive) return
@@ -47,4 +54,21 @@ const strRe = />(.*)/
 function getStr(str: string): string {
   return strRe.exec(str)?.[1] ?? ''
 }
+
+function onKeyDown(e: KeyboardEvent) {
+  if (
+    e.code === 'ArrowLeft' ||
+    e.code === 'ArrowRight' ||
+    e.code === 'Space' ||
+    e.code === 'Enter'
+  ) {
+    toggle()
+    e.preventDefault()
+  }
+}
+
+const publicInterface: ToggleInputComponent = {
+  getFocusEl: () => inputComponent.value?.getFocusEl() ?? undefined,
+}
+defineExpose(publicInterface)
 </script>

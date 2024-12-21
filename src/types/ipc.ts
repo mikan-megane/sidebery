@@ -21,6 +21,7 @@ export const enum InstanceType {
   proxy = 6,
   preview = 7,
   sync = 8,
+  panelConfig = 9,
 }
 
 export interface Message<T extends InstanceType, A extends ActionsKeys<T>> {
@@ -69,6 +70,11 @@ export type SettingsActions = {
   connectTo: (dstType: InstanceType, dstWinId?: ID, dstTabId?: ID) => void
 }
 
+export type PanelConfigPopupActions = {
+  storageChanged: typeof Store.storageChangeListener
+  connectTo: (dstType: InstanceType, dstWinId?: ID, dstTabId?: ID) => void
+}
+
 export type SidebarActions = {
   reloadTab: (tab: Tab) => void
   queryTab: (props: Partial<Tab>) => Tab | null
@@ -112,7 +118,7 @@ export type SearchPopupActions = {
   closePopup: () => void
 }
 
-export type PreviewAction = {
+export type PreviewActions = {
   updatePreview: (tabId: ID, title: string, url: string, unloaded: boolean) => void
   setY: (y: number) => void
   close: () => void
@@ -123,7 +129,8 @@ export type Actions =
   | SettingsActions
   | SidebarActions
   | SearchPopupActions
-  | PreviewAction
+  | PreviewActions
+  | PanelConfigPopupActions
 
 export type ActionsKeys<T> = T extends InstanceType.bg
   ? keyof BgActions
@@ -134,8 +141,10 @@ export type ActionsKeys<T> = T extends InstanceType.bg
       : T extends InstanceType.search
         ? keyof SearchPopupActions
         : T extends InstanceType.preview
-          ? keyof PreviewAction
-          : never
+          ? keyof PreviewActions
+          : T extends InstanceType.panelConfig
+            ? keyof PanelConfigPopupActions
+            : never
 
 export type ActionsType<T> = T extends InstanceType.bg
   ? BgActions
@@ -146,5 +155,7 @@ export type ActionsType<T> = T extends InstanceType.bg
       : T extends InstanceType.search
         ? SearchPopupActions
         : T extends InstanceType.preview
-          ? PreviewAction
-          : any
+          ? PreviewActions
+          : T extends InstanceType.panelConfig
+            ? PanelConfigPopupActions
+            : any

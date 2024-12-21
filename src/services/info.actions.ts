@@ -39,6 +39,8 @@ export function setInstanceType(t: InstanceType): void {
   else if (t === InstanceType.proxy) Info.isProxy = true
   else if (t === InstanceType.search) Info.isSearch = true
   else if (t === InstanceType.preview) Info.isPreview = true
+  else if (t === InstanceType.sync) Info.isSync = true
+  else if (t === InstanceType.panelConfig) Info.isPanelConfig = true
 }
 
 export function getInstanceName(instance?: InstanceType): string {
@@ -51,6 +53,7 @@ export function getInstanceName(instance?: InstanceType): string {
   else if (instance === InstanceType.search) return 'search'
   else if (instance === InstanceType.preview) return 'preview'
   else if (instance === InstanceType.sync) return 'sync'
+  else if (instance === InstanceType.panelConfig) return 'panel-config'
   return 'unknown'
 }
 

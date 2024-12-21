@@ -1006,7 +1006,7 @@ export function isSubListTitle(something: any): something is SubListTitleInfo {
 }
 
 export function findFrom<T>(
-  arr: T[],
+  arr: readonly T[],
   index: number,
   pred: (val: T, i: number) => unknown
 ): T | undefined {
@@ -1017,7 +1017,7 @@ export function findFrom<T>(
   }
 }
 export function findLastFrom<T>(
-  arr: T[],
+  arr: readonly T[],
   index: number,
   pred: (val: T, i: number) => unknown
 ): T | undefined {

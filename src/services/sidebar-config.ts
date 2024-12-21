@@ -2,6 +2,7 @@ import {
   BookmarksPanelConfig,
   HistoryPanelConfig,
   OldPanelConfig,
+  PanelConfig,
   SidebarConfig,
   Stored,
   SyncPanelConfig,
@@ -185,4 +186,22 @@ function updateSidebarConfig(newConfig?: SidebarConfig | null): void {
 
     SidebarConfigRState.panels = newConfig.panels
   }
+}
+
+export async function openPanelConfigWindow(panelId: ID) {
+  const width = 720
+  const height = 640
+
+  await browser.windows.create({
+    allowScriptsToClose: true,
+    focused: true,
+    width,
+    height,
+    incognito: false,
+    state: 'normal',
+    type: 'popup',
+    url: `/popup.panel-config/panel-config.html?panelId=${panelId}`,
+    // For userChrome modificatoins with `#main-window[titlepreface='PanelConfig‎']`
+    titlePreface: 'PanelConfig‎',
+  })
 }

@@ -22,6 +22,8 @@ export const Info = {
   isBg: false,
   isSearch: false,
   isPreview: false,
+  isSync: false,
+  isPanelConfig: false,
 
   majorVersion: undefined as number | undefined,
   prevMajorVersion: undefined as number | undefined,
