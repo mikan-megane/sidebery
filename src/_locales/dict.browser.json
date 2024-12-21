@@ -1098,6 +1098,9 @@
     "zh_TW": "依最近瀏覽時間排序當前面板的分頁（新-舊）",
     "ja": "アクティブパネルのタブをアクセス時間でソート（新しい順）"
   },
+  "KbOpenPanelConfig": {
+    "en": "Open panel config"
+  },
 
   "proxy_popup_title_prefix": {
     "en": "Proxy for \"",

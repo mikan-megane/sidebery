@@ -10,6 +10,7 @@
     KeybindingField(:keybinding="Keybindings.reactive.byName.open_snap_viewer")
     KeybindingField(:keybinding="Keybindings.reactive.byName.menu")
     .info(v-if="Settings.state.ctxMenuNative") {{translate('settings.kb_menu_note')}}
+    KeybindingField(:keybinding="Keybindings.reactive.byName.open_panel_config")
 
   section
     h2 {{translate('settings.kb_switching_panel')}}

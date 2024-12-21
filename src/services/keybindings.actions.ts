@@ -18,7 +18,7 @@ import * as IPC from 'src/services/ipc'
 import * as Logs from 'src/services/logs'
 import { By as SortBy, sort as sortTabs } from 'src/services/tabs.fg.sorting'
 import { SetupPage } from './setup-page'
-import { Sync } from './_services'
+import { SidebarConfig, Sync } from './_services'
 import { Notifications } from './notifications'
 import { translate } from 'src/dict'
 
@@ -261,6 +261,16 @@ function onCmd(name: string): void {
   else if (name === 'sort_panel_tabs_by_url_des') onKeySortTabs(SortBy.Url, -1, true, true)
   else if (name === 'sort_panel_tabs_by_time_asc') onKeySortTabs(SortBy.ATime, 1, true, true)
   else if (name === 'sort_panel_tabs_by_time_des') onKeySortTabs(SortBy.ATime, -1, true, true)
+  else if (name === 'open_panel_config') onKeyOpenPanelConfig()
+}
+
+function onKeyOpenPanelConfig() {
+  let targetId
+  if (Selection.isNavItem()) {
+    targetId = Selection.getFirst()
+    Selection.resetSelection()
+  }
+  SidebarConfig.openPanelConfigWindow(targetId ?? Sidebar.activePanelId)
 }
 
 function onKeySortTabs(type: SortBy, dir = 0, tree?: boolean, panel?: boolean) {

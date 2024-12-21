@@ -423,6 +423,9 @@
     },
     "sort_panel_tabs_by_time_des": {
       "description": "__MSG_KbSortPanelTabsByTimeDes__"
+    },
+    "open_panel_config": {
+      "description": "__MSG_KbOpenPanelConfig__"
     }
   },
   "browser_action": {
