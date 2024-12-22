@@ -138,14 +138,14 @@ function onMenuHiddenBg(): void {
 }
 
 export function setCtxMenu(conf?: MenuConfs) {
-  if (!conf) return
-  if (conf?.tabs?.length) Menu.tabsConf = conf.tabs
+  if (!conf) conf = {}
+  if (conf.tabs?.length) Menu.tabsConf = conf.tabs
   else Menu.tabsConf = Utils.cloneArray(TABS_MENU)
-  if (conf?.tabsPanel?.length) Menu.tabsPanelConf = conf.tabsPanel
+  if (conf.tabsPanel?.length) Menu.tabsPanelConf = conf.tabsPanel
   else Menu.tabsPanelConf = Utils.cloneArray(TABS_PANEL_MENU)
-  if (conf?.bookmarks?.length) Menu.bookmarksConf = conf.bookmarks
+  if (conf.bookmarks?.length) Menu.bookmarksConf = conf.bookmarks
   else Menu.bookmarksConf = Utils.cloneArray(BOOKMARKS_MENU)
-  if (conf?.bookmarksPanel?.length) Menu.bookmarksPanelConf = conf.bookmarksPanel
+  if (conf.bookmarksPanel?.length) Menu.bookmarksPanelConf = conf.bookmarksPanel
   else Menu.bookmarksPanelConf = Utils.cloneArray(BOOKMARKS_PANEL_MENU)
 }
 
