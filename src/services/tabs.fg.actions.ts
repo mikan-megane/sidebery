@@ -597,11 +597,31 @@ export function cacheTabsData(delay = 300): void {
 }
 let cacheTabsDataTimeout: number | undefined
 
+const saveTabDataTimeouts = new Map<ID, number>()
+
 /**
  * Save tab data to its session storage
  */
-export function saveTabData(tabId: ID, forced?: boolean): void {
+export function saveTabData(tabId: ID, forced?: boolean, delay?: number): void {
   // Logs.info('Tabs.saveTabData', tabId)
+  const timeout = saveTabDataTimeouts.get(tabId)
+  clearTimeout(timeout)
+
+  if (delay) {
+    saveTabDataTimeouts.set(
+      tabId,
+      setTimeout(() => {
+        saveTabDataTimeouts.delete(tabId)
+        _saveTabData(tabId, forced)
+      }, delay)
+    )
+  } else {
+    saveTabDataTimeouts.delete(tabId)
+    _saveTabData(tabId, forced)
+  }
+}
+
+function _saveTabData(tabId: ID, forced?: boolean): void {
   const tab = Tabs.byId[tabId]
   if (!tab) return
 
