@@ -1,7 +1,7 @@
 /* eslint no-console: off */
-const fs = require('fs')
-const path = require('path')
-const { IS_DEV, ADDON_PATH, treeToList, watch, log, logOk, VUE_DIST, logErr } = require('./utils')
+import fs from 'fs'
+import path from 'path'
+import { IS_DEV, ADDON_PATH, treeToList, watch, log, logOk, VUE_DIST, logErr } from './utils.js'
 
 const COPY = {
   './src/manifest.json': {

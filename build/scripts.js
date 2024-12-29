@@ -1,10 +1,10 @@
 /* eslint no-console: off */
-const path = require('path')
-const fs = require('fs')
-const esbuild = require('esbuild')
-const { parse, compileTemplate, compileScript } = require('@vue/compiler-sfc')
-const { IS_DEV, ADDON_PATH, VUE_DIST } = require('./utils')
-const { treeToList, getTSConfig, colorize, watch, log, logOk, logErr } = require('./utils')
+import path from 'path'
+import fs from 'fs'
+import esbuild from 'esbuild'
+import { parse, compileTemplate, compileScript } from '@vue/compiler-sfc'
+import { IS_DEV, ADDON_PATH, VUE_DIST } from './utils.js'
+import { treeToList, getTSConfig, colorize, watch, log, logOk, logErr } from './utils.js'
 
 const forChromium = process.argv.includes('--chromium')
 const SRC_DIR = './src'
