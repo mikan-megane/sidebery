@@ -33,5 +33,5 @@ export function err(msg: string, err?: unknown, ...args: Array<unknown>): void {
   if (err !== undefined) console.error(msg, err)
   else console.error(msg)
 
-  if (args) console.error(...args)
+  if (args.length) console.error(...args)
 }
