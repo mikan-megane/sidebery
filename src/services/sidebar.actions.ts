@@ -114,7 +114,8 @@ export async function loadPanels(): Promise<void> {
 
   // Activate last active panel
   if (!Windows.incognito) {
-    let actPanel: Panel | undefined = Sidebar.panelsById[activeId]
+    let actPanel: Panel | undefined
+    if (activeId !== undefined) actPanel = Sidebar.panelsById[activeId]
     if (!actPanel) actPanel = Sidebar.panels.find(p => p.type === PanelType.tabs)
     if (actPanel) Sidebar.reactive.activePanelId = Sidebar.activePanelId = actPanel.id
     else Sidebar.reactive.activePanelId = Sidebar.activePanelId = Sidebar.panels[0]?.id ?? NOID

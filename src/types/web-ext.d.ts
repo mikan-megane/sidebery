@@ -454,9 +454,9 @@ declare namespace browser {
     function getRecentlyClosed(filter?: Filter): Promise<Session[]>
     function restore(sessionId: string): Promise<Session>
     function setWindowValue<T>(windowId: ID, key: string, value: T): Promise<void>
-    function getWindowValue<T>(id: ID, key: string): Promise<T>
+    function getWindowValue<T>(id: ID, key: string): Promise<T | undefined>
     function setTabValue<T>(tabId: ID, key: string, value: T): Promise<void>
-    function getTabValue<T>(tabId: ID, key: string): Promise<T>
+    function getTabValue<T>(tabId: ID, key: string): Promise<T | undefined>
     function forgetClosedWindow(sessionId: string): Promise<void>
     function forgetClosedTab(windowId: number, sessionId: string): Promise<void>
 
