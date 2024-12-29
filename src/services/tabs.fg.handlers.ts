@@ -1,5 +1,5 @@
 import * as Utils from 'src/utils'
-import { NativeTab, Tab, TabStatus, TabsPanel, RemovedTabInfo } from 'src/types'
+import { NativeTab, Tab, TabStatus, TabsPanel, RemovedTabInfo, TabSessionData } from 'src/types'
 import { NOID, GROUP_URL, ADDON_HOST, GROUP_INITIAL_TITLE } from 'src/defaults'
 import { DEFAULT_CONTAINER_ID } from 'src/defaults'
 import * as Logs from 'src/services/logs'
@@ -94,6 +94,130 @@ function releaseReopenedTabsBuffer(): void {
 
   Tabs.deferredEventHandling.forEach(cb => cb())
   Tabs.deferredEventHandling = []
+}
+
+const DETECT_SESSION_RESTORE_MIN_TABS_COUNT = 3
+const SR_GET_TAB_SESSION_DATA_THRESHOLD = DETECT_SESSION_RESTORE_MIN_TABS_COUNT - 1
+let checkingIfSessionRestoringTimeout: number | undefined
+let prevSRCheckTimestamp = 0
+let suspectTabs = null as Tab[] | null
+let suspectTabsDataQuerying = null as Promise<TabSessionData | undefined>[] | null
+function checkIfSessionRestoring(newTab: Tab) {
+  const srCheckTimestamp = performance.now()
+  let srCheckTimeDif = 0
+  if (prevSRCheckTimestamp !== 0) srCheckTimeDif = srCheckTimestamp - prevSRCheckTimestamp
+  prevSRCheckTimestamp = srCheckTimestamp
+
+  // Start getting tabs session data only if there are enough tabs
+  if (
+    !suspectTabsDataQuerying &&
+    suspectTabs &&
+    suspectTabs.length >= SR_GET_TAB_SESSION_DATA_THRESHOLD
+  ) {
+    suspectTabsDataQuerying = suspectTabs.map(t => {
+      return browser.sessions
+        .getTabValue<TabSessionData | undefined>(t.id, 'data')
+        .catch(() => undefined)
+    })
+  }
+
+  if (!suspectTabs) suspectTabs = [newTab]
+  else suspectTabs.push(newTab)
+
+  // Get tab session data
+  if (suspectTabsDataQuerying) {
+    const dataQuerying = browser.sessions.getTabValue<TabSessionData | undefined>(newTab.id, 'data')
+    suspectTabsDataQuerying.push(dataQuerying.catch(() => undefined))
+  }
+
+  clearTimeout(checkingIfSessionRestoringTimeout)
+  checkingIfSessionRestoringTimeout = setTimeout(async () => {
+    if (
+      suspectTabs &&
+      suspectTabs.length >= DETECT_SESSION_RESTORE_MIN_TABS_COUNT &&
+      suspectTabsDataQuerying
+    ) {
+      let tabsSessionData: (TabSessionData | undefined)[] | undefined
+      try {
+        tabsSessionData = (await Promise.all(suspectTabsDataQuerying)) ?? []
+      } catch (err) {
+        Logs.err('Tabs.checkIfSessionRestoring: Cannot get tabs data from session:', err)
+        tabsSessionData = []
+      }
+
+      tryToRestoreTabsStateFromSessionData(suspectTabs, tabsSessionData)
+    }
+
+    suspectTabs = null
+    prevSRCheckTimestamp = 0
+    suspectTabsDataQuerying = null
+  }, 250 + srCheckTimeDif)
+}
+
+async function tryToRestoreTabsStateFromSessionData(
+  tabs: Tab[],
+  sData: (TabSessionData | undefined)[]
+) {
+  const idsMap: Record<ID, ID> = {}
+
+  for (let data, tab, i = 0; i < tabs.length; i++) {
+    tab = tabs[i]
+    data = sData[i]
+    if (!tab || !data) continue
+
+    // Check if tab was auto-reopened
+    if (tab.reopening && tab.reopening.id !== NOID) {
+      const newTab = Tabs.byId[tab.reopening.id]
+      if (newTab) tab = newTab
+    }
+
+    if (Sidebar.panelsById[data.panelId]) tab.panelId = data.panelId
+    const actualParentId = idsMap[data.parentId]
+    if (actualParentId !== undefined) tab.parentId = actualParentId
+    tab.reactive.folded = tab.folded = !!data.folded
+    tab.reactive.unread = tab.unread = false
+    if (data.customTitle) tab.reactive.customTitle = tab.customTitle = data.customTitle
+    if (data.customColor) tab.reactive.customColor = tab.customColor = data.customColor
+
+    idsMap[data.id] = tab.id
+  }
+
+  // Sort tabs by panels
+  let nonPinnedIndex = Tabs.list.findIndex(t => !t.pinned)
+  if (nonPinnedIndex === -1) nonPinnedIndex = 0
+
+  const sortedTabs: Tab[] = Tabs.list.slice(0, nonPinnedIndex)
+
+  for (const panel of Sidebar.panels) {
+    if (!Utils.isTabsPanel(panel)) continue
+    for (let tab, i = nonPinnedIndex; i < Tabs.list.length; i++) {
+      tab = Tabs.list[i]
+      if (tab?.panelId === panel.id) sortedTabs.push(tab)
+    }
+  }
+  for (let tab, i = 0; i < sortedTabs.length; i++) {
+    tab = sortedTabs[i]
+    if (tab) tab.index = i
+  }
+
+  // Recalc local state
+  Tabs.list = sortedTabs
+  Sidebar.recalcTabsPanels()
+  if (Settings.state.tabsTree) Tabs.updateTabsTree()
+  Sidebar.recalcVisibleTabs()
+
+  // Move native tabs
+  const ids = sortedTabs.map(t => {
+    t.moving = true
+    return t.id
+  })
+  await Utils.GLOBAL_QUEUE.add(browser.tabs.move, ids, { index: nonPinnedIndex }).catch(e => {
+    Logs.err('Tabs.tryToRestoreTabsStateFromSessionData: Move:', e)
+  })
+  sortedTabs.forEach(t => (t.moving = false))
+
+  Tabs.cacheTabsData(640)
+  tabs.forEach(t => Tabs.saveTabData(t.id))
 }
 
 function onTabCreated(nativeTab: NativeTab, attached?: boolean): void {
@@ -238,17 +362,30 @@ function onTabCreated(nativeTab: NativeTab, attached?: boolean): void {
 
   // Find appropriate position using the current settings
   else {
-    const parent = Tabs.byId[tab.openerTabId ?? NOID]
-    if (!attached && parent?.folded && Settings.state.ignoreFoldedParent) {
-      tab.openerTabId = parent.parentId
-    }
-
     panel = Tabs.getPanelForNewTab(tab)
     if (!panel) return Logs.err('Cannot handle new tab: Cannot find target panel')
-    index = Tabs.getIndexForNewTab(panel, tab)
-    if (!autoGroupTab) {
-      if (!Settings.state.groupOnOpen) tab.openerTabId = undefined
-      else tab.openerTabId = Tabs.getParentForNewTab(panel, tab.openerTabId)
+
+    // It's probably a session restore
+    if (
+      !attached &&
+      ((tab.discarded && tab.url !== 'about:blank') || (tab.active && Tabs.activeId === tab.id))
+    ) {
+      checkIfSessionRestoring(tab)
+      index = tab.index
+    }
+
+    // Not a session restore, getting tab position...
+    else {
+      const parent = Tabs.byId[tab.openerTabId ?? NOID]
+      if (!attached && parent?.folded && Settings.state.ignoreFoldedParent) {
+        tab.openerTabId = parent.parentId
+      }
+
+      index = Tabs.getIndexForNewTab(panel, tab)
+      if (!autoGroupTab) {
+        if (!Settings.state.groupOnOpen) tab.openerTabId = undefined
+        else tab.openerTabId = Tabs.getParentForNewTab(panel, tab.openerTabId)
+      }
     }
   }
 
@@ -257,8 +394,7 @@ function onTabCreated(nativeTab: NativeTab, attached?: boolean): void {
     tab.dstPanelId = panel.id
     Tabs.movingTabs.push(tab.id)
     tab.moving = true
-    browser.tabs
-      .move(tab.id, { index })
+    Utils.GLOBAL_QUEUE.add(browser.tabs.move, tab.id, { index })
       .catch(err => {
         Logs.err('Tabs.onTabCreated: Cannot move the tab to the correct position:', err)
       })
@@ -402,7 +538,7 @@ function onTabCreated(nativeTab: NativeTab, attached?: boolean): void {
     }
   }
 
-  Tabs.saveTabData(tab.id)
+  Tabs.saveTabData(tab.id, false, 250)
   Tabs.cacheTabsData()
 
   // Update openerTabId
@@ -932,6 +1068,7 @@ function onTabRemoved(tabId: ID, info: browser.tabs.RemoveInfo, detached?: boole
         newTab.reactive.folded = tab.folded
         newTab.isParent = tab.isParent
         newTab.reactive.isParent = tab.isParent
+        // TODO: custom title/color
         Tabs.forEachDescendant(tab, t => {
           if (t.parentId === tab.id) {
             t.parentId = newTab.id
@@ -1372,8 +1509,8 @@ function onTabActivated(info: browser.tabs.ActiveInfo): void {
       return
     }
 
-    Logs.err('Tabs.onTabActivated: Cannot get target tab', info.tabId)
-    return Tabs.reinitTabs()
+    Tabs.activeId = info.tabId
+    return
   }
 
   // Update previous active tab and store his id

@@ -257,7 +257,7 @@ function onTabActivated(info: browser.tabs.ActiveInfo): void {
   if (prevTab) prevTab.active = false
 
   // Update tab's url
-  if (tab.reloadOnActivation) {
+  if (tab?.reloadOnActivation) {
     tab.reloadOnActivation = undefined
     browser.tabs.reload(tab.id)
   }
