@@ -298,6 +298,12 @@ function onTabCreated(nativeTab: NativeTab, attached?: boolean): void {
     const oldTab = Tabs.list[tab.index]
     if (oldTab?.reopening) {
       oldTab.reopening.id = tab.id
+
+      // Restore some props
+      tab.customColor = oldTab.customColor
+      tab.reactive.customColor = oldTab.customColor ?? null
+      tab.customTitle = oldTab.customTitle
+      tab.reactive.customTitle = oldTab.customTitle ?? null
     }
   }
 
@@ -1068,7 +1074,6 @@ function onTabRemoved(tabId: ID, info: browser.tabs.RemoveInfo, detached?: boole
         newTab.reactive.folded = tab.folded
         newTab.isParent = tab.isParent
         newTab.reactive.isParent = tab.isParent
-        // TODO: custom title/color
         Tabs.forEachDescendant(tab, t => {
           if (t.parentId === tab.id) {
             t.parentId = newTab.id
