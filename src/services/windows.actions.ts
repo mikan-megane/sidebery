@@ -150,6 +150,7 @@ export async function createWithTabs(
 
   // Create window
   const defaultContainerId = conf.incognito ? PRIVATE_CONTAINER_ID : DEFAULT_CONTAINER_ID
+  const isPrivate = conf.incognito
   let window: browser.windows.Window
   try {
     window = await browser.windows.create(conf)
@@ -195,7 +196,7 @@ export async function createWithTabs(
 
       if (info.url && !info.pinned && !info.active) conf.discarded = true
       if (info.title && conf.discarded) conf.title = info.title
-      if (info.container !== undefined && Containers.reactive.byId[info.container]) {
+      if (!isPrivate && info.container !== undefined && Containers.reactive.byId[info.container]) {
         conf.cookieStoreId = info.container
       }
 
