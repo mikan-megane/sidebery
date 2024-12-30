@@ -571,6 +571,7 @@ function onNavDragStart(e: DragEvent, item: NavItem) {
         container: tab.cookieStoreId,
         customColor: tab.customColor,
         customTitle: tab.customTitle,
+        folded: tab.folded,
       })
     }
   } else {

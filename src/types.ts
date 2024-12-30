@@ -194,6 +194,7 @@ export interface DragItem {
   container?: string
   customColor?: string
   customTitle?: string
+  folded?: boolean
 }
 
 export interface DragInfo {

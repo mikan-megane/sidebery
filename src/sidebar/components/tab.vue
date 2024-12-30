@@ -487,6 +487,7 @@ function onDragStart(e: DragEvent): void {
         container: tab.cookieStoreId,
         customTitle: tab.customTitle,
         customColor: tab.customColor,
+        folded: tab.folded,
       })
     }
   }
