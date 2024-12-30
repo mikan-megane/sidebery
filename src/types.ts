@@ -192,6 +192,8 @@ export interface DragItem {
   pinned?: boolean
   parentId?: ID
   container?: string
+  customColor?: string
+  customTitle?: string
 }
 
 export interface DragInfo {

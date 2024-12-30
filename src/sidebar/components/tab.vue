@@ -485,6 +485,8 @@ function onDragStart(e: DragEvent): void {
         title: tab.title,
         parentId: tab.parentId,
         container: tab.cookieStoreId,
+        customTitle: tab.customTitle,
+        customColor: tab.customColor,
       })
     }
   }

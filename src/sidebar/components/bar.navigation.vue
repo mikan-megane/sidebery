@@ -569,6 +569,8 @@ function onNavDragStart(e: DragEvent, item: NavItem) {
         title: tab.title,
         parentId: tab.parentId,
         container: tab.cookieStoreId,
+        customColor: tab.customColor,
+        customTitle: tab.customTitle,
       })
     }
   } else {
