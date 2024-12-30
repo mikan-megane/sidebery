@@ -176,18 +176,15 @@ export async function createWithTabs(
 
   // Process the tabs
   const processingTabs: Promise<browser.tabs.Tab | browser.tabs.Tab[]>[] = []
-  let index = 0
-  for (const info of tabsInfo) {
+  if (moveTabs) {
     // Move
-    if (moveTabs) {
-      // TODO: Try to call it once with array of ids
-      processingTabs.push(browser.tabs.move(info.id, { index: index++, windowId: window.id }))
-
-      if (info.active) activeTabId = info.id
-    }
-
+    activeTabId = tabsInfo.find(t => t.active)?.id ?? NOID
+    const ids = tabsInfo.map(t => t.id)
+    processingTabs.push(browser.tabs.move(ids, { index: 0, windowId: window.id }))
+  } else {
     // Create
-    else {
+    let index = 0
+    for (const info of tabsInfo) {
       type CreateProps = browser.tabs.CreateProperties
       const conf: CreateProps = { url: info.url, windowId: window.id, index: index++ }
       if (info.pinned) conf.pinned = true
