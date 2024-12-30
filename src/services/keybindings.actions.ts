@@ -262,6 +262,28 @@ function onCmd(name: string): void {
   else if (name === 'sort_panel_tabs_by_time_asc') onKeySortTabs(SortBy.ATime, 1, true, true)
   else if (name === 'sort_panel_tabs_by_time_des') onKeySortTabs(SortBy.ATime, -1, true, true)
   else if (name === 'open_panel_config') onKeyOpenPanelConfig()
+  else if (name === 'copy_title') onKeyCopyTitle()
+  else if (name === 'copy_url') onKeyCopyUrl()
+}
+
+function onKeyCopyUrl() {
+  if (Selection.isTabs()) {
+    Tabs.copyUrls(Selection.get())
+  } else if (Selection.isBookmarks()) {
+    Bookmarks.copyUrls(Selection.get())
+  } else {
+    Tabs.copyUrls([Tabs.activeId])
+  }
+}
+
+function onKeyCopyTitle() {
+  if (Selection.isTabs()) {
+    Tabs.copyTitles(Selection.get())
+  } else if (Selection.isBookmarks()) {
+    Bookmarks.copyTitles(Selection.get())
+  } else {
+    Tabs.copyTitles([Tabs.activeId])
+  }
 }
 
 function onKeyOpenPanelConfig() {

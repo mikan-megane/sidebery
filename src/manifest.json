@@ -426,6 +426,12 @@
     },
     "open_panel_config": {
       "description": "__MSG_KbOpenPanelConfig__"
+    },
+    "copy_title": {
+      "description": "__MSG_KbCopyTitle__"
+    },
+    "copy_url": {
+      "description": "__MSG_KbCopyUrl__"
     }
   },
   "browser_action": {

@@ -1101,6 +1101,12 @@
   "KbOpenPanelConfig": {
     "en": "Open panel config"
   },
+  "KbCopyTitle": {
+    "en": "Copy titles of selected tabs/bookmarks or active tab"
+  },
+  "KbCopyUrl": {
+    "en": "Copy URLs of selected tabs/bookmarks or active tab"
+  },
 
   "proxy_popup_title_prefix": {
     "en": "Proxy for \"",
