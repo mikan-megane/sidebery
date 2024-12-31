@@ -21,6 +21,7 @@ export const Info = {
   isUrl: false,
   isBg: false,
   isSearch: false,
+  isEditing: false,
   isPreview: false,
   isSync: false,
   isPanelConfig: false,

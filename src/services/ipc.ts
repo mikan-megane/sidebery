@@ -72,6 +72,7 @@ let _localTabId = NOID
 export const state = {
   bgConnection: undefined as ConnectionInfo | undefined,
   searchPopupConnections: new Map<ID, ConnectionInfo>(),
+  editingPopupConnections: new Map<ID, ConnectionInfo>(),
   sidebarConnections: new Map<ID, ConnectionInfo>(),
   setupPageConnections: new Map<ID, ConnectionInfo>(),
   groupPageConnections: new Map<ID, ConnectionInfo>(),
@@ -101,6 +102,7 @@ export function isConnected(type: InstanceType, id = NOID): boolean {
   else if (type === InstanceType.sidebar) return state.sidebarConnections.has(id)
   else if (type === InstanceType.setup) return state.setupPageConnections.has(id)
   else if (type === InstanceType.search) return state.searchPopupConnections.has(id)
+  else if (type === InstanceType.editing) return state.editingPopupConnections.has(id)
   else if (type === InstanceType.group) return state.groupPageConnections.has(id)
   else if (type === InstanceType.sync) return state.syncConnections.has(id)
   else if (type === InstanceType.panelConfig) return state.panelConfigConnections.has(id)
@@ -113,6 +115,7 @@ export function getConnection(type: InstanceType, id: ID): ConnectionInfo | unde
   else if (type === InstanceType.sidebar) return state.sidebarConnections.get(id)
   else if (type === InstanceType.setup) return state.setupPageConnections.get(id)
   else if (type === InstanceType.search) return state.searchPopupConnections.get(id)
+  else if (type === InstanceType.editing) return state.editingPopupConnections.get(id)
   else if (type === InstanceType.group) return state.groupPageConnections.get(id)
   else if (type === InstanceType.sync) return state.syncConnections.get(id)
   else if (type === InstanceType.panelConfig) return state.panelConfigConnections.get(id)
@@ -120,11 +123,12 @@ export function getConnection(type: InstanceType, id: ID): ConnectionInfo | unde
 }
 
 function removeConnection(type: InstanceType, id: ID) {
-  Logs.info('IPC.REMOVE:', getInstanceName(type), id)
+  // Logs.info('IPC.REMOVE:', getInstanceName(type), id)
   if (type === InstanceType.bg) state.bgConnection = undefined
   else if (type === InstanceType.sidebar) state.sidebarConnections.delete(id)
   else if (type === InstanceType.setup) state.setupPageConnections.delete(id)
   else if (type === InstanceType.search) state.searchPopupConnections.delete(id)
+  else if (type === InstanceType.editing) state.editingPopupConnections.delete(id)
   else if (type === InstanceType.sync) state.syncConnections.delete(id)
   else if (type === InstanceType.panelConfig) state.panelConfigConnections.delete(id)
   else if (type === InstanceType.group) state.groupPageConnections.delete(id)
@@ -144,6 +148,7 @@ function createConnection(type: InstanceType, id: ID): ConnectionInfo {
   else if (type === InstanceType.sidebar) state.sidebarConnections.set(id, connection)
   else if (type === InstanceType.setup) state.setupPageConnections.set(id, connection)
   else if (type === InstanceType.search) state.searchPopupConnections.set(id, connection)
+  else if (type === InstanceType.editing) state.editingPopupConnections.set(id, connection)
   else if (type === InstanceType.group) state.groupPageConnections.set(id, connection)
   else if (type === InstanceType.sync) state.syncConnections.set(id, connection)
   else if (type === InstanceType.panelConfig) state.panelConfigConnections.set(id, connection)
@@ -167,6 +172,7 @@ export function connectTo(
   const toSidebar = dstType === InstanceType.sidebar
   const toSetup = dstType === InstanceType.setup
   const toSearch = dstType === InstanceType.search
+  const toEditing = dstType === InstanceType.editing
   const toSync = dstType === InstanceType.sync
   const toPanelConfig = dstType === InstanceType.panelConfig
   const toGroup = dstType === InstanceType.group
@@ -176,8 +182,9 @@ export function connectTo(
   // Check destination id
   let id
   if (toBg || toPreview) id = NOID
-  else if ((toSidebar || toSearch || toSync || toPanelConfig) && dstWinId !== NOID) id = dstWinId
-  else if ((toSetup || toGroup) && dstTabId !== NOID) id = dstTabId
+  else if ((toSidebar || toSearch || toEditing || toSync || toPanelConfig) && dstWinId !== NOID) {
+    id = dstWinId
+  } else if ((toSetup || toGroup) && dstTabId !== NOID) id = dstTabId
   else {
     Logs.err(`${dbgPrefix} No destination id`)
     return
@@ -187,7 +194,7 @@ export function connectTo(
   const portNameData: PortNameData = { srcType, dstType }
   if (srcWinId !== NOID) portNameData.srcWinId = srcWinId
   if (srcTabId !== NOID) portNameData.srcTabId = srcTabId
-  if (dstWinId !== NOID && (toSidebar || toSearch || toSync || toPanelConfig)) {
+  if (dstWinId !== NOID && (toSidebar || toSearch || toEditing || toSync || toPanelConfig)) {
     portNameData.dstWinId = dstWinId
   }
   if (dstTabId !== NOID && (toSetup || toGroup)) portNameData.dstTabId = dstTabId
@@ -274,7 +281,7 @@ export function connectTo(
   // Reset reconnection count after 5s
   clearTimeout(connection.reconnectingTimeout)
   connection.reconnectingTimeout = setTimeout(() => {
-    Logs.info(`${dbgPrefix} Reseting reconnection count:`, connection.reconnectCount)
+    // Logs.info(`${dbgPrefix} Reseting reconnection count:`, connection.reconnectCount)
     connection.reconnectCount = 0
   }, RESET_RECON_COUNT_TIMEOUT)
 
@@ -304,7 +311,7 @@ export function connectTo(
     timeout,
     portName: '',
     ok: () => {
-      Logs.info(`IPC.connectTo(${getInstanceName(dstType)}): CONFIRMED`)
+      // Logs.info(`IPC.connectTo(${getInstanceName(dstType)}): CONFIRMED`)
       connection.state = ConnectionState.Ready
       if (connectionIsNew) {
         const handlers = connectionHandlers.get(dstType)
@@ -427,6 +434,17 @@ export function sendToSearchPopup<T extends InstanceType.search, A extends Actio
 }
 
 /**
+ * Sends message to editing popup.
+ */
+export function sendToEditingPopup<T extends InstanceType.editing, A extends ActionsKeys<T>>(
+  dstWinId: ID,
+  action: A,
+  ...args: Parameters<ActionsType<T>[A]>
+): void {
+  send({ dstType: InstanceType.editing, dstWinId, action, args })
+}
+
+/**
  * Sends message to background.
  */
 export function bg<T extends InstanceType.bg, A extends ActionsKeys<T>>(
@@ -460,6 +478,7 @@ export function send<T extends InstanceType, A extends ActionsKeys<T>>(msg: Mess
   if (msg.dstType === InstanceType.sidebar && msg.dstWinId !== undefined) id = msg.dstWinId
   else if (msg.dstType === InstanceType.setup && msg.dstTabId !== undefined) id = msg.dstTabId
   else if (msg.dstType === InstanceType.search && msg.dstWinId !== undefined) id = msg.dstWinId
+  else if (msg.dstType === InstanceType.editing && msg.dstWinId !== undefined) id = msg.dstWinId
   else if (msg.dstType === InstanceType.group && msg.dstTabId !== undefined) id = msg.dstTabId
 
   // Get port
@@ -521,6 +540,7 @@ export async function request<T extends InstanceType, A extends ActionsKeys<T>>(
   if (dstType === InstanceType.sidebar && msg.dstWinId !== undefined) id = msg.dstWinId
   else if (dstType === InstanceType.setup && msg.dstTabId !== undefined) id = msg.dstTabId
   else if (dstType === InstanceType.search && msg.dstWinId !== undefined) id = msg.dstWinId
+  else if (dstType === InstanceType.editing && msg.dstWinId !== undefined) id = msg.dstWinId
   else if (dstType === InstanceType.sync && msg.dstWinId !== undefined) id = msg.dstWinId
   else if (dstType === InstanceType.panelConfig && msg.dstWinId !== undefined) id = msg.dstWinId
   else if (dstType === InstanceType.group && msg.dstTabId !== undefined) id = msg.dstTabId
@@ -668,6 +688,7 @@ function onConnect(port: browser.runtime.Port) {
   const fromSidebar = srcType === InstanceType.sidebar
   const fromSetup = srcType === InstanceType.setup
   const fromSearch = srcType === InstanceType.search
+  const fromEditing = srcType === InstanceType.editing
   const fromGroup = srcType === InstanceType.group
   const fromSync = srcType === InstanceType.sync
   const fromPanelConfig = srcType === InstanceType.panelConfig
@@ -675,6 +696,7 @@ function onConnect(port: browser.runtime.Port) {
   if (fromSidebar && srcWinId === NOID) return Logs.err('IPC.onConnect: Sidebar: No srcWinId')
   if (fromSetup && srcTabId === NOID) return Logs.err('IPC.onConnect: Setup page: No srcTabId')
   if (fromSearch && srcWinId === NOID) return Logs.err('IPC.onConnect: Search popup: No srcWinId')
+  if (fromEditing && srcWinId === NOID) return Logs.err('IPC.onConnect: Editing popup: No srcWinId')
   if (fromSync && srcWinId === NOID) return Logs.err('IPC.onConnect: Sync: No srcWinId')
   if (fromPanelConfig && srcWinId === NOID) return Logs.err('IPC.onConnect: PanelConf: No srcWinId')
   if (fromGroup && srcTabId === NOID) return Logs.err('IPC.onConnect: Group page: No srcTabId')
@@ -683,7 +705,10 @@ function onConnect(port: browser.runtime.Port) {
   let id
   if (fromBg || fromPreview) {
     id = NOID
-  } else if ((fromSidebar || fromSearch || fromSync || fromPanelConfig) && srcWinId !== NOID) {
+  } else if (
+    (fromSidebar || fromSearch || fromEditing || fromSync || fromPanelConfig) &&
+    srcWinId !== NOID
+  ) {
     id = srcWinId
   } else if ((fromSetup || fromGroup) && srcTabId !== NOID) {
     id = srcTabId
@@ -764,6 +789,7 @@ export function onConnected(type: InstanceType, cb: (winOrTabId: ID) => void) {
   if (type === InstanceType.sidebar) state.sidebarConnections.forEach(con => cb(con.id))
   if (type === InstanceType.setup) state.setupPageConnections.forEach(con => cb(con.id))
   if (type === InstanceType.search) state.searchPopupConnections.forEach(con => cb(con.id))
+  if (type === InstanceType.editing) state.editingPopupConnections.forEach(con => cb(con.id))
   if (type === InstanceType.sync) state.syncConnections.forEach(con => cb(con.id))
   if (type === InstanceType.panelConfig) state.panelConfigConnections.forEach(con => cb(con.id))
   if (type === InstanceType.group) state.groupPageConnections.forEach(con => cb(con.id))

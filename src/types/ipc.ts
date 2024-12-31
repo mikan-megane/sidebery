@@ -22,6 +22,7 @@ export const enum InstanceType {
   preview = 7,
   sync = 8,
   panelConfig = 9,
+  editing = 10,
 }
 
 export interface Message<T extends InstanceType, A extends ActionsKeys<T>> {
@@ -100,6 +101,10 @@ export type SidebarActions = {
   onOutsideSearchBookmarks: () => void
   onOutsideSearchHistory: () => void
 
+  onOutsideEditingInput: (value: string) => void
+  onOutsideEditingExit: () => void
+  onOutsideEditingEnter: () => void
+
   moveTabsToThisWin: (tabs: Tab[], dst?: DstPlaceInfo) => Promise<boolean>
   openTabs: (items: ItemInfo[], dst: DstPlaceInfo) => Promise<boolean>
 
@@ -111,10 +116,15 @@ export type SidebarActions = {
   connectTo: (dstType: InstanceType, dstWinId?: ID, dstTabId?: ID) => void
 
   getSearchQuery: () => string
+  getEditingValue: () => string
   updWindowPreface: typeof Windows.updWindowPreface
 }
 
 export type SearchPopupActions = {
+  closePopup: () => void
+}
+
+export type EditingPopupAction = {
   closePopup: () => void
 }
 
@@ -129,6 +139,7 @@ export type Actions =
   | SettingsActions
   | SidebarActions
   | SearchPopupActions
+  | EditingPopupAction
   | PreviewActions
   | PanelConfigPopupActions
 
@@ -140,11 +151,13 @@ export type ActionsKeys<T> = T extends InstanceType.bg
       ? keyof SidebarActions
       : T extends InstanceType.search
         ? keyof SearchPopupActions
-        : T extends InstanceType.preview
-          ? keyof PreviewActions
-          : T extends InstanceType.panelConfig
-            ? keyof PanelConfigPopupActions
-            : never
+        : T extends InstanceType.editing
+          ? keyof EditingPopupAction
+          : T extends InstanceType.preview
+            ? keyof PreviewActions
+            : T extends InstanceType.panelConfig
+              ? keyof PanelConfigPopupActions
+              : never
 
 export type ActionsType<T> = T extends InstanceType.bg
   ? BgActions
@@ -154,8 +167,10 @@ export type ActionsType<T> = T extends InstanceType.bg
       ? SidebarActions
       : T extends InstanceType.search
         ? SearchPopupActions
-        : T extends InstanceType.preview
-          ? PreviewActions
-          : T extends InstanceType.panelConfig
-            ? PanelConfigPopupActions
-            : any
+        : T extends InstanceType.editing
+          ? EditingPopupAction
+          : T extends InstanceType.preview
+            ? PreviewActions
+            : T extends InstanceType.panelConfig
+              ? PanelConfigPopupActions
+              : any

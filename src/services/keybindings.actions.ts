@@ -249,6 +249,7 @@ function onCmd(name: string): void {
   else if (name === 'group_tabs') onKeyGroupTabs(false)
   else if (name === 'group_tabs_act') onKeyGroupTabs(true)
   else if (name === 'flatten_tabs') onKeyFlattenTabs()
+  else if (name === 'edit_title') onKeyEditTitle()
   else if (name === 'sel_child_tabs') onKeySelChildTabs()
   else if (name === 'sort_tabs_by_title_asc') onKeySortTabs(SortBy.Title, 1)
   else if (name === 'sort_tabs_by_title_des') onKeySortTabs(SortBy.Title, -1)
@@ -1344,6 +1345,16 @@ function onKeyFlattenTabs() {
   if (!ids.length) return
 
   Tabs.flattenTabs(ids)
+}
+
+function onKeyEditTitle() {
+  const ids = Selection.isTabs() ? Selection.get() : [Tabs.activeId]
+  if (!ids.length) return
+
+  if (Selection.isTabs()) Selection.resetSelection()
+
+  if (Tabs.byId[Tabs.editableTabId]) Tabs.onOutsideEditingExit()
+  else Tabs.editTabTitle(ids)
 }
 
 function onKeySelChildTabs() {

@@ -276,6 +276,9 @@
     "zh_TW": "樹序列化（壓平選定分頁所在的樹）",
     "ja": "選択したタブをフラット化"
   },
+  "KbEditTitle": {
+    "en": "Edit title"
+  },
   "KbOpenNewTabInCurrPanel": {
     "en": "Open a new tab in the active panel",
     "de": "Öffne neuen Tab im aktiven Panel",

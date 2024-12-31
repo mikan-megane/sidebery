@@ -59,6 +59,9 @@ async function main(): Promise<void> {
     onOutsideSearchExit: Search.onOutsideSearchExit,
     onOutsideSearchBookmarks: Search.bookmarks,
     onOutsideSearchHistory: Search.history,
+    onOutsideEditingInput: Tabs.onOutsideEditingInput,
+    onOutsideEditingEnter: Tabs.onOutsideEditingEnter,
+    onOutsideEditingExit: Tabs.onOutsideEditingExit,
     notifyAboutNewSnapshot: Snapshots.notifyAboutNewSnapshot,
     notifyAboutWrongProxyAuthData: Notifications.notifyAboutWrongProxyAuthData,
     notify: Notifications.notify,
@@ -66,6 +69,7 @@ async function main(): Promise<void> {
     storageChanged: Store.storageChangeListener,
     connectTo: IPC.connectTo,
     getSearchQuery: Search.getSearchQuery,
+    getEditingValue: Tabs.getEditingValue,
     updWindowPreface: Windows.updWindowPreface,
   })
 
@@ -146,6 +150,11 @@ async function main(): Promise<void> {
   Keybindings.setupListeners()
 
   Search.init()
+
+  IPC.onDisconnected(InstanceType.editing, (id: ID) => {
+    if (Windows.id !== id) return
+    if (Tabs.byId[Tabs.editableTabId]) Tabs.onOutsideEditingExit()
+  })
 
   if (Settings.state.updateSidebarTitle) Sidebar.updateSidebarTitle(0)
 

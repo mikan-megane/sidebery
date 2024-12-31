@@ -388,6 +388,9 @@
     "flatten_tabs": {
       "description": "__MSG_KbFlattenTabs__"
     },
+    "edit_title": {
+      "description": "__MSG_KbEditTitle__"
+    },
     "sel_child_tabs": {
       "description": "__MSG_KbSelChildTabs__"
     },
