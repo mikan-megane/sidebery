@@ -29,6 +29,7 @@
     KeybindingField(:keybinding="Keybindings.reactive.byName.switch_to_panel_7")
     KeybindingField(:keybinding="Keybindings.reactive.byName.switch_to_panel_8")
     KeybindingField(:keybinding="Keybindings.reactive.byName.switch_to_panel_9")
+    KeybindingField(:keybinding="Keybindings.reactive.byName.switch_to_prev_panel")
 
   section
     h2 {{translate('settings.kb_scroll_active_panel')}}

@@ -250,6 +250,9 @@
     "switch_to_panel_9": {
       "description": "__MSG_KbSwitchToPanel9__"
     },
+    "switch_to_prev_panel": {
+      "description": "__MSG_KbSwitchToPrevPanel__"
+    },
     "move_tabs_to_panel_0": {
       "description": "__MSG_KbMoveTabsToPanel0__"
     },

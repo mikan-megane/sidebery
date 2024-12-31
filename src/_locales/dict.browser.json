@@ -203,6 +203,9 @@
     "zh_TW": "切換到第十個面板",
     "ja": "10番目のパネルに切り替え"
   },
+  "KbSwitchToPrevPanel": {
+    "en": "Switch to previously active panel"
+  },
   "KbScrollToActivePanelTop": {
     "en": "Scroll to the top of the active panel",
     "de": "Zum Anfang des aktiven Panels scrollen",

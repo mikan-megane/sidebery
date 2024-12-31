@@ -217,7 +217,8 @@ function onCmd(name: string): void {
   } else if (name.startsWith('switch_to_panel_')) {
     const panel = Sidebar.panels[parseInt(name.slice(-1))]
     if (panel) Sidebar.switchToPanel(panel.id)
-  } else if (name === 'move_tabs_to_panel_start') onKeyMoveTabsInPanel('start', true)
+  } else if (name === 'switch_to_prev_panel') onKeySwitchToPrevPanel()
+  else if (name === 'move_tabs_to_panel_start') onKeyMoveTabsInPanel('start', true)
   else if (name === 'move_tabs_to_panel_end') onKeyMoveTabsInPanel('end', true)
   else if (name.startsWith('move_tabs_to_panel_')) onKeyMoveTabsToPanel(parseInt(name[19]))
   else if (name === 'search') {
@@ -264,6 +265,14 @@ function onCmd(name: string): void {
   else if (name === 'open_panel_config') onKeyOpenPanelConfig()
   else if (name === 'copy_title') onKeyCopyTitle()
   else if (name === 'copy_url') onKeyCopyUrl()
+}
+
+function onKeySwitchToPrevPanel() {
+  if (Sidebar.lastActivePanelId === Sidebar.activePanelId) return
+  const prevPanel = Sidebar.panelsById[Sidebar.lastActivePanelId]
+  if (!prevPanel) return
+
+  Sidebar.activatePanel(Sidebar.lastActivePanelId)
 }
 
 function onKeyCopyUrl() {
