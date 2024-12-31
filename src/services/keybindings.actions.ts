@@ -278,8 +278,10 @@ function onKeySwitchToPrevPanel() {
 function onKeyCopyUrl() {
   if (Selection.isTabs()) {
     Tabs.copyUrls(Selection.get())
+    Selection.resetSelection()
   } else if (Selection.isBookmarks()) {
     Bookmarks.copyUrls(Selection.get())
+    Selection.resetSelection()
   } else {
     Tabs.copyUrls([Tabs.activeId])
   }
@@ -288,8 +290,10 @@ function onKeyCopyUrl() {
 function onKeyCopyTitle() {
   if (Selection.isTabs()) {
     Tabs.copyTitles(Selection.get())
+    Selection.resetSelection()
   } else if (Selection.isBookmarks()) {
     Bookmarks.copyTitles(Selection.get())
+    Selection.resetSelection()
   } else {
     Tabs.copyTitles([Tabs.activeId])
   }
