@@ -1,6 +1,14 @@
 import * as Utils from 'src/utils'
 import { NOID } from 'src/defaults'
-import { Command, CommandUpdateDetails, ItemBounds, Tab, Bookmark, MenuType } from 'src/types'
+import {
+  Command,
+  CommandUpdateDetails,
+  ItemBounds,
+  Tab,
+  Bookmark,
+  MenuType,
+  SubPanelType,
+} from 'src/types'
 import { InstanceType, ItemInfo, SelectionType, ItemBoundsType, TabsPanel } from 'src/types'
 import { DstPlaceInfo, SrcPlaceInfo } from 'src/types'
 import { Keybindings } from 'src/services/keybindings'
@@ -526,7 +534,14 @@ function onKeySelect(dir: number): void {
     return
   }
 
-  const activePanel = Sidebar.panelsById[Sidebar.activePanelId]
+  let activePanel = Sidebar.panelsById[Sidebar.activePanelId]
+  if (
+    Sidebar.subPanelActive &&
+    Sidebar.subPanelType === SubPanelType.Bookmarks &&
+    Sidebar.subPanels.bookmarks
+  ) {
+    activePanel = Sidebar.subPanels.bookmarks
+  }
 
   if (Utils.isTabsPanel(activePanel)) {
     let tabs
