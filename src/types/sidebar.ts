@@ -264,6 +264,9 @@ export interface BookmarksPanel extends PanelCommonProps, BookmarksPanelConfig {
   component?: BookmarksPanelComponent
 
   reactive: BookmarksPanelReactiveProps
+
+  pathUp?: () => boolean
+  pathDown?: () => boolean
 }
 
 export interface BookmarksPanelReactiveProps extends PanelCommonReactiveProps {

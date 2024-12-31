@@ -438,6 +438,9 @@
     },
     "copy_url": {
       "description": "__MSG_KbCopyUrl__"
+    },
+    "open_bookmarks_sub_panel": {
+      "description": "__MSG_KbOpenBookmarksSubPanel__"
     }
   },
   "browser_action": {

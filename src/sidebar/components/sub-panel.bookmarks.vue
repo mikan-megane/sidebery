@@ -71,6 +71,9 @@ const hostPanel = computed(() => {
 
 onMounted(() => {
   open()
+
+  props.bookmarksPanel.pathUp = goUp
+  props.bookmarksPanel.pathDown = goDown
 })
 
 const tree = computed(() => {
@@ -149,17 +152,18 @@ async function loadBookmarks(): Promise<void> {
   state.loading = false
 }
 
-function goUp(): void {
-  if (state.rootFolderId === BKM_ROOT_ID) return
+function goUp(): boolean {
+  if (state.rootFolderId === BKM_ROOT_ID) return false
   props.bookmarksPanel.reactive.rootOffset++
   updateRootTree()
 
   if (DnD.items.length) {
     nextTick(() => Sidebar.updateBounds())
   }
+  return true
 }
 
-function goDown(): void {
+function goDown(): boolean {
   props.bookmarksPanel.reactive.rootOffset--
   if (props.bookmarksPanel.reactive.rootOffset < 0) props.bookmarksPanel.reactive.rootOffset = 0
   checkRootFolder()
@@ -168,6 +172,9 @@ function goDown(): void {
   if (DnD.items.length) {
     nextTick(() => Sidebar.updateBounds())
   }
+
+  if (props.bookmarksPanel.reactive.rootOffset) return true
+  else return false
 }
 
 function onDrop(): void {

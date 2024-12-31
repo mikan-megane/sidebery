@@ -186,6 +186,7 @@ function onCmd(name: string): void {
   else if (name === 'activate') onKeyActivate()
   else if (name === 'reset_selection') {
     if (Windows.reactive.choosing) Windows.closeWindowsPopup()
+    if (!Selection.isSet() && Sidebar.subPanelActive) Sidebar.closeSubPanel()
     Selection.resetSelection()
     Menu.close()
     if (Sidebar.reactive.hiddenPanelsPopup) Sidebar.reactive.hiddenPanelsPopup = false
@@ -274,6 +275,23 @@ function onCmd(name: string): void {
   else if (name === 'open_panel_config') onKeyOpenPanelConfig()
   else if (name === 'copy_title') onKeyCopyTitle()
   else if (name === 'copy_url') onKeyCopyUrl()
+  else if (name === 'open_bookmarks_sub_panel') onKeyOpenBookmarksSubPanel()
+}
+
+function onKeyOpenBookmarksSubPanel() {
+  if (!Settings.state.subPanelBookmarks) return
+
+  const actPanel = Sidebar.panelsById[Sidebar.activePanelId]
+  if (!Utils.isTabsPanel(actPanel)) return
+
+  if (Sidebar.subPanelActive && Sidebar.subPanelType === SubPanelType.Bookmarks) {
+    const bookmarksPanel = Sidebar.subPanels.bookmarks
+    let rootPathChanged = false
+    if (bookmarksPanel && bookmarksPanel.pathUp) rootPathChanged = bookmarksPanel.pathUp()
+    if (!rootPathChanged) Sidebar.closeSubPanel()
+  } else {
+    Sidebar.openSubPanel(SubPanelType.Bookmarks, actPanel)
+  }
 }
 
 function onKeySwitchToPrevPanel() {

@@ -13,6 +13,7 @@
     KeybindingField(:keybinding="Keybindings.reactive.byName.open_panel_config")
     KeybindingField(:keybinding="Keybindings.reactive.byName.copy_title")
     KeybindingField(:keybinding="Keybindings.reactive.byName.copy_url")
+    KeybindingField(:keybinding="Keybindings.reactive.byName.open_bookmarks_sub_panel")
 
   section
     h2 {{translate('settings.kb_switching_panel')}}
