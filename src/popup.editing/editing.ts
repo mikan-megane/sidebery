@@ -7,7 +7,7 @@ import { Windows } from 'src/services/windows'
 import { Logs } from 'src/services/_services'
 
 const VERTICAL_MARGINS = 22
-const el = document.getElementById('textInput') as HTMLInputElement | null
+const el = document.getElementById('text_input') as HTMLInputElement | null
 
 el?.focus()
 
@@ -28,8 +28,35 @@ el?.addEventListener('contextmenu', (e: Event) => {
   if (ctxMenuKeyPressed !== undefined) e.preventDefault()
 })
 
+let initWidth: number | undefined
+let placeholderHeight: number | undefined
+let glitchFixTimeout: number | undefined
+let prevHeight: number | undefined
 el?.addEventListener('input', (e: Event) => {
+  clearTimeout(glitchFixTimeout)
+
   if (Windows.id !== undefined) IPC.sendToSidebar(Windows.id, 'onOutsideEditingInput', el.value)
+
+  el.style.height = '1px'
+
+  let newHeight
+  if (el.value.length === 0 && placeholderHeight) {
+    newHeight = placeholderHeight
+  } else {
+    newHeight = el.scrollHeight - VERTICAL_MARGINS
+  }
+
+  const glitchFixIsNeeded = prevHeight !== undefined && prevHeight !== newHeight
+
+  prevHeight = newHeight
+  el.style.height = `${newHeight}px`
+
+  if (glitchFixIsNeeded) {
+    if (initWidth) document.body.style.width = initWidth - 13 + 'px'
+    glitchFixTimeout = setTimeout(() => {
+      if (initWidth) document.body.style.width = initWidth - 12 + 'px'
+    }, 1)
+  }
 })
 
 function closePopup(): void {
@@ -50,6 +77,13 @@ void (async () => {
   const winId = parseInt(winIdStr)
   if (isNaN(winId)) return
 
+  const placeholder = sp.get('placeholder')
+  if (placeholder && el) {
+    el.placeholder = placeholder
+    el.value = placeholder
+    placeholderHeight = el.scrollHeight - VERTICAL_MARGINS
+  }
+
   const value = sp.get('value')
   if (value && el) {
     el.value = value
@@ -57,9 +91,6 @@ void (async () => {
     // 1px less, so later I can update height to fix graphical glitches
     el.style.height = `${el.scrollHeight - VERTICAL_MARGINS - 1}px`
   }
-
-  const placeholder = sp.get('placeholder')
-  if (placeholder && el) el.placeholder = placeholder
 
   if (winId !== undefined) {
     IPC.setWinId(winId)
@@ -78,6 +109,7 @@ void (async () => {
 
       // Update height to fix graphical glitches
       el.style.height = `${el.scrollHeight - VERTICAL_MARGINS}px`
+      initWidth = document.body.offsetWidth
     }
   }, 3)
 

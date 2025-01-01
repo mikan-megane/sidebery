@@ -22,13 +22,14 @@
       padding: 0 12px 0 0;
       margin: 0;
     }
-    #textInput {
+    #text_input {
       position: relative;
       display: block;
       width: calc(100% - 56px);
       height: 32px;
       font-size: 1.25rem;
       line-height: 32px;
+      font-family: system-ui;
       color: var(--edit-fg);
       appearance: none;
       border: none;
@@ -38,6 +39,7 @@
       background-color: transparent;
       resize: none;
       z-index: 1;
+      transform: translateZ(0);
     }
     #icon_edit {
       position: absolute;
@@ -55,7 +57,7 @@
     style="background-color: -moz-dialog; color: -moz-dialogtext; position: absolute; width: 0; height: 0;">
   </div>
   <inject>svg://src/assets/edit.svg#icon_edit</inject>
-  <textarea id="textInput" type="text" spellcheck="false">.</textarea>
+  <textarea id="text_input" type="text" spellcheck="false">.</textarea>
   <script type="module" src="./editing.js" defer></script>
 </body>
 </html>
