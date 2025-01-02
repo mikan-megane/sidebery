@@ -1548,6 +1548,9 @@ function onTabActivated(info: browser.tabs.ActiveInfo): void {
   const panel = Sidebar.panelsById[tab.panelId]
   if (!Utils.isTabsPanel(panel)) return
 
+  // Update succession
+  Tabs.updateSuccessionDebounced(0)
+
   if (panel.updatedTabs.length) {
     Utils.rmFromArray(panel.updatedTabs, tab.id)
     panel.reactive.updated = panel.updatedTabs.length > 0
@@ -1605,9 +1608,6 @@ function onTabActivated(info: browser.tabs.ActiveInfo): void {
   }
 
   if (!tab.pinned) Tabs.scrollToTabDebounced(3, tab.id, true)
-
-  // Update succession
-  Tabs.updateSuccessionDebounced(10)
 
   // Reset fallback preview mode
   if (Settings.state.previewTabs && Preview.state.modeFallback) {

@@ -291,7 +291,12 @@ export async function removeTabs(
   }
 
   // Update successorTabId if there is an active tab
-  if (activeTab) Tabs.updateSuccessionDebounced(0, toRemove)
+  if (activeTab) {
+    const successor = Tabs.updateSuccessionDebounced(0, toRemove)
+    if (Settings.state.nativeHighlight && successor) {
+      await browser.tabs.update(successor.id, { active: true })
+    }
+  }
 
   if (!silent && count > 1 && Settings.state.tabsRmUndoNote && !warn) {
     if (removedParent) {
