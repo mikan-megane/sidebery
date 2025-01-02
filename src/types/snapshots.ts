@@ -47,6 +47,7 @@ export interface SnapTab {
   panelId: ID
   lvl?: number
   pinned?: boolean
+  folded?: boolean
   containerId?: string
   customTitle?: string
   customColor?: string

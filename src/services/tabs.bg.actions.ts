@@ -469,6 +469,7 @@ export async function updateBgTabsTreeData(): Promise<void> {
       if (tabInfo.tid !== undefined) tab.parentId = tabInfo.tid
       if (tabInfo.ct) tab.customTitle = tabInfo.ct
       if (tabInfo.cc) tab.customColor = tabInfo.cc
+      if (tabInfo.f) tab.folded = true
       const parent = Tabs.byId[tab.parentId]
       if (parent) tab.lvl = parent.lvl + 1
     }

@@ -2066,6 +2066,7 @@ export function getTabsTreeData(): TabsTreeData {
       else data.pid = tab.panelId
     }
     if (tab.parentId !== NOID) data.tid = tab.parentId
+    if (tab.isParent && tab.folded) data.f = 1
     if (tab.customTitle) data.ct = tab.customTitle
     if (tab.customColor) data.cc = tab.customColor
 

@@ -201,6 +201,7 @@ export interface TabTreeData {
   tid?: ID
   ct?: string
   cc?: string
+  f?: 1
 }
 export type TabsTreeData = TabTreeData[]
 

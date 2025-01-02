@@ -71,6 +71,7 @@ export async function createSnapshot(auto = false): Promise<Snapshot | undefined
         snapTab.pinned = true
         if (Settings.state.pinnedTabsPosition !== 'panel') snapTab.panelId = -1
       }
+      if (tab.folded) snapTab.folded = true
       if (tab.cookieStoreId !== CONTAINER_ID) snapTab.containerId = tab.cookieStoreId
       if (tab.customTitle) snapTab.customTitle = tab.customTitle
       if (tab.customColor) snapTab.customColor = tab.customColor
@@ -301,6 +302,7 @@ export function minimizeSnapshot(snapshots: Snapshot[], snapshot: Snapshot): voi
             tab.containerId === tabN.containerId &&
             tab.panelId === tabN.panelId &&
             tab.lvl === tabN.lvl &&
+            tab.folded === tabN.folded &&
             tab.customTitle === tabN.customTitle &&
             tab.customColor === tabN.customColor
           ) {
@@ -580,6 +582,7 @@ async function openWindow(snapshot: NormalizedSnapshot, winIndex: number): Promi
         url: tab.url,
         title: tab.title,
         parentId: NOID,
+        folded: tab.folded,
         panelId: tab.panelId ?? NOID,
         container: tab.containerId ?? DEFAULT_CONTAINER_ID,
       }
