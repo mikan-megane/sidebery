@@ -1102,3 +1102,36 @@ export function getRandomFrom<T>(arr: T[]): T {
 export function settledOr<T>(result: PromiseSettledResult<T>, fallback: T): T {
   return result?.status === 'fulfilled' ? (result.value ?? fallback) : fallback
 }
+
+export class BenchAvrg {
+  private _deltas: number[] = []
+  private _timeout: number | undefined
+  private _prefix = 'AVRG:'
+  private _delay = 2500
+  private _start: number | undefined
+
+  constructor(prefix = 'AVRG:', delay = 2500) {
+    this._prefix = prefix
+    this._delay = delay
+  }
+
+  public start() {
+    this._start = performance.now()
+  }
+
+  public end() {
+    if (this._start === undefined) return
+
+    const delta = performance.now() - this._start
+    this._deltas.push(delta)
+    this._start = undefined
+
+    clearTimeout(this._timeout)
+    this._timeout = setTimeout(() => {
+      // eslint-disable-next-line no-console
+      console.info(this._prefix, this._deltas.reduce((a, n) => a + n, 0) / this._deltas.length)
+      this._deltas = []
+      this._start = undefined
+    }, this._delay)
+  }
+}
