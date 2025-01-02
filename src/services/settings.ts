@@ -7,5 +7,14 @@ export const Settings = {
 
   updateWinPrefaceOnPanelSwitch: false,
 
+  rmChildTabsFolded: false,
+  rmChildTabsAll: false,
+  rmChildTabsNone: false,
+
+  activateAfterClosingNone: false,
+  activateAfterClosingNext: false,
+  activateAfterClosingPrev: false,
+  activateAfterClosingPrevAct: false,
+
   ...SettingsActions,
 }
