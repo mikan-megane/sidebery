@@ -107,4 +107,15 @@ void (async () => {
   copyBtnEl.addEventListener('click', () => {
     if (url) navigator.clipboard.writeText(encodeURI(url))
   })
+  copyBtnEl.addEventListener('keydown', e => {
+    if (e.code === 'Enter' && url) {
+      copyBtnEl.style.opacity = '.6'
+    }
+  })
+  copyBtnEl.addEventListener('keyup', e => {
+    if (e.code === 'Enter' && url) {
+      navigator.clipboard.writeText(encodeURI(url))
+      copyBtnEl.style.opacity = '1'
+    }
+  })
 })()
