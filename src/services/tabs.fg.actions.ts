@@ -2740,6 +2740,8 @@ export function updateSuccessionDebounced(delay: number, exclude?: readonly ID[]
 function updateSuccession(exclude?: readonly ID[]) {
   let firstSuccessor: Tab | undefined
 
+  if (Tabs.list.length < 2) return
+
   const activeTab = Tabs.byId[Tabs.activeId]
   if (activeTab) {
     const suc = [activeTab.id]
