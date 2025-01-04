@@ -86,6 +86,7 @@ export const Sidebar = {
   switchOnMouseLeave: false,
 
   reMountSidebar: null as null | (() => void),
+  selectPanel: null as null | ((dir: 1 | -1) => void),
 
   ...SidebarActions,
 }

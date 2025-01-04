@@ -1,15 +1,7 @@
 import * as Utils from 'src/utils'
 import { NOID } from 'src/defaults'
-import {
-  Command,
-  CommandUpdateDetails,
-  ItemBounds,
-  Tab,
-  Bookmark,
-  MenuType,
-  SubPanelType,
-} from 'src/types'
-import { InstanceType, ItemInfo, SelectionType, ItemBoundsType, TabsPanel } from 'src/types'
+import { Command, CommandUpdateDetails, ItemBounds, Tab, MenuType, SubPanelType } from 'src/types'
+import { InstanceType, SelectionType, ItemBoundsType, TabsPanel } from 'src/types'
 import { DstPlaceInfo, SrcPlaceInfo } from 'src/types'
 import { Keybindings } from 'src/services/keybindings'
 import { Settings } from 'src/services/settings'
@@ -20,7 +12,6 @@ import { Menu } from 'src/services/menu'
 import { Sidebar } from 'src/services/sidebar'
 import { Tabs } from 'src/services/tabs.fg'
 import { Search } from 'src/services/search'
-import { Store } from 'src/services/storage'
 import { SwitchingTabScope } from './tabs.fg.actions'
 import * as IPC from 'src/services/ipc'
 import * as Logs from 'src/services/logs'
@@ -181,8 +172,8 @@ function onCmd(name: string): void {
   else if (name === 'rm_tabs_above_in_panel') onKeyRAIP()
   else if (name === 'rm_tabs_below_in_panel') onKeyRBIP()
   else if (name === 'rm_tabs_other_in_panel') onKeyROIP()
-  else if (name === 'sel_next_panel') Sidebar.selectPanel(1)
-  else if (name === 'sel_prev_panel') Sidebar.selectPanel(-1)
+  else if (name === 'sel_next_panel') Sidebar.selectPanel?.(1)
+  else if (name === 'sel_prev_panel') Sidebar.selectPanel?.(-1)
   else if (name === 'activate') onKeyActivate()
   else if (name === 'reset_selection') {
     if (Windows.reactive.choosing) Windows.closeWindowsPopup()
