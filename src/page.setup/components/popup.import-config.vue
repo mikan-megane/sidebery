@@ -55,6 +55,7 @@ import ToggleField from 'src/components/toggle-field.vue'
 import { NormalizedSnapshot } from 'src/types/snapshots'
 import { Containers } from 'src/services/containers'
 import { getSidebarConfigFromV4 } from 'src/services/sidebar-config'
+import { Keybindings } from 'src/services/keybindings'
 
 const props = defineProps({
   importedData: {
@@ -231,7 +232,7 @@ async function importData(): Promise<void> {
 
   if (state.keybindings) {
     try {
-      importKeybindings(backup, toStore)
+      await importKeybindings(backup)
     } catch (err) {
       return Logs.err('Backup import: Cannot import keybindings:', err)
     }
@@ -534,12 +535,9 @@ async function importFavicons(backup: BackupData, toStore: Stored): Promise<void
   toStore.favDomains = favData.favDomains
 }
 
-function importKeybindings(backup: BackupData, toStore: Stored): void {
+async function importKeybindings(backup: BackupData) {
   if (!backup.keybindings) throw 'No keybindings data'
 
-  for (const name of Object.keys(backup.keybindings)) {
-    const shortcut = backup.keybindings[name]
-    browser.commands.update({ name, shortcut })
-  }
+  await Keybindings.importKeybindings(backup.keybindings)
 }
 </script>

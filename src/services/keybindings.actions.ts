@@ -78,7 +78,7 @@ export async function importSyncedKeybindings(entry: Sync.SyncedEntry) {
 }
 
 export async function importKeybindings(keybindings: Record<string, string>) {
-  Logs.info('Keybindings.importKeybindings(): keybindings:', keybindings)
+  // Logs.info('Keybindings.importKeybindings(): keybindings:', keybindings)
 
   const waiting = []
   const commands = await browser.commands.getAll()
