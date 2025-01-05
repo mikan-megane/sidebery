@@ -59,11 +59,31 @@ export async function save(key: KeyType, value: SyncableData, entryId?: string) 
 
   if (keys.length) {
     const profileId = await Info.getProfileId()
+    const profileName = Settings.state.syncName.trim()
     const syncPropName = profileId + '::' + key
     const time = Date.now()
     const ver = Info.reactive.addonVer
+
+    // Find data with the same profile name and delete it
+    const syncData = await browser.storage.sync.get<Synced | undefined>()
+    if (syncData) {
+      const toRemove: string[] = []
+      for (const propName of Object.keys(syncData)) {
+        const [pId, k] = propName.split('::')
+        const data = syncData[propName]
+        if (!data || !k) continue
+        if (k === key && data.name === profileName && profileId !== pId) {
+          toRemove.push(propName)
+        }
+      }
+      if (toRemove.length) {
+        await browser.storage.sync.remove(toRemove)
+      }
+    }
+
+    // Set/Update data
     await browser.storage.sync.set<Synced>({
-      [syncPropName]: { value, time, name: Settings.state.syncName, ver, entryId },
+      [syncPropName]: { value, time, name: profileName, ver, entryId },
     })
   }
 }
