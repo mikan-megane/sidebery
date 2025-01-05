@@ -982,7 +982,7 @@ export async function onDrop(e: DragEvent): Promise<void> {
   let newTabPanel
   if (DnD.reactive.dstPanelId === 'add_tp' && (fromTabs || fromBookmarks)) {
     newTabPanel = Sidebar.createTabsPanel({ color: Utils.getRandomFrom(COLOR_NAMES) })
-    const index = Sidebar.getIndexForNewTabsPanel()
+    const index = Sidebar.getIndexForNewTabsPanel(true)
     Sidebar.addPanel(index, newTabPanel)
     Sidebar.recalcPanels()
     Sidebar.recalcTabsPanels()

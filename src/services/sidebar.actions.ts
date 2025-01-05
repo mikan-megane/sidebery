@@ -1714,9 +1714,16 @@ export function createTabsPanel(conf?: Partial<TabsPanelConfig>): TabsPanel {
   return panel
 }
 
-export function getIndexForNewTabsPanel(): number {
+export function getIndexForNewTabsPanel(append?: boolean): number {
   const activePanel = Sidebar.panelsById[Sidebar.activePanelId]
   let index = -1
+
+  if (append) {
+    index = Sidebar.reactive.nav.findLastIndex(id => !!Sidebar.panelsById[id])
+    index++
+    return index
+  }
+
   if (Utils.isTabsPanel(activePanel)) index = activePanel.index
   else {
     index = Sidebar.reactive.nav.findLastIndex(id => {
