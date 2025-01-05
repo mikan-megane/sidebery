@@ -612,22 +612,12 @@ export async function hasCustomCSS(): Promise<boolean> {
 }
 
 /**
- * Apply custom css and save it
+ * Save custom css
  */
-export function setCustomCSS(target: CustomCssTarget, css: string): void {
-  const fieldName = (target + 'CSS') as CustomCssFieldName
+export async function saveCustomCSS() {
+  await Store.set({ sidebarCSS: Styles.sidebarCSS, groupCSS: Styles.groupCSS })
 
-  if (fieldName === 'sidebarCSS') {
-    if (Styles.sidebarCSS === css) return
-    Styles.sidebarCSS = css
-  } else if (fieldName === 'groupCSS') {
-    if (Styles.groupCSS === css) return
-    Styles.groupCSS = css
-  }
-
-  Store.set({ [fieldName]: css })
-
-  if (Settings.state.syncSaveStyles) saveStylesToSync()
+  if (Settings.state.syncSaveStyles) await saveStylesToSync()
 }
 
 export function upgradeCustomStyles(stored: Stored, newStorage: Stored): void {

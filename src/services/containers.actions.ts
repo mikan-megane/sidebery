@@ -183,11 +183,22 @@ export function upgradeV4Containers(
   return output
 }
 
+let saveContainersTimeout: number | undefined
 export async function saveContainers(delay?: number): Promise<void> {
-  return Store.set({ containers: Utils.cloneObject(Containers.reactive.byId) }, delay)
+  clearTimeout(saveContainersTimeout)
+
+  if (!delay) {
+    return Store.set({ containers: Utils.cloneObject(Containers.reactive.byId) })
+  } else {
+    saveContainersTimeout = setTimeout(() => {
+      Store.set({ containers: Utils.cloneObject(Containers.reactive.byId) })
+    }, delay)
+  }
 }
 
 export function updateContainers(newContainers?: Record<ID, Container> | null): void {
+  clearTimeout(saveContainersTimeout)
+
   if (!newContainers) return
   Containers.reactive.byId = newContainers
 

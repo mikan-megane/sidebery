@@ -2,7 +2,6 @@ import {
   BookmarksPanelConfig,
   HistoryPanelConfig,
   OldPanelConfig,
-  PanelConfig,
   SidebarConfig,
   Stored,
   SyncPanelConfig,
@@ -171,7 +170,7 @@ export function setupSidebarConfigListeners() {
   Store.onKeyChange('sidebar', updateSidebarConfig)
 }
 
-function updateSidebarConfig(newConfig?: SidebarConfig | null): void {
+export function updateSidebarConfig(newConfig?: SidebarConfig | null): void {
   if (!newConfig?.nav?.length) newConfig = { nav: [], panels: {} }
 
   if (newConfig.nav) SidebarConfigRState.nav = newConfig.nav

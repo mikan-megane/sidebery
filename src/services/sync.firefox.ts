@@ -63,8 +63,6 @@ export function syncEntryTypeToKeyType(entryType: Sync.SyncedEntryType): KeyType
 }
 
 export async function save(key: KeyType, value: SyncableData, entryId?: string) {
-  Logs.info('Sync.Firefox.save', key, value)
-
   const keys = Object.keys(value)
 
   if (keys.length) {

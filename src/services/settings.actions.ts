@@ -131,7 +131,7 @@ export function updateSettingsBg(settings?: SettingsState | null): void {
       if (!next.markWindow) {
         browser.windows.update(win.id, { titlePreface: '' })
       } else if (IPC.isConnected(InstanceType.sidebar, win.id)) {
-        IPC.sendToSidebar(win.id, 'updWindowPreface')
+        IPC.sendToSidebar(win.id, 'updWindowPreface', next.markWindowPreface)
       }
     }
   } else if (markWindowPrefaceChanged) {

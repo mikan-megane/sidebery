@@ -66,20 +66,14 @@ export function getCtxMenuConf() {
   return Utils.cloneObject(contextMenu)
 }
 
-export function saveCtxMenu(delay?: number): void {
-  Logs.info('Menu.saveCtxMenu')
+export async function saveCtxMenu(delay?: number) {
+  const storage: Stored = { contextMenu: getCtxMenuConf() }
+  await Store.set(storage, delay)
 
-  const storage: Stored = {
-    contextMenu: getCtxMenuConf(),
-  }
-  Store.set(storage, delay)
-
-  if (Settings.state.syncSaveCtxMenu) saveCtxMenuToSync()
+  if (Settings.state.syncSaveCtxMenu) await saveCtxMenuToSync()
 }
 
 export async function saveCtxMenuToSync(): Promise<void> {
-  Logs.info('Menu.saveCtxMenuToSync()')
-
   const contextMenu = getCtxMenuConf()
   await Sync.save(Sync.SyncedEntryType.CtxMenu, contextMenu)
 }

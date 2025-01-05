@@ -158,6 +158,14 @@
   font-weight: 700
   color: var(--status-err)
 
+.ConfigPopup .error-note
+  position: relative
+  font-size: rem(14)
+  margin: -8px 0 16px
+  padding: 0
+  color: var(--status-err)
+  white-space: pre-wrap
+
 .ConfigPopup .btn
   overflow: visible
 
@@ -173,3 +181,20 @@
 .ConfigPopup .img-rm:focus .focus-fx
 .ConfigPopup .btn:has(:focus) .focus-fx
   box-shadow: 0 0 0 2px var(--toolbar-fg-active)
+
+.ConfigPopup .btn.-progress
+  cursor: progress
+
+.ConfigPopup .ctrls .LoadingDots
+  position: relative
+  width: auto
+
+.ConfigPopup .ToggleField[data-done="true"] .label:before
+  content: ''
+  position: absolute
+  width: 7px
+  height: 12px
+  top: calc(50% - 10px)
+  right: -20px
+  box-shadow: 2px 2px 0 0 var(--status-ok)
+  transform: rotateZ(45deg)

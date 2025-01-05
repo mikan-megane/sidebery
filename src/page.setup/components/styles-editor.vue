@@ -475,7 +475,11 @@ function undoRedo(e: KeyboardEvent): void {
 let applyTimeout: number | undefined
 function applyCssDebounced(delay = 1000): void {
   clearTimeout(applyTimeout)
-  applyTimeout = setTimeout(() => Styles.setCustomCSS(state.cssTarget, state.customCSS), delay)
+  applyTimeout = setTimeout(() => {
+    if (state.cssTarget === 'sidebar') Styles.sidebarCSS = state.customCSS
+    else if (state.cssTarget === 'group') Styles.groupCSS = state.customCSS
+    Styles.saveCustomCSS()
+  }, delay)
 }
 
 function onColorSampelInput(e: Event): void {
