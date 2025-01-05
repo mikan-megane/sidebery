@@ -16,7 +16,6 @@ import * as IPC from 'src/services/ipc'
 import * as Logs from 'src/services/logs'
 import { initSidebarConfig, loadSidebarConfig } from 'src/services/sidebar-config'
 import { setupSidebarConfigListeners } from 'src/services/sidebar-config'
-import { showUpgradingScreen } from 'src/services/upgrading'
 import { initPopups } from 'src/services/popups'
 
 async function main(): Promise<void> {
@@ -61,11 +60,6 @@ async function main(): Promise<void> {
 
   const app = createApp(Root)
   app.mount('#root_container')
-
-  if (Info.isMajorUpgrade()) {
-    showUpgradingScreen()
-    return
-  }
 
   Settings.setupSettingsChangeListener()
 

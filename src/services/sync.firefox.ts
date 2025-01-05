@@ -1,9 +1,7 @@
-import { ContextMenuConfig_v4, CssVars, MenuConfs, SettingsState } from 'src/types'
+import { MenuConfs, SettingsState } from 'src/types'
 import { Settings } from './settings'
 import { Logs, Sync, Utils } from './_services'
 import { Info } from './info'
-import { DEFAULT_SETTINGS } from 'src/defaults'
-import { Styles } from './styles'
 import { Store } from './storage'
 import { Menu } from './menu'
 import { Keybindings } from './keybindings'
@@ -41,12 +39,6 @@ export interface SyncableData {
   sidebarCSS?: string
   groupCSS?: string
   keybindings?: { [name: string]: string }
-
-  tabsMenu?: ContextMenuConfig_v4 // DEPR
-  bookmarksMenu?: ContextMenuConfig_v4 // DEPR
-  tabsPanelMenu?: ContextMenuConfig_v4 // DEPR
-  bookmarksPanelMenu?: ContextMenuConfig_v4 // DEPR
-  cssVars?: CssVars // DEPR
 }
 
 export function syncEntryTypeToKeyType(entryType: Sync.SyncedEntryType): KeyType | void {
@@ -197,47 +189,7 @@ export async function loadSyncedEntries(): Promise<SyncedEntry[]> {
  * Update local storage with synced data and reload that data
  */
 export async function applySyncData(info: SyncedValue) {
-  const syncMajorVer = Info.getMajVer(info.ver)
-  const currentMajorVer = Info.majorVersion
-  let data = Utils.cloneObject(info.value)
-
-  // Upgrade data
-  if (!syncMajorVer || syncMajorVer !== currentMajorVer) {
-    const old = data
-    data = {}
-
-    // Upgrade settings
-    if (old.settings) {
-      try {
-        data.settings = Utils.recreateNormalizedObject(old.settings, DEFAULT_SETTINGS)
-        data.settings.theme = 'proton'
-        if (data.settings.tabDoubleClick !== 'none') {
-          data.settings.tabsSecondClickActPrev = false
-        }
-        if (old.settings.hScrollThroughPanels === true) {
-          data.settings.hScrollAction = 'switch_panels'
-        } else if (old.settings.hScrollThroughPanels === false) {
-          data.settings.hScrollAction = 'none'
-        }
-        if ((old.settings.moveNewTabPin as string) === 'none') {
-          data.settings.moveNewTabPin = 'start'
-        }
-      } catch (err) {
-        Logs.err('Cannot upgrade legacy settings', err)
-        throw 'settings'
-      }
-    }
-
-    // Upgrade styles
-    if (old.sidebarCSS || old.groupCSS || old.cssVars) {
-      try {
-        Styles.upgradeCustomStyles(old, data)
-      } catch (err) {
-        Logs.err('Cannot upgrade legacy styles', err)
-        throw 'styles'
-      }
-    }
-  }
+  const data = Utils.cloneObject(info.value)
 
   // Update settings
   if (data.settings) {

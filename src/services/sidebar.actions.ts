@@ -1719,7 +1719,7 @@ export function getIndexForNewTabsPanel(): number {
   let index = -1
   if (Utils.isTabsPanel(activePanel)) index = activePanel.index
   else {
-    index = Utils.findLastIndex(Sidebar.reactive.nav, id => {
+    index = Sidebar.reactive.nav.findLastIndex(id => {
       return Utils.isTabsPanel(Sidebar.panelsById[id])
     })
     if (index === -1 && activePanel) index = activePanel.index

@@ -1,11 +1,9 @@
 import {
   BookmarksPanelConfig,
   HistoryPanelConfig,
-  OldPanelConfig,
   SidebarConfig,
   Stored,
   SyncPanelConfig,
-  TabToPanelMoveRuleConfig,
   TabsPanelConfig,
 } from 'src/types'
 import * as Logs from 'src/services/logs'
@@ -52,76 +50,6 @@ export async function loadSidebarConfig() {
 
 export async function saveSidebarConfig(delay?: number) {
   return Store.set({ sidebar: Utils.cloneObject(SidebarConfigRState) }, delay)
-}
-
-export function getSidebarConfigFromV4(panels_v4: OldPanelConfig[]): SidebarConfig {
-  const sidebar: SidebarConfig = { panels: {}, nav: [] }
-
-  for (const oldPanelConf of panels_v4) {
-    if (oldPanelConf.type === 'bookmarks') {
-      const panel = Utils.cloneObject(BOOKMARKS_PANEL_CONFIG)
-      panel.id = 'bookmarks'
-      panel.name = translate('panel.bookmarks.title')
-      panel.lockedPanel = oldPanelConf.lockedPanel
-      panel.skipOnSwitching = oldPanelConf.skipOnSwitching
-
-      sidebar.panels[panel.id] = panel
-      sidebar.nav.push(panel.id)
-    } else {
-      const panel = Utils.cloneObject(TABS_PANEL_CONFIG)
-      panel.id = oldPanelConf.id
-      panel.name = oldPanelConf.name
-      panel.lockedPanel = oldPanelConf.lockedPanel
-      panel.skipOnSwitching = oldPanelConf.skipOnSwitching
-      panel.color = Utils.normalizeColor(oldPanelConf.color)
-      panel.iconSVG = oldPanelConf.icon
-      panel.iconIMG = oldPanelConf.customIcon
-      panel.iconIMGSrc = oldPanelConf.customIconSrc
-      panel.noEmpty = oldPanelConf.noEmpty
-      panel.newTabCtx = oldPanelConf.newTabCtx
-      panel.dropTabCtx = oldPanelConf.dropTabCtx
-
-      if (oldPanelConf.moveTabCtx && oldPanelConf.moveTabCtx !== 'none') {
-        panel.moveRules.push({
-          id: Utils.uid(),
-          active: true,
-          containerId: oldPanelConf.moveTabCtx,
-          topLvlOnly: !!oldPanelConf.moveTabCtxNoChild,
-        })
-      }
-
-      if (oldPanelConf.urlRules) {
-        panel.moveRules.push(...convertOldUrlRulesToMoveRules(oldPanelConf))
-      }
-
-      sidebar.panels[panel.id] = panel
-      sidebar.nav.push(panel.id)
-    }
-  }
-
-  if (!Settings.state.hideAddBtn) sidebar.nav.push('add_tp')
-  sidebar.nav.push('sp-0')
-  if (!Settings.state.hideSettingsBtn) sidebar.nav.push('settings')
-
-  return sidebar
-}
-
-function convertOldUrlRulesToMoveRules(panel: OldPanelConfig): TabToPanelMoveRuleConfig[] {
-  const output: TabToPanelMoveRuleConfig[] = []
-  const isActive = !!panel.urlRulesActive
-
-  for (const rawRule of panel.urlRules.split('\n')) {
-    const rule = rawRule.trim()
-    if (!rule) continue
-
-    output.push({
-      id: Utils.uid(),
-      active: isActive,
-      url: rule,
-    })
-  }
-
-  return output
 }
 
 export function createTabsPanelConfig(conf?: Partial<TabsPanelConfig>): TabsPanelConfig {

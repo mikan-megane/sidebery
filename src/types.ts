@@ -1,9 +1,8 @@
-import { Container, Container_v4 } from './types/containers'
+import { Container } from './types/containers'
 import { SettingsState } from './types/settings'
-import { SidebarConfig, OldPanelConfig, TabsPanel } from './types/sidebar'
-import { ContextMenuConfig_v4, MenuConfs } from './types/menu'
-import { CssVars } from './types/styles'
-import { Snapshot, Snapshot_v4 } from './types/snapshots'
+import { SidebarConfig, TabsPanel } from './types/sidebar'
+import { MenuConfs } from './types/menu'
+import { Snapshot } from './types/snapshots'
 import { ItemInfo } from './types/tabs'
 import { WindowChoosingDetails } from './types/windows'
 import { ItemBounds } from './types/sidebar'
@@ -89,13 +88,6 @@ export interface BackupData {
   favHashes?: number[]
   favDomains?: Record<string, FavDomain>
   keybindings?: Record<string, string>
-  // DEPRECATED //
-  containers_v4?: Record<string, Container_v4>
-  panels_v4?: OldPanelConfig[]
-  tabsMenu?: ContextMenuConfig_v4
-  bookmarksMenu?: ContextMenuConfig_v4
-  cssVars?: CssVars
-  snapshots_v4?: Snapshot_v4[]
 }
 
 export interface Command extends browser.commands.Command {
@@ -267,14 +259,10 @@ export interface DbgInfo {
   storage?: DbgStorage | string
   sidebar?: SidebarConfig | string
   containers?: Container[] | string
-  cssVars?: Record<string, string> | string
   sidebarCSSLen?: string
   groupCSSLen?: string
   windows?: DbgWindow[] | string
-  tabsMenu?: ContextMenuConfig_v4 | string
-  bookmarksMenu?: ContextMenuConfig_v4 | string
-  tabsPanelMenu?: ContextMenuConfig_v4 | string
-  bookmarksPanelMenu?: ContextMenuConfig_v4 | string
+  contextMenu?: MenuConfs | string
   bookmarks?: DbgBookmarks | string
 }
 
@@ -379,17 +367,6 @@ export const enum SelectionType {
   NewTabBar = 5,
   NavItem = 6,
   Header = 7,
-}
-
-export interface UpgradeMsg {
-  title: string
-  note: string
-  status: 'done' | 'in-progress' | 'pending' | 'err' | 'no' | 'finish'
-}
-
-export interface UpgradingState {
-  status: 'done' | 'loading' | 'err' | 'finish'
-  messages: UpgradeMsg[]
 }
 
 export const enum WheelDirection {

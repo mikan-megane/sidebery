@@ -2446,7 +2446,7 @@ export function tabFlip() {
   }
 
   const history = Tabs.getActiveTabsHistory(panelId)
-  const prevTabId = Utils.findLast(history.actTabs, id => {
+  const prevTabId = history.actTabs.findLast(id => {
     const tab = Tabs.byId[id]
     if (Settings.state.tabsSecondClickActPrevNoUnload && tab?.discarded) return false
     return id !== Tabs.activeId

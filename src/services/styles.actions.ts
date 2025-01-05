@@ -620,21 +620,6 @@ export async function saveCustomCSS() {
   if (Settings.state.syncSaveStyles) await saveStylesToSync()
 }
 
-export function upgradeCustomStyles(stored: Stored, newStorage: Stored): void {
-  const legacyCSSVars = stored.cssVars ? convertVarsToCSS(stored.cssVars) : ''
-
-  let sidebarCSS = ''
-  if (stored.sidebarCSS) sidebarCSS = `/* OLD STYLES\n${stored.sidebarCSS}\n*/`
-  if (legacyCSSVars) sidebarCSS = legacyCSSVars + '\n\n' + sidebarCSS
-
-  let groupCSS = ''
-  if (stored.groupCSS) groupCSS = `/* OLD STYLES\n${stored.groupCSS}\n*/`
-  if (legacyCSSVars) groupCSS = legacyCSSVars + '\n\n' + groupCSS
-
-  newStorage.sidebarCSS = sidebarCSS
-  newStorage.groupCSS = groupCSS
-}
-
 export function convertVarsToCSS(vars: Record<string, string | null>): string {
   const cssVars: string[] = []
   for (const key of Object.keys(vars)) {

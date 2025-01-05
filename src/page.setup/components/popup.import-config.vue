@@ -56,7 +56,7 @@
 <script lang="ts" setup>
 import { ref, reactive, computed, onMounted, PropType } from 'vue'
 import * as Utils from 'src/utils'
-import { BackupData, Stored, Snapshot, Container, Container_v4 } from 'src/types'
+import { BackupData, Stored, Snapshot } from 'src/types'
 import { translate } from 'src/dict'
 import { DEFAULT_CONTAINER } from 'src/defaults'
 import { Info } from 'src/services/info'
@@ -71,7 +71,6 @@ import ToggleField from 'src/components/toggle-field.vue'
 import LoadingDots from 'src/components/loading-dots.vue'
 import { NormalizedSnapshot } from 'src/types/snapshots'
 import { Containers } from 'src/services/containers'
-import { getSidebarConfigFromV4 } from 'src/services/sidebar-config'
 import { Keybindings } from 'src/services/keybindings'
 import { Settings } from 'src/services/settings'
 import { SidebarConfig, Sync } from 'src/services/_services'
@@ -128,30 +127,20 @@ const allSelected = computed<boolean>(() => {
 })
 const settingsInactive = computed((): boolean => {
   const data = props.importedData
-  return (
-    !data.settings &&
-    !data.sidebar &&
-    !data.contextMenu &&
-    !data.panels_v4 &&
-    !data.tabsMenu &&
-    !data.bookmarksMenu
-  )
+  return !data.settings && !data.sidebar && !data.contextMenu
 })
 const stylesInactive = computed((): boolean => {
   const data = props.importedData
-  return !data.cssVars && !data.sidebarCSS && !data.groupCSS
+  return !data.sidebarCSS && !data.groupCSS
 })
 const containersInactive = computed((): boolean => {
   const data = props.importedData
   const cKeysLen = data.containers ? Object.keys(data.containers).length : 0
-  const cv4KeysLen = data.containers_v4 ? Object.keys(data.containers_v4).length : 0
-  return !cKeysLen && !cv4KeysLen
+  return !cKeysLen
 })
 const snapshotsInactive = computed((): boolean => {
   const data = props.importedData
-  const sLen = data.snapshots?.length
-  const sv4Len = data.snapshots_v4?.length
-  return !sLen && !sv4Len
+  return !data.snapshots?.length
 })
 const faviconsInactive = computed((): boolean => {
   const data = props.importedData
@@ -339,13 +328,11 @@ function checkPermissions(): void {
   permTabHide = false
   state.permNeeded = false
 
-  const containers = backup.containers ?? backup.containers_v4
+  const containers = backup.containers
   if (state.containers && containers) {
-    for (let ctr of Object.values(containers) as (Container | Container_v4)[]) {
+    for (let ctr of Object.values(containers)) {
       if (ctr.proxified) webData = true
-      if (ctr.includeHostsActive) webData = true // DEPR
-      if (ctr.excludeHostsActive) webData = true // DEPR
-      if ((ctr as Container).reopenRulesActive) webData = true
+      if (ctr.reopenRulesActive) webData = true
       if (ctr.userAgentActive) webData = true
 
       if (webData) break
@@ -386,7 +373,6 @@ function requestPermissions(): void {
 
 type OldNewIds = Record<string, string>
 async function importContainers(backup: BackupData): Promise<OldNewIds> {
-  if (backup.containers_v4) backup.containers = Containers.upgradeV4Containers(backup.containers_v4)
   if (!backup.containers) throw 'No containers data'
 
   let ffContainers = await browser.contextualIdentities.query({})
@@ -396,8 +382,6 @@ async function importContainers(backup: BackupData): Promise<OldNewIds> {
   const oldNewContainersMap: OldNewIds = {}
 
   for (let ctr of Object.values(Utils.cloneObject(backup.containers))) {
-    Containers.updateReopeningRules(ctr)
-
     let ffCtr = ffContainers.find(c => {
       return c.name === ctr.name && c.icon === ctr.icon && c.color === ctr.color
     })
@@ -435,9 +419,6 @@ async function importSettings(backup: BackupData) {
 }
 
 async function importSidebar(backup: BackupData, containersIds: OldNewIds = {}) {
-  if (backup.panels_v4 && !backup.sidebar) {
-    backup.sidebar = getSidebarConfigFromV4(backup.panels_v4)
-  }
   if (!backup.sidebar) return
 
   await SidebarConfig.loadSidebarConfig()
@@ -490,15 +471,6 @@ async function importSidebar(backup: BackupData, containersIds: OldNewIds = {}) 
 }
 
 async function importContextMenu(backup: BackupData) {
-  if (!backup.contextMenu?.tabs && backup.tabsMenu) {
-    if (!backup.contextMenu) backup.contextMenu = {}
-    backup.contextMenu.tabs = Menu.upgradeMenuConf(backup.tabsMenu)
-  }
-  if (!backup.contextMenu?.bookmarks && backup.bookmarksMenu) {
-    if (!backup.contextMenu) backup.contextMenu = {}
-    backup.contextMenu.bookmarks = Menu.upgradeMenuConf(backup.bookmarksMenu)
-  }
-
   if (!backup.contextMenu) return
 
   Menu.setCtxMenu(backup.contextMenu)
@@ -511,21 +483,13 @@ async function importStyles(backup: BackupData): Promise<void> {
   let sidebarCSS = ''
   let groupCSS = ''
 
-  if (storage.sidebarCSS) sidebarCSS = `/* OLD STYLES\n${storage.sidebarCSS}\n*/`
+  if (storage.sidebarCSS) sidebarCSS = `/* OLD STYLES\n${storage.sidebarCSS.trim()}\n*/`
   if (backup.sidebarCSS) sidebarCSS = backup.sidebarCSS + '\n\n' + sidebarCSS
   sidebarCSS = sidebarCSS.trim()
 
-  if (storage.groupCSS) groupCSS = `/* OLD STYLES\n${storage.groupCSS}\n*/`
+  if (storage.groupCSS) groupCSS = `/* OLD STYLES\n${storage.groupCSS.trim()}\n*/`
   if (backup.groupCSS) groupCSS = backup.groupCSS + '\n\n' + groupCSS
   groupCSS = groupCSS.trim()
-
-  if (backup.cssVars) {
-    const varsCSS = Styles.convertVarsToCSS(backup.cssVars)
-    if (varsCSS) {
-      sidebarCSS = varsCSS + '\n\n' + sidebarCSS
-      groupCSS = varsCSS + '\n\n' + groupCSS
-    }
-  }
 
   if (sidebarCSS) Styles.sidebarCSS = sidebarCSS.trim()
   if (groupCSS) Styles.groupCSS = groupCSS.trim()
@@ -534,10 +498,6 @@ async function importStyles(backup: BackupData): Promise<void> {
 }
 
 async function importSnapshots(backup: BackupData): Promise<void> {
-  if (!backup.snapshots && backup.snapshots_v4) {
-    backup.snapshots = Snapshots.convertFromV4(backup.snapshots_v4)
-  }
-
   if (!backup.snapshots) throw 'No snapshots data'
 
   let storage
@@ -602,7 +562,7 @@ async function importFavicons(backup: BackupData): Promise<void> {
 
   let index = favData.favicons.length
 
-  if (index >= Favicons.MAX_COUNT_LIMIT) return Logs.warn('importFavicons: Exceeding the limit')
+  if (index >= Favicons.MAX_COUNT_LIMIT) throw 'importFavicons: Exceeding the limit'
 
   const oldNewIndexes = new Map<number, number>()
 

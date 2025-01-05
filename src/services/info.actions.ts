@@ -10,10 +10,7 @@ export async function loadPlatformInfo(): Promise<void> {
 }
 
 export async function loadVersionInfo(): Promise<void> {
-  const stored = await browser.storage.local.get<Stored>(['ver', 'favAutoCleanTime'])
-
-  // Check old versions
-  if (!stored.ver && stored.favAutoCleanTime) stored.ver = '4.0.0'
+  const stored = await browser.storage.local.get<Stored>('ver')
 
   // Get major versions
   if (stored.ver) {

@@ -8,9 +8,6 @@ export const SHARD_SIZE = 400
 
 export async function loadFaviconsData() {
   const keys: (keyof Stored)[] = [
-    // *** rc4>>rc5
-    'favicons',
-    // rc4>>rc5 ***
     'favicons_01',
     'favicons_02',
     'favicons_03',
@@ -21,15 +18,12 @@ export async function loadFaviconsData() {
   ]
   const storage = await browser.storage.local.get<Stored>(keys)
   let fullList: string[] | undefined
-  const RC4toRC5 = !!storage.favicons
   if (storage.favicons_01?.length) {
     fullList = storage.favicons_01
     if (storage.favicons_02?.length) fullList.push(...storage.favicons_02)
     if (storage.favicons_03?.length) fullList.push(...storage.favicons_03)
     if (storage.favicons_04?.length) fullList.push(...storage.favicons_04)
     if (storage.favicons_05?.length) fullList.push(...storage.favicons_05)
-  } else if (storage.favicons?.length) {
-    fullList = storage.favicons
   }
   if (!fullList?.length || !storage.favHashes?.length || !storage.favDomains) {
     fullList = []
@@ -45,7 +39,6 @@ export async function loadFaviconsData() {
     favicons: fullList,
     favHashes: storage.favHashes,
     favDomains: storage.favDomains,
-    RC4toRC5,
   }
 }
 

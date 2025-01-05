@@ -13,7 +13,6 @@ let saveAll = true
 let favicons: string[] = []
 let hashes: number[] = []
 let domainsInfo: Record<string, FavDomain> = {}
-let RC4toRC5 = false
 
 /**
  * Load favicons
@@ -26,8 +25,6 @@ export async function loadFavicons(): Promise<void> {
     return Logs.err('loadFavicons: Cannot get favicons', err)
   }
 
-  RC4toRC5 = favData.RC4toRC5
-
   favicons = []
   hashes = []
   domainsInfo = {}
@@ -37,13 +34,7 @@ export async function loadFavicons(): Promise<void> {
 
     // Normalize
     if (domainInfo.index === undefined) continue
-    // *** rc4>>rc5
-    const srcUrl = (domainInfo as unknown as { src: string }).src
-    if (srcUrl) {
-      domainInfo.len = srcUrl.length
-      delete (domainInfo as unknown as { src?: string }).src
-      // rc4>>rc5 ***
-    } else if (domainInfo.len === undefined) {
+    if (domainInfo.len === undefined) {
       domainInfo.len = 999
     }
 
@@ -91,11 +82,6 @@ function saveFaviconsData(
   }
 
   Store.set(toSave)
-
-  if (RC4toRC5) {
-    browser.storage.local.remove<Stored>('favicons')
-    RC4toRC5 = false
-  }
 }
 
 function getIndexToReplace(): number {
@@ -199,48 +185,4 @@ export function saveFavicon(url: string, icon: string): void {
 
     IPC.sendToSidebars('setFavicon', domain, icon)
   }, SAVE_DELAY)
-}
-
-export async function upgradeFaviCache(stored: Stored, newStorage: Stored): Promise<void> {
-  const favicons = stored.favicons ?? []
-  const favUrls = stored.favUrls ?? {}
-
-  // Get urls map
-  const urlsMap: Record<number, string> = {}
-  for (const url of Object.keys(favUrls)) {
-    const index = favUrls[url]
-    if (typeof index !== 'number' || index < 0) continue
-    if (!urlsMap[index]) urlsMap[index] = url
-  }
-
-  const newFavs: string[] = []
-  const newFavDomains: Record<string, FavDomain> = {}
-  const newHashes: number[] = []
-
-  for (let hash, favicon, i = 0; i < favicons.length; i++) {
-    favicon = favicons[i]
-    if (!favicon) continue
-
-    hash = Utils.strHash(favicon)
-
-    let newFav
-    try {
-      newFav = await resizeFavicon(favicon)
-    } catch {
-      continue
-    }
-    if (urlsMap[i]) {
-      newHashes.push(hash)
-      const newIndex = newFavs.push(newFav) - 1
-      const url = urlsMap[i]
-      const domain = Utils.getDomainOf(url)
-      if (!newFavDomains[domain]) {
-        newFavDomains[domain] = { index: newIndex, len: url.length }
-      }
-    }
-  }
-
-  newStorage.favicons_01 = newFavs
-  newStorage.favHashes = newHashes
-  newStorage.favDomains = newFavDomains
 }

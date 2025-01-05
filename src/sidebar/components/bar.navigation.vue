@@ -712,7 +712,7 @@ function onNavItemDrop(item: NavItem): void {
 
 async function addTabsPanel(silent?: boolean): Promise<void> {
   // Find target index
-  let index = Utils.findLastIndex(Sidebar.reactive.nav, id => {
+  let index = Sidebar.reactive.nav.findLastIndex(id => {
     const panel = Sidebar.panelsById[id]
     return Utils.isTabsPanel(panel)
   })

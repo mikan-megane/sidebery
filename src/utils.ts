@@ -498,14 +498,8 @@ export async function parseDragEvent(
 /**
  * Check if string is group url
  */
-export function isV4GroupUrl(url: string): boolean {
-  return url.startsWith('m') && url.startsWith('/group/group.html', 52)
-}
 export function isGroupUrl(url: string): boolean {
   return url.startsWith('m') && url.startsWith('/sidebery/group.html', 52)
-}
-export function isV4UrlUrl(url: string): boolean {
-  return url.startsWith('m') && url.startsWith('/url/url.html', 52)
 }
 export function isUrlUrl(url: string): boolean {
   return url.startsWith('m') && url.startsWith('/sidebery/url.html', 52)
@@ -1025,21 +1019,6 @@ export function findLastFrom<T>(
     v = arr[i]
     if (pred(v, i)) return v
   }
-}
-
-// Temp, (v104, esr115 (2023-09-26))
-export function findLast<T>(arr: T[], pred: (val: T, i: number) => unknown): T | undefined {
-  for (let i = arr.length, v; i--; ) {
-    v = arr[i]
-    if (pred(v, i)) return v
-  }
-}
-export function findLastIndex<T>(arr: T[], pred: (val: T, i: number) => unknown): number {
-  for (let i = arr.length, v; i--; ) {
-    v = arr[i]
-    if (pred(v, i)) return i
-  }
-  return -1
 }
 
 interface QueueItem {

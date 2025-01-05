@@ -2,7 +2,7 @@ import * as Utils from 'src/utils'
 import { RGB_COLORS } from 'src/defaults'
 import { menuOptions } from './menu.options'
 import { Menu } from 'src/services/menu'
-import { Stored, ContextMenuConfig_v4, MenuConf } from 'src/types'
+import { Stored, MenuConf } from 'src/types'
 import { MenuBlock, MenuOption, MenuType, ContextMenuComponent, MenuConfs } from 'src/types'
 import { Settings } from 'src/services/settings'
 import { Selection } from 'src/services/selection'
@@ -35,24 +35,6 @@ export async function loadCtxMenu(): Promise<void> {
   // prettier-ignore
   const storage = await browser.storage.local.get<Stored>('contextMenu')
   setCtxMenu(storage.contextMenu)
-}
-
-export function upgradeMenuConf(oldConf: ContextMenuConfig_v4): MenuConf {
-  const conf: MenuConf = []
-  for (const oldOpt of oldConf) {
-    if (typeof oldOpt === 'string') {
-      conf.push(oldOpt)
-    } else {
-      let name = ''
-      const opts: string[] = []
-      oldOpt.forEach(opt => {
-        if (typeof opt === 'string') opts.push(opt)
-        else if (opt.name) name = opt.name
-      })
-      conf.push({ name, opts })
-    }
-  }
-  return conf
 }
 
 export function getCtxMenuConf() {

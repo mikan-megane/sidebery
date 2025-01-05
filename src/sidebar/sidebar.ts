@@ -25,7 +25,6 @@ import { Info } from 'src/services/info'
 import SidebarRoot from './sidebar.vue'
 import { Snapshots } from 'src/services/snapshots'
 import { updateWebReqHandlers } from 'src/services/web-req.fg'
-import { initUpgrading, showUpgradingScreen } from 'src/services/upgrading'
 import { Sync } from 'src/services/_services'
 
 async function main(): Promise<void> {
@@ -102,16 +101,11 @@ async function main(): Promise<void> {
   Search.reactive = reactive(Search.reactive)
   Styles.reactive = reactive(Styles.reactive)
   Sync.initSync(reactive)
-  initUpgrading(reactive)
 
   Styles.updateGlobalFontSize()
 
   const app = createApp(SidebarRoot)
   app.mount('#root_container')
-
-  if (Info.isMajorUpgrade()) {
-    return showUpgradingScreen()
-  }
 
   Settings.setupSettingsChangeListener()
   Permissions.setupListeners()

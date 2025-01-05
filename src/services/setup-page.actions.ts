@@ -281,8 +281,7 @@ export async function getDbgDetails(): Promise<DbgInfo> {
         if (clone.name) clone.name = clone.name.length.toString()
         if (clone.icon) clone.icon = '...'
         if (clone.proxy) clone.proxy = { type: clone.proxy.type }
-        if (clone.includeHosts) clone.includeHosts = clone.includeHosts.length.toString()
-        if (clone.excludeHosts) clone.excludeHosts = clone.excludeHosts.length.toString()
+        if (clone.reopenRules) clone.reopenRules.forEach(r => (r.url = '...'))
         if (clone.userAgent) clone.userAgent = clone.userAgent.length.toString()
         dbg.containers.push(clone)
       }
@@ -314,21 +313,10 @@ export async function getDbgDetails(): Promise<DbgInfo> {
   }
 
   try {
-    const s = await browser.storage.local.get<Stored>([
-      'tabsMenu',
-      'bookmarksMenu',
-      'tabsPanelMenu',
-      'bookmarksPanelMenu',
-    ])
-    if (s.tabsMenu) dbg.tabsMenu = s.tabsMenu
-    if (s.bookmarksMenu) dbg.bookmarksMenu = s.bookmarksMenu
-    if (s.tabsPanelMenu) dbg.tabsPanelMenu = s.tabsPanelMenu
-    if (s.bookmarksPanelMenu) dbg.bookmarksPanelMenu = s.bookmarksPanelMenu
+    const s = await browser.storage.local.get<Stored>('contextMenu')
+    if (s.contextMenu) dbg.contextMenu = Utils.clone(s.contextMenu)
   } catch (err) {
-    dbg.tabsMenu = (err as Error).toString()
-    dbg.bookmarksMenu = (err as Error).toString()
-    dbg.tabsPanelMenu = (err as Error).toString()
-    dbg.bookmarksPanelMenu = (err as Error).toString()
+    dbg.contextMenu = (err as Error).toString()
   }
 
   try {

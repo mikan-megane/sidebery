@@ -103,8 +103,6 @@
     .right-vertical-box(v-if="pinnedTabsBarRight || navBarRight")
       PinnedTabsBar(v-if="pinnedTabsBarRight")
       NavigationBar.-vert(v-if="navBarRight")
-
-  UpgradeScreen(v-if="reactiveUpgrading.status")
 </template>
 
 <script lang="ts" setup>
@@ -124,7 +122,6 @@ import { Bookmarks } from 'src/services/bookmarks'
 import { Windows } from 'src/services/windows'
 import { Search } from 'src/services/search'
 import { SwitchingTabScope } from 'src/services/tabs.fg.actions'
-import { reactiveUpgrading } from 'src/services/upgrading'
 import { Sync } from 'src/services/_services'
 import ConfirmPopup from './components/popup.confirm.vue'
 import CtxMenuPopup from './components/popup.context-menu.vue'
@@ -145,7 +142,6 @@ import GroupConfigPopup from './components/popup.group-config.vue'
 import DialogPopup from 'src/components/popup.dialog.vue'
 import NewTabShortcutsPopup from '../components/popup.new-tab-shortcuts.vue'
 import SiteConfigPopup from '../components/popup.site-config.vue'
-import UpgradeScreen from '../components/upgrade-screen.vue'
 import SubPanel from './components/sub-panel.vue'
 import * as Utils from 'src/utils'
 import * as Popups from 'src/services/popups'

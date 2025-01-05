@@ -1,6 +1,5 @@
 import { Tab, GroupInfo, TabsTreeData } from './tabs'
 import { ItemInfo, DstPlaceInfo, Notification, PanelConfig } from '../types'
-import { UpgradingState } from '../types'
 import { Stored } from './storage'
 import { Tabs } from 'src/services/tabs.bg'
 import { Snapshots } from 'src/services/snapshots'
@@ -62,8 +61,6 @@ export type BgActions = {
   checkIpInfo: typeof WebReq.checkIpInfo
   disableAutoReopening: typeof WebReq.disableAutoReopening
   enableAutoReopening: typeof WebReq.enableAutoReopening
-  checkUpgrade: () => UpgradingState | null
-  continueUpgrade: () => void
 }
 
 export type SettingsActions = {

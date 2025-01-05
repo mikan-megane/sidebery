@@ -126,26 +126,6 @@ export interface PanelBounds {
   items: ItemBounds[]
 }
 
-export interface OldPanelConfig {
-  type: string
-  id: ID
-  name: string
-  icon: string
-  color: string
-  customIconSrc: string
-  customIcon: string
-  lockedTabs: boolean
-  lockedPanel: boolean
-  skipOnSwitching: boolean
-  noEmpty: boolean
-  newTabCtx: string
-  dropTabCtx: string
-  moveTabCtx: string
-  moveTabCtxNoChild: boolean
-  urlRulesActive: boolean
-  urlRules: string
-}
-
 export interface SrcBookmarksPanelConfig {
   id: ID
   viewMode: string

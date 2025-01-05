@@ -145,11 +145,11 @@ function onSave(): void {
       panel.index = popup.index
     } else if (panel.index === -1) {
       if (isTabsPanel) {
-        panel.index = Utils.findLastIndex(Sidebar.reactive.nav, id => {
+        panel.index = Sidebar.reactive.nav.findLastIndex(id => {
           return Utils.isTabsPanel(Sidebar.panelsById[id])
         })
       } else if (isBookmarksPanel) {
-        panel.index = Utils.findLastIndex(Sidebar.reactive.nav, id => {
+        panel.index = Sidebar.reactive.nav.findLastIndex(id => {
           return Utils.isBookmarksPanel(Sidebar.panelsById[id])
         })
       }
