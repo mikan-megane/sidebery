@@ -11,11 +11,11 @@
     @update:value="checkPermissions")
     .error-note(v-if="state.settingsError") {{state.settingsError}}
   ToggleField(
-    label="settings.backup_styles"
-    v-model:value="state.styles"
-    :data-done="state.stylesDone"
-    :inactive="stylesInactive || !!state.errorMsg")
-    .error-note(v-if="state.stylesError") {{state.stylesError}}
+    label="settings.backup_menu"
+    v-model:value="state.menu"
+    :data-done="state.menuDone"
+    :inactive="menuInactive || !!state.errorMsg")
+    .error-note(v-if="state.menuError") {{state.menuError}}
   ToggleField(
     label="settings.backup_containers"
     v-model:value="state.containers"
@@ -23,6 +23,19 @@
     :inactive="containersInactive || !!state.errorMsg"
     @update:value="checkPermissions")
     .error-note(v-if="state.containersError") {{state.containersError}}
+  ToggleField(
+    label="settings.backup_nav"
+    v-model:value="state.nav"
+    :data-done="state.navDone"
+    :inactive="navInactive || !!state.errorMsg"
+    @update:value="checkPermissions")
+    .error-note(v-if="state.navError") {{state.navError}}
+  ToggleField(
+    label="settings.backup_styles"
+    v-model:value="state.styles"
+    :data-done="state.stylesDone"
+    :inactive="stylesInactive || !!state.errorMsg")
+    .error-note(v-if="state.stylesError") {{state.stylesError}}
   ToggleField(
     label="settings.backup_snapshots"
     v-model:value="state.snapshots"
@@ -90,6 +103,12 @@ const state = reactive({
   settings: false,
   settingsError: '',
   settingsDone: false,
+  nav: false,
+  navError: '',
+  navDone: false,
+  menu: false,
+  menuError: '',
+  menuDone: false,
   styles: false,
   stylesError: '',
   stylesDone: false,
@@ -114,10 +133,13 @@ const state = reactive({
 
 let permWebData = false
 let permTabHide = false
+let permDownloads = false
 
 const allSelected = computed<boolean>(() => {
   const all =
     (settingsInactive.value || state.settings) &&
+    (navInactive.value || state.nav) &&
+    (menuInactive.value || state.menu) &&
     (stylesInactive.value || state.styles) &&
     (containersInactive.value || state.containers) &&
     (snapshotsInactive.value || state.snapshots) &&
@@ -127,7 +149,15 @@ const allSelected = computed<boolean>(() => {
 })
 const settingsInactive = computed((): boolean => {
   const data = props.importedData
-  return !data.settings && !data.sidebar && !data.contextMenu
+  return !data.settings
+})
+const navInactive = computed((): boolean => {
+  const data = props.importedData
+  return !data.sidebar
+})
+const menuInactive = computed((): boolean => {
+  const data = props.importedData
+  return !data.contextMenu
 })
 const stylesInactive = computed((): boolean => {
   const data = props.importedData
@@ -153,6 +183,8 @@ const keybindingsInactive = computed((): boolean => {
 const importInactive = computed((): boolean => {
   return (
     !state.settings &&
+    !state.nav &&
+    !state.menu &&
     !state.styles &&
     !state.containers &&
     !state.snapshots &&
@@ -174,6 +206,8 @@ onMounted(() => {
   }
 
   if (!settingsInactive.value) state.settings = true
+  if (!navInactive.value) state.nav = true
+  if (!menuInactive.value) state.menu = true
   if (!stylesInactive.value) state.styles = true
   if (!containersInactive.value) state.containers = true
   if (!snapshotsInactive.value) state.snapshots = true
@@ -186,6 +220,8 @@ onMounted(() => {
 function onAllChanged(): void {
   if (allSelected.value) {
     if (!settingsInactive.value) state.settings = false
+    if (!navInactive.value) state.nav = false
+    if (!menuInactive.value) state.menu = false
     if (!stylesInactive.value) state.styles = false
     if (!containersInactive.value) state.containers = false
     if (!snapshotsInactive.value) state.snapshots = false
@@ -193,6 +229,8 @@ function onAllChanged(): void {
     if (!keybindingsInactive.value) state.keybindings = false
   } else {
     if (!settingsInactive.value) state.settings = true
+    if (!navInactive.value) state.nav = true
+    if (!menuInactive.value) state.menu = true
     if (!stylesInactive.value) state.styles = true
     if (!containersInactive.value) state.containers = true
     if (!snapshotsInactive.value) state.snapshots = true
@@ -218,6 +256,30 @@ async function importData(): Promise<void> {
   let containersIds: OldNewIds | undefined
   let noErrors = true
 
+  if (state.settings) {
+    try {
+      await importSettings(backup)
+      state.settingsDone = true
+    } catch (err) {
+      Logs.err('Backup import: Cannot import settings', err)
+      const errStr = err?.toString ? ':\n' + err.toString() : ''
+      state.settingsError += 'Cannot import settings' + errStr
+      noErrors = false
+    }
+  }
+
+  if (state.menu) {
+    try {
+      await importContextMenu(backup)
+      state.menuDone = true
+    } catch (err) {
+      Logs.err('Backup import: Cannot import menu settings', err)
+      const errStr = err?.toString ? ':\n' + err.toString() : ''
+      state.menuError += 'Cannot import menu settings' + errStr
+      noErrors = false
+    }
+  }
+
   if (state.containers) {
     try {
       containersIds = await importContainers(backup)
@@ -230,36 +292,16 @@ async function importData(): Promise<void> {
     }
   }
 
-  if (state.settings) {
-    let settingsError = ''
-    try {
-      await importSettings(backup)
-    } catch (err) {
-      Logs.err('Backup import: Cannot import settings', err)
-      const errStr = err?.toString ? ':\n' + err.toString() : ''
-      settingsError += 'Cannot import settings' + errStr
-      noErrors = false
-    }
+  if (state.nav) {
     try {
       await importSidebar(backup, containersIds)
+      state.navDone = true
     } catch (err) {
       Logs.err('Backup import: Cannot import sidebar settings', err)
-      if (settingsError) settingsError += '\n\n'
       const errStr = err?.toString ? ':\n' + err.toString() : ''
-      settingsError += 'Cannot import sidebar settings' + errStr
+      state.navError += 'Cannot import panels and nav-bar configs' + errStr
       noErrors = false
     }
-    try {
-      await importContextMenu(backup)
-    } catch (err) {
-      Logs.err('Backup import: Cannot import menu settings', err)
-      if (settingsError) settingsError += '\n\n'
-      const errStr = err?.toString ? ':\n' + err.toString() : ''
-      settingsError += 'Cannot import menu settings' + errStr
-      noErrors = false
-    }
-    if (settingsError) state.settingsError = settingsError
-    else state.settingsDone = true
   }
 
   if (state.styles) {
@@ -324,8 +366,10 @@ function checkPermissions(): void {
   const backup = props.importedData
   let webData = false
   let tabsHide = false
+  let downloads = false
   permWebData = false
   permTabHide = false
+  permDownloads = false
   state.permNeeded = false
 
   const containers = backup.containers
@@ -342,6 +386,8 @@ function checkPermissions(): void {
   if (state.settings && backup.settings) {
     if (backup.settings.hideInact) tabsHide = true
     if (backup.settings.hideFoldedTabs) tabsHide = true
+    if (backup.settings.newTabCtxReopen) webData = true
+    if (backup.settings.snapAutoExport) downloads = true
   }
 
   if (webData && !Permissions.reactive.webData) {
@@ -350,6 +396,10 @@ function checkPermissions(): void {
   }
   if (tabsHide && !Permissions.reactive.tabHide) {
     permTabHide = true
+    state.permNeeded = true
+  }
+  if (downloads && !Permissions.reactive.downloads) {
+    permDownloads = true
     state.permNeeded = true
   }
 }
@@ -362,11 +412,13 @@ function requestPermissions(): void {
     permissions.push('webRequest', 'webRequestBlocking')
   }
   if (permTabHide) permissions.push('tabHide')
+  if (permDownloads) permissions.push('downloads')
   if (!origins.length && !permissions.length) return
 
   browser.permissions.request({ origins, permissions }).then((allowed: boolean) => {
     if (permWebData) permWebData = !allowed
     if (permTabHide) permTabHide = !allowed
+    if (permDownloads) permDownloads = !allowed
     state.permNeeded = !allowed
   })
 }
