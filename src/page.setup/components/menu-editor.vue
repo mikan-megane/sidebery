@@ -139,7 +139,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, computed, onMounted } from 'vue'
+import { ref, reactive, computed, onMounted, onActivated } from 'vue'
 import * as Utils from 'src/utils'
 import { translate } from 'src/dict'
 import { TABS_MENU, BOOKMARKS_MENU } from 'src/defaults'
@@ -315,17 +315,17 @@ const disabledBookmarksPanelMenu = computed<string[]>(() => {
   return all.filter(option => !active.includes(option))
 })
 
-void (async () => {
-  // TODO: Show loading animation
+Menu.setupListeners()
 
+onActivated(async () => {
+  // TODO: Show loading animation
   await Menu.loadCtxMenu()
-  Menu.setupListeners()
 
   state.tabsConf = Menu.tabsConf
   state.bookmarksConf = Menu.bookmarksConf
   state.tabsPanelConf = Menu.tabsPanelConf
   state.bookmarksPanelConf = Menu.bookmarksPanelConf
-})()
+})
 
 onMounted(() => {
   SetupPage.registerEl('menu_editor_tabs', menuEditorTabsEl.value)
