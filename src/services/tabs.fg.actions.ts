@@ -2748,7 +2748,7 @@ function updateSuccession(exclude?: readonly ID[]) {
     firstSuccessor = Tabs.findSuccessorTab(activeTab, exclude)
     if (firstSuccessor) {
       activeTab.successorTabId = firstSuccessor.id
-      suc.push(firstSuccessor.id)
+      if (firstSuccessor.id !== activeTab.id) suc.push(firstSuccessor.id)
 
       if (!exclude) {
         const secondSuccessor = Tabs.findSuccessorTab(firstSuccessor, suc)
@@ -2760,7 +2760,7 @@ function updateSuccession(exclude?: readonly ID[]) {
 
     if (suc.length > 1) {
       browser.tabs.moveInSuccession(suc).catch(err => {
-        Logs.err('Tabs.updateSuccession: Cannot update succession:', err)
+        Logs.err('Tabs.updateSuccession: Cannot update succession:', err, suc)
       })
     }
   }
