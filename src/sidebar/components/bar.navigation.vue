@@ -615,6 +615,9 @@ function onNavMouseUp(e: MouseEvent, item: NavItem, inHiddenBar?: boolean) {
         return Sidebar.scrollPanelToEdge()
       }
     }
+    if (item.type === PanelType.sync) {
+      Sync.reload()
+    }
   }
 
   // Right

@@ -40,7 +40,7 @@ html, body
   cursor: default
   display: flex
   flex-direction: column
-  font: caption
+  font-family: system-ui
   margin: 0
   padding: 0
   user-select: none
@@ -77,7 +77,7 @@ html, body
   // padding-top: var(--s-top-padding, 0px)
 
 .panel
-  position: absolute
+  position: relative
   display: flex
   top: 0
   left: 0
@@ -98,3 +98,56 @@ html, body
     transform: translateX(50%)
     opacity: 0
     z-index: 0
+
+.Sync .header
+  --header-height: 32px
+
+  position: relative
+  display: flex
+  justify-content: space-between
+  align-items: center
+  background-color: var(--toolbar-bg)
+  width: 100%
+  height: var(--header-height)
+  flex-shrink: 0
+
+.Sync .header > .title
+  position: relative
+  margin: 0 auto
+  font-size: rem(14)
+  font-weight: 700
+  color: var(--toolbar-fg)
+
+.Sync .header .space-filler
+.Sync .header .header-btn
+  position: relative
+  width: var(--header-height)
+  height: var(--header-height)
+  flex-shrink: 0
+
+.Sync .header .header-btn
+  &:before
+    content: ''
+    position: absolute
+    width: calc(var(--header-height) - 4px)
+    height: calc(var(--header-height) - 4px)
+    top: 2px
+    left: 2px
+    border-radius: var(--general-border-radius)
+    background-color: var(--toolbar-fg)
+    opacity: 0
+  .icon
+    position: absolute
+    width: 16px
+    height: 16px
+    top: calc(50% - 8px)
+    left: calc(50% - 8px)
+    fill: var(--toolbar-fg)
+    opacity: .7
+  &:hover:before
+    opacity: .1
+  &:active
+    opacity: .7
+.Sync[data-syncing="true"] .header .icon.-sync
+  opacity: 1
+  animation: syncing-animation 1s linear infinite

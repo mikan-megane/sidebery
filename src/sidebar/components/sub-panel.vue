@@ -13,7 +13,10 @@
     @drop="onDrop")
   .sub-panel
     .header
+      .header-btn(v-if="isSync" @click="Sync.reload")
+        svg.icon.-sync(): use(xlink:href="#icon_sync")
       .title {{titles[Sidebar.reactive.subPanelType]}}
+      .space-filler(v-if="isSync")
     ClosedTabsSubPanel(v-if="isRecentlyClosedTabs")
     BookmarksSubPanel(v-else-if="isBookmarks && Sidebar.subPanels.bookmarks" :bookmarksPanel="Sidebar.subPanels.bookmarks")
     HistoryPanel(v-else-if="isHistory" :isSubPanel="true")
@@ -30,6 +33,7 @@ import { Settings } from 'src/services/settings'
 import { DnD } from 'src/services/drag-and-drop'
 import { Search } from 'src/services/search'
 import { Sidebar } from 'src/services/sidebar'
+import { Sync } from 'src/services/_services'
 import ClosedTabsSubPanel from './sub-panel.closed-tabs.vue'
 import BookmarksSubPanel from './sub-panel.bookmarks.vue'
 import HistoryPanel from './panel.history.vue'

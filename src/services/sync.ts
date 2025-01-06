@@ -277,7 +277,7 @@ export async function load() {
   Logs.info('Sync.load(): Loaded:', entries)
 }
 
-export async function unload() {
+export function unload() {
   Logs.info('Sync.unload()')
 
   Sync.Firefox.cachedValues.clear()
@@ -291,6 +291,19 @@ export async function unload() {
 
   const syncPanel = Sidebar.panelsById.sync
   if (syncPanel) syncPanel.reactive.ready = syncPanel.ready = false
+}
+
+export async function reload() {
+  if (reactive.loading || reactive.syncing) return
+  unload()
+  reactive.syncing = true
+  try {
+    await load()
+  } catch (err) {
+    Logs.err('Sync.reload', err)
+    // TODO: Show notification about this shit
+  }
+  reactive.syncing = false
 }
 
 let unloadAfterTimeout: number | undefined
