@@ -25,18 +25,18 @@
           img.fav-icon(v-else :src="t.favicon" @error="onFavError(t)" draggable="false")
         .title {{(t.customTitle ?? t.title)}}
         .containerMark(v-if="t.containerId")
-    .btn(
-      v-if="entry.type !== Sync.SyncedEntryType.Tabs"
-      :class="{'-inactive': entry.loading}"
-      @click="onMainAction(entry)") Import
-    .btn(
-      v-if="entry.type === Sync.SyncedEntryType.Tabs"
-      :class="{'-inactive': entry.loading}"
-      @click="openTabs(entry)") Open
-    .btn(
-      :class="{'-inactive': entry.loading}"
-      @click="onDelete(entry)") Delete
-
+    .ctrls
+      .btn(
+        v-if="entry.type !== Sync.SyncedEntryType.Tabs"
+        :class="{'-inactive': entry.loading}"
+        @click="onMainAction(entry)") Import
+      .btn(
+        v-if="entry.type === Sync.SyncedEntryType.Tabs"
+        :class="{'-inactive': entry.loading}"
+        @click="openTabs(entry)") Open
+      .btn(
+        :class="{'-inactive': entry.loading}"
+        @click="onDelete(entry)") Delete
 </template>
 
 <script lang="ts" setup>
