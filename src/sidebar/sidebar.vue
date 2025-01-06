@@ -94,6 +94,7 @@
             svg: use(xlink:href="#icon_clock")
           .tool-btn.-sync(
             v-if="Settings.state.subPanelSync"
+            @dragleave="onSSPBDragLeave"
             @click="Sidebar.openSubPanel(SubPanelType.Sync, activePanel)")
             .dnd-layer(data-dnd-type="sspb")
             svg: use(xlink:href="#icon_sync")
@@ -444,10 +445,15 @@ function getPanelPos(i: number, panelId: ID): PanelPosition {
 let onBSPBDragLeaveTimeout: number | undefined
 function onBSPBDragLeave() {
   if (Sidebar.subPanelActive) DnD.reactive.dstType = DropType.Bookmarks
+  else DnD.reactive.dstType = DropType.Nowhere
 
   clearTimeout(onBSPBDragLeaveTimeout)
   onBSPBDragLeaveTimeout = setTimeout(() => {
     if (Sidebar.subPanelActive) Sidebar.updateBounds()
   }, 120)
+}
+
+function onSSPBDragLeave() {
+  DnD.reactive.dstType = DropType.Nowhere
 }
 </script>

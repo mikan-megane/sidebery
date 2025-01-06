@@ -452,6 +452,11 @@ export async function open(
       const newTab = Tabs.byId[tab.id]
       if (newTab) newTab.reactive.customColor = newTab.customColor = item.customColor
     }
+
+    if (item.folded) {
+      const newTab = Tabs.byId[tab.id]
+      if (newTab) newTab.reactive.folded = newTab.folded = true
+    }
   }
 
   return true

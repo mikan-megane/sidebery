@@ -9,16 +9,18 @@
   .sync-content
     .sync-tab(
       v-for="t in entry.tabs"
+      draggable="true"
       :key="t.id"
       :title="`${t.title}\n---\n${t.url}`"
       :data-lvl="t.lvl"
       :data-parent="t.isParent"
       :data-color="t.containerColor"
+      @dragstart="onTabDragStart($event, t, entry)"
       @mousedown="onTabMouseDown($event, t, entry)"
       @mouseup="onTabMouseUp($event, t, entry)")
       .body
         .color-layer(v-if="t.customColor" :style="{ '--tab-color': t.customColor }")
-        .fav(v-if="t.favicon")
+        .fav(v-if="t.favicon" @dragstart.stop.prevent)
           svg.fav-icon(v-if="t.favicon.startsWith('#')"): use(:xlink:href="t.favicon")
           img.fav-icon(v-else :src="t.favicon" @error="onFavError(t)" draggable="false")
         .title {{(t.customTitle ?? t.title)}}
@@ -43,10 +45,11 @@ import { Styles } from 'src/services/styles'
 import { Favicons } from 'src/services/_services.fg'
 import { Mouse } from 'src/services/mouse'
 import { Tabs } from 'src/services/tabs.fg'
-import { DstPlaceInfo, ItemInfo } from 'src/types'
+import { DragInfo, DragItem, DragType, DropType, DstPlaceInfo, ItemInfo } from 'src/types'
 import { Sidebar } from 'src/services/sidebar'
 import { Windows } from 'src/services/windows'
 import { Containers } from 'src/services/containers'
+import { DnD } from 'src/services/drag-and-drop'
 
 const props = defineProps<{ entry: SyncedEntry }>()
 const title = getTypeTitle()
@@ -143,5 +146,87 @@ async function onTabMouseUp(e: MouseEvent, tab: Sync.EntryTab, entry: Sync.Synce
     await Tabs.open([tabInfo], dstInfo)
     return
   }
+}
+
+function onTabDragStart(e: DragEvent, tab: Sync.EntryTab, entry: Sync.SyncedEntry) {
+  Sidebar.updateBounds()
+
+  // Check what to drag
+  const toDrag = [tab.id]
+  const dragItems: DragItem[] = []
+  const uriList = []
+  const links = []
+  const urlTitleList = []
+  const branch = getBranch(tab, entry)
+  for (const tab of branch) {
+    uriList.push(tab.url)
+    links.push(`<a href="${tab.url}>${tab.title}</a>`)
+    urlTitleList.push(tab.url)
+    urlTitleList.push(tab.title)
+    toDrag.push(tab.id)
+
+    let appropriateContainer
+    if (tab.containerId) {
+      appropriateContainer = Containers.findUnique(entry.containers?.[tab.containerId])
+    }
+
+    dragItems.push({
+      id: tab.id,
+      url: tab.url,
+      title: tab.title,
+      parentId: tab.parentId,
+      container: appropriateContainer?.id,
+      customColor: tab.customColor,
+      customTitle: tab.customTitle,
+      folded: tab.folded,
+    })
+  }
+
+  const dragInfo: DragInfo = {
+    type: DragType.Tabs,
+    items: dragItems,
+    windowId: Windows.id,
+    incognito: Windows.incognito,
+    panelId: Sidebar.activePanelId,
+    x: e.clientX,
+    y: e.clientY,
+    copy: true,
+  }
+
+  DnD.start(dragInfo, DropType.Tabs)
+
+  // Set native drag info
+  if (e.dataTransfer) {
+    const dragImgEl = document.getElementById('drag_image')
+    e.dataTransfer.setData('application/x-sidebery-dnd', JSON.stringify(dragInfo))
+    if (Settings.state.dndOutside === 'data' ? !e.altKey : e.altKey) {
+      const uris = uriList.join('\r\n')
+      e.dataTransfer.setData('text/x-moz-url', urlTitleList.join('\r\n'))
+      e.dataTransfer.setData('text/uri-list', uris)
+      e.dataTransfer.setData('text/plain', uris)
+      e.dataTransfer.setData('text/html', links.join('\r\n'))
+    }
+    if (dragImgEl) e.dataTransfer.setDragImage(dragImgEl, -3, -3)
+    e.dataTransfer.effectAllowed = 'copyMove'
+  }
+
+  Sidebar.closeSubPanel()
+}
+
+function getBranch(rootTab: Sync.EntryTab, entry: Sync.SyncedEntry): Sync.EntryTab[] {
+  const branch: Sync.EntryTab[] = [rootTab]
+  const tabs = entry.tabs ?? []
+
+  const startIndex = tabs.findIndex(t => t.id === rootTab.id)
+  if (startIndex === -1) return branch
+
+  for (let i = startIndex + 1; i < tabs.length; i++) {
+    const tab = tabs[i]
+    if (!tab) break
+    if (rootTab.lvl >= tab.lvl) break
+    branch.push(tab)
+  }
+
+  return branch
 }
 </script>

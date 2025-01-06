@@ -400,6 +400,8 @@ export function onDragEnter(e: DragEvent): void {
 
   // Bookmarks sub-panel button
   if (type === 'bspb') {
+    resetDragPointer()
+
     DnD.reactive.dstPin = false
 
     const panel = Sidebar.panelsById[Sidebar.activePanelId]
@@ -424,6 +426,8 @@ export function onDragEnter(e: DragEvent): void {
 
   // Sync sub-panel button
   if (type === 'sspb') {
+    resetDragPointer()
+
     DnD.reactive.dstPin = false
     DnD.reactive.dstParentId = NOID
 
