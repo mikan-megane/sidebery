@@ -30,6 +30,10 @@
       :class="{'-inactive': entry.loading}"
       @click="onMainAction(entry)") Import
     .btn(
+      v-if="entry.type === Sync.SyncedEntryType.Tabs"
+      :class="{'-inactive': entry.loading}"
+      @click="openTabs(entry)") Open
+    .btn(
       :class="{'-inactive': entry.loading}"
       @click="onDelete(entry)") Delete
 
@@ -92,6 +96,36 @@ async function onMainAction(entry: SyncedEntry) {
   entry.loading = false
 }
 
+async function openTabs(entry: SyncedEntry) {
+  if (entry.type !== Sync.SyncedEntryType.Tabs || !entry.tabs) return
+
+  const tabs = entry.tabs
+  const toOpen: ItemInfo[] = []
+  for (const tab of tabs) {
+    let appropriateContainer
+    if (tab.containerId && entry.containers) {
+      appropriateContainer = Containers.findUnique(entry.containers[tab.containerId])
+    }
+    toOpen.push({
+      id: tab.id,
+      url: tab.url,
+      title: tab.title,
+      parentId: tab.parentId,
+      container: Containers.getContainerFor(tab.url) ?? appropriateContainer?.id,
+      customColor: tab.customColor,
+      customTitle: tab.customTitle,
+      folded: tab.folded,
+    })
+  }
+  const dstInfo: DstPlaceInfo = {
+    windowId: Windows.id,
+    discarded: toOpen.length > 1 ? true : false,
+    panelId: Sidebar.getRecentTabsPanelId(),
+  }
+
+  await Tabs.open(toOpen, dstInfo)
+}
+
 async function onDelete(entry: SyncedEntry) {
   Logs.info('panel.sync.entry.vue: onDelete')
 
@@ -127,7 +161,13 @@ async function onTabMouseUp(e: MouseEvent, tab: Sync.EntryTab, entry: Sync.Synce
 
   Logs.info('onTabMouseUp:', tab)
 
-  const tabInfo: ItemInfo = { id: 0, url: tab.url, title: tab.title }
+  const tabInfo: ItemInfo = {
+    id: 0,
+    url: tab.url,
+    title: tab.title,
+    customColor: tab.customColor,
+    customTitle: tab.customTitle,
+  }
   const dstInfo: DstPlaceInfo = {
     windowId: Windows.id,
     discarded: false,
