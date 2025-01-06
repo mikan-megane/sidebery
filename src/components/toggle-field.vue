@@ -1,11 +1,13 @@
 <template lang="pug">
 .ToggleField(
   :data-inactive="props.inactive"
+  :data-loading="loading"
   @click="toggle"
   @keydown="onKeyDown")
   .focus-fx
   .body
     .label(:style="{ color: props.color }") {{translate(props.label)}}
+    LoadingDots(v-if="loading")
     ToggleInput.input(ref="inputComponent" :value="props.value")
   .note(v-if="props.note" @click.stop="") {{props.note}}
   .note(v-if="props.noteWithLinks" @click.stop="")
@@ -20,6 +22,7 @@ import { ref } from 'vue'
 import { translate } from 'src/dict'
 import { ToggleInputComponent } from 'src/types'
 import ToggleInput from './toggle-input.vue'
+import LoadingDots from './loading-dots.vue'
 
 interface ToggleFieldProps {
   value: boolean | null | undefined
@@ -27,6 +30,7 @@ interface ToggleFieldProps {
   inactive?: boolean
   field?: boolean
   color?: string
+  loading?: boolean
   note?: string
   noteWithLinks?: string
 }
@@ -37,6 +41,7 @@ const inputComponent = ref<ToggleInputComponent | null>(null)
 
 function toggle(): void {
   if (props.inactive) return
+  if (props.loading) return
   emit('update:value', !props.value)
   emit('toggle', !props.value)
 }
@@ -62,7 +67,7 @@ function onKeyDown(e: KeyboardEvent) {
     e.code === 'Space' ||
     e.code === 'Enter'
   ) {
-    toggle()
+    if (!props.loading) toggle()
     e.preventDefault()
   }
 }

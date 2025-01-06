@@ -16,6 +16,7 @@ section(ref="el")
   ToggleField(
     label="Use Google Drive (experimental)"
     v-model:value="Settings.state.syncUseGoogleDrive"
+    :loading="gdToggling"
     @update:value="onGDToggle"
     :note="translate('settings.sync_gd_note')")
 
@@ -53,6 +54,7 @@ import { Keybindings } from 'src/services/keybindings'
 import { Logs, Sync } from 'src/services/_services'
 
 const el = ref<HTMLElement | null>(null)
+const gdToggling = ref(false)
 
 onMounted(() => {
   SetupPage.registerEl('settings_sync', el.value)
@@ -110,26 +112,37 @@ async function onFFToggle() {
 async function onGDToggle() {
   Logs.info('onGDToggle:', Settings.state.syncUseGoogleDrive)
 
+  gdToggling.value = true
+
   Settings.saveDebounced(150)
 
   // Save enabled fields of this profile
   if (Settings.state.syncUseGoogleDrive) {
-    // Save profile info
-    await Sync.Google.saveProfileInfo()
+    try {
+      // Save profile info
+      await Sync.Google.saveProfileInfo()
 
-    if (Settings.state.syncSaveCtxMenu) Menu.saveCtxMenuToSync()
-    if (Settings.state.syncSaveKeybindings) Keybindings.saveKeybindingsToSync()
-    if (Settings.state.syncSaveStyles) {
-      await Styles.loadCustomCSS()
-      Styles.saveStylesToSync()
+      if (Settings.state.syncSaveCtxMenu) Menu.saveCtxMenuToSync()
+      if (Settings.state.syncSaveKeybindings) Keybindings.saveKeybindingsToSync()
+      if (Settings.state.syncSaveStyles) {
+        await Styles.loadCustomCSS()
+        Styles.saveStylesToSync()
+      }
+    } catch (err) {
+      Logs.err('onGDToggle: turn on', err)
     }
   }
 
   // Remove files created from this profile
   else {
-    await Sync.Google.removeAllFilesOfThisProfile()
-    return
+    try {
+      await Sync.Google.removeAllFilesOfThisProfile()
+    } catch (err) {
+      Logs.err('onGDToggle: turn off', err)
+    }
   }
+
+  gdToggling.value = false
 }
 
 function onSettingsToggle(): void {

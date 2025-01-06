@@ -97,6 +97,18 @@
   &:has(:focus) .focus-fx
     box-shadow: inset 0 0 0 2px var(--toolbar-fg-active)
 
+.ToggleField .LoadingDots
+  position: relative
+  width: auto
+  margin: auto 0 auto auto
+  padding-left: 16px
+.ToggleField[data-loading="true"]
+  cursor: progress
+.ToggleField[data-loading="true"] .body .label
+.ToggleField[data-loading="true"] .body .ToggleInput
+.ToggleField[data-loading="true"] .note
+  opacity: .3
+
 .Sidebar .ToggleField
 .ToggleField.-compact
   padding: 4px
