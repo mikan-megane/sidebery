@@ -99,7 +99,7 @@ html, body
     opacity: 0
     z-index: 0
 
-.Sync .header
+.Sync > .header
   --header-height: 32px
 
   position: relative
@@ -111,21 +111,21 @@ html, body
   height: var(--header-height)
   flex-shrink: 0
 
-.Sync .header > .title
+.Sync > .header > .title
   position: relative
   margin: 0 auto
   font-size: rem(14)
   font-weight: 700
   color: var(--toolbar-fg)
 
-.Sync .header .space-filler
-.Sync .header .header-btn
+.Sync > .header .space-filler
+.Sync > .header .header-btn
   position: relative
   width: var(--header-height)
   height: var(--header-height)
   flex-shrink: 0
 
-.Sync .header .header-btn
+.Sync > .header .header-btn
   &:before
     content: ''
     position: absolute
@@ -148,6 +148,6 @@ html, body
     opacity: .1
   &:active
     opacity: .7
-.Sync[data-syncing="true"] .header .icon.-sync
+.Sync[data-syncing="true"] > .header .icon.-sync
   opacity: 1
   animation: syncing-animation 1s linear infinite
