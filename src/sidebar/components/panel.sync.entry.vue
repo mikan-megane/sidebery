@@ -124,7 +124,7 @@ async function openTabs(entry: SyncedEntry) {
     panelId: Sidebar.getRecentTabsPanelId(),
   }
 
-  if (Info.isSync) updDstInfoForPopup(dstInfo)
+  if (Info.isSync) await updDstInfoForPopup(dstInfo)
 
   await Tabs.open(toOpen, dstInfo)
 }
@@ -181,19 +181,30 @@ async function onTabMouseUp(e: MouseEvent, tab: Sync.EntryTab, entry: Sync.Synce
   if (e.button === 0) tabInfo.active = true
   else if (e.button === 1) tabInfo.active = false
 
-  if (Info.isSync) updDstInfoForPopup(dstInfo)
+  if (Info.isSync) await updDstInfoForPopup(dstInfo)
 
   await Tabs.open([tabInfo], dstInfo)
 }
 
-function updDstInfoForPopup(dstInfo: DstPlaceInfo) {
+async function updDstInfoForPopup(dstInfo: DstPlaceInfo) {
   const url = new URL(location.href)
   const params = url.searchParams
   const srcWinIdStr = params.get('w')
-  const srcWinId = parseInt(srcWinIdStr ?? '')
-  if (isNaN(srcWinId)) return // TODO: maybe send to bg and then open in the last focused win
+  let targetWinId: ID | undefined = parseInt(srcWinIdStr ?? '')
+  if (isNaN(targetWinId)) {
+    try {
+      const window = await browser.windows.getLastFocused({
+        windowTypes: ['normal'],
+        populate: false,
+      })
+      targetWinId = window.id
+    } catch (err) {
+      Logs.err('updDstInfoForPopup: Cannot get last focused window')
+    }
+  }
+  if (targetWinId === undefined) return
 
-  dstInfo.windowId = srcWinId
+  dstInfo.windowId = targetWinId
   delete dstInfo.panelId
 }
 
