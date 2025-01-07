@@ -212,6 +212,15 @@ export const commonTranslations: Translations = {
     en: 'Sync',
     zh_TW: '同步',
   },
+  'panel.sync.err.google_entries': {
+    en: 'Cannot load entries from Google Drive',
+  },
+  'panel.sync.err.google_entries_sub': {
+    en: 'Try again later',
+  },
+  'panel.sync.err.google_tabs': {
+    en: 'Cannot load tabs from Google Drive',
+  },
 
   // ---
   // -- Popups

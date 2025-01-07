@@ -39,7 +39,7 @@ export async function loadAccessToken(force = false): Promise<void> {
   try {
     authRawAns = await browser.identity.launchWebAuthFlow({ url: authURLStr, interactive: false })
   } catch (err) {
-    Logs.err('Cannot get access token (without consent):', err)
+    Logs.err('Google.loadAccessToken: Cannot get access token (without consent):', err)
   }
 
   // Parse token answer (if any)
@@ -56,7 +56,7 @@ export async function loadAccessToken(force = false): Promise<void> {
     try {
       authRawAns = await browser.identity.launchWebAuthFlow({ url: authURLStr, interactive: true })
     } catch (err) {
-      Logs.err('Cannot get access token (with consent):', err)
+      Logs.err('Google.loadAccessToken: Cannot get access token (with consent):', err)
     }
   }
 

@@ -3,6 +3,8 @@ import { Google, Logs, Sync, Utils } from './_services'
 import { Settings } from './settings'
 import { Sidebar } from './sidebar'
 import { Windows } from './windows'
+import { Notifications } from './notifications'
+import { translate } from 'src/dict'
 
 export * as Firefox from './sync.firefox'
 export * as Google from './sync.google'
@@ -237,10 +239,22 @@ export async function load() {
     Settings.state.syncUseGoogleDrive ? Sync.Google.loadSyncedEntries() : [],
   ])
   const ffEntries = Utils.settledOr(ffEntriesResult, [])
-  const gdEntries = Utils.settledOr(gdEntriesResult, [])
+  let gdEntries = Utils.settledOr(gdEntriesResult, null)
 
   entries.push(...ffEntries)
-  entries.push(...gdEntries)
+
+  if (gdEntries) {
+    entries.push(...gdEntries)
+  } else {
+    gdEntries = []
+    Logs.err('Sync.load: Cannot load entries from google')
+    Notifications.notify({
+      icon: '#icon_sync',
+      lvl: 'err',
+      title: translate('panel.sync.err.google_entries'),
+      details: translate('panel.sync.err.google_entries_sub'),
+    })
+  }
 
   // Sort by time
   entries.sort((a, b) => (b.time ?? 0) - (a.time ?? 0))

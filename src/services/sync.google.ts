@@ -5,6 +5,8 @@ import { Store } from './storage'
 import { SyncedEntry } from './sync'
 import { Favicons } from './_services.fg'
 import { NOID } from 'src/defaults'
+import { Notifications } from './notifications'
+import { translate } from 'src/dict'
 
 export interface ProfileInfo {
   name: string
@@ -375,7 +377,7 @@ export async function removeAllFilesOfThisProfile() {
   })
 }
 
-export async function loadSyncedEntries(): Promise<SyncedEntry[]> {
+export async function loadSyncedEntries(): Promise<SyncedEntry[] | null> {
   Logs.info('Sync.Google.loadSyncedEntries()')
 
   const entries: SyncedEntry[] = []
@@ -383,7 +385,11 @@ export async function loadSyncedEntries(): Promise<SyncedEntry[]> {
     fields: ['id', 'name', 'size', 'modifiedTime', 'appProperties'],
     orderBy: 'modifiedTime',
   })
-  if (!filesInfo || filesInfo.length === 0) {
+  if (!filesInfo) {
+    Logs.err('Sync.Google.loadSyncedEntries(): Cannot list files')
+    return null
+  }
+  if (filesInfo.length === 0) {
     Logs.warn('Sync.Google.loadSyncedEntries(): No files')
     return entries
   }
@@ -457,9 +463,21 @@ export async function loadSyncedEntries(): Promise<SyncedEntry[]> {
   }
 
   if (loadingTabEntries.length) {
-    const loadedTabEntryFiles = await Promise.all(loadingTabEntries)
-    for (const tabEntries of loadedTabEntryFiles) {
+    let withError = false
+    const loadedTabEntryFiles = await Promise.allSettled(loadingTabEntries)
+    for (const tabEntriesResult of loadedTabEntryFiles) {
+      const tabEntries = Utils.settledOr(tabEntriesResult, null)
       if (tabEntries) entries.push(...tabEntries)
+      else withError = true
+    }
+
+    if (withError) {
+      Notifications.notify({
+        icon: '#icon_sync',
+        lvl: 'err',
+        title: translate('panel.sync.err.google_tabs'),
+        details: translate('panel.sync.err.google_entries_sub'),
+      })
     }
   }
 
