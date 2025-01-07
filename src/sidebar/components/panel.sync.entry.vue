@@ -54,6 +54,7 @@ import { Sidebar } from 'src/services/sidebar'
 import { Windows } from 'src/services/windows'
 import { Containers } from 'src/services/containers'
 import { DnD } from 'src/services/drag-and-drop'
+import { Info } from 'src/services/info'
 
 const props = defineProps<{ entry: SyncedEntry }>()
 const title = getTypeTitle()
@@ -123,6 +124,8 @@ async function openTabs(entry: SyncedEntry) {
     panelId: Sidebar.getRecentTabsPanelId(),
   }
 
+  if (Info.isSync) updDstInfoForPopup(dstInfo)
+
   await Tabs.open(toOpen, dstInfo)
 }
 
@@ -175,17 +178,23 @@ async function onTabMouseUp(e: MouseEvent, tab: Sync.EntryTab, entry: Sync.Synce
     containerId: Containers.getContainerFor(tab.url),
   }
 
-  if (e.button === 0) {
-    tabInfo.active = true
-    await Tabs.open([tabInfo], dstInfo)
-    return
-  }
+  if (e.button === 0) tabInfo.active = true
+  else if (e.button === 1) tabInfo.active = false
 
-  if (e.button === 1) {
-    tabInfo.active = false
-    await Tabs.open([tabInfo], dstInfo)
-    return
-  }
+  if (Info.isSync) updDstInfoForPopup(dstInfo)
+
+  await Tabs.open([tabInfo], dstInfo)
+}
+
+function updDstInfoForPopup(dstInfo: DstPlaceInfo) {
+  const url = new URL(location.href)
+  const params = url.searchParams
+  const srcWinIdStr = params.get('w')
+  const srcWinId = parseInt(srcWinIdStr ?? '')
+  if (isNaN(srcWinId)) return // TODO: maybe send to bg and then open in the last focused win
+
+  dstInfo.windowId = srcWinId
+  delete dstInfo.panelId
 }
 
 function onTabDragStart(e: DragEvent, tab: Sync.EntryTab, entry: Sync.SyncedEntry) {

@@ -2,6 +2,7 @@ import { MenuConfs, SettingsState, SubPanelType, CustomStyles } from 'src/types'
 import { Google, Logs, Sync, Utils } from './_services'
 import { Settings } from './settings'
 import { Sidebar } from './sidebar'
+import { Windows } from './windows'
 
 export * as Firefox from './sync.firefox'
 export * as Google from './sync.google'
@@ -333,6 +334,8 @@ export async function openSyncWindow() {
   const width = 300
   const height = 600
 
+  const parentWinId = Windows.id
+
   const syncWindow = await browser.windows.create({
     allowScriptsToClose: true,
     focused: true,
@@ -341,7 +344,7 @@ export async function openSyncWindow() {
     incognito: false,
     state: 'normal',
     type: 'popup',
-    url: '/popup.sync/sync.html',
+    url: `/popup.sync/sync.html?w=${parentWinId}`,
     // For userChrome modificatoins with `#main-window[titlepreface='Sync‎']`
     titlePreface: 'Sync‎',
   })
