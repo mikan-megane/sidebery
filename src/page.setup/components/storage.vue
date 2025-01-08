@@ -25,10 +25,17 @@
     h2 Google Drive Files
 
     .storage-section
-      .storage-prop(v-for="info in state.googleDriveFiles" @click="openStoredData(info.name)")
-        .name {{info.name}}
-        .size {{info.sizeStr}}
-        .btn.-warn(@click.stop="deleteGoogleDriveFile(info.id)") {{translate('settings.storage_delete_prop')}}
+      .storage-prop(
+        v-for="info in state.googleDriveFiles"
+        :data-loading="info.loading"
+        @click="openStoredData(info.name)")
+        .left-group
+          .name {{info.name}}
+          .profile   ({{info.profile}})
+        .right-group
+          .time {{info.timeStr}}
+          .size {{info.sizeStr}}
+        .btn.-warn(@click.stop="deleteGoogleDriveFile(info)") {{translate('settings.storage_delete_prop')}}
 
     .ctrls
       .btn(@click="loadGoogleDriveFiles") Update
@@ -48,12 +55,24 @@ import * as Logs from 'src/services/logs'
 import FooterSection from './footer-section.vue'
 import { Google } from 'src/services/_services'
 
+interface GoogleDriveFileInfo {
+  id: string
+  name: string
+  profile: string
+  profileId: string
+  size: number
+  sizeStr: string
+  time: number
+  timeStr: string
+  loading: boolean
+}
+
 const el = ref<HTMLElement | null>(null)
 const state = reactive({
   storedProps: [] as { name: string; size: number; sizeStr: string; len: string }[],
   storageOveral: '-',
   faviconsCache: [] as { favicon: string; tooltip: string }[],
-  googleDriveFiles: [] as { id: string; name: string; size: number; sizeStr: string }[],
+  googleDriveFiles: [] as GoogleDriveFileInfo[],
 })
 
 onMounted(() => {
@@ -80,8 +99,8 @@ async function calcStorageInfo(): Promise<void> {
     .sort((a, b) => b.size - a.size)
 
   // TEMP
-  if ((stored.favicons || stored.favicons_01) && stored.favDomains) {
-    const fullList = stored.favicons ?? [
+  if (stored.favicons_01 && stored.favDomains) {
+    const fullList = [
       ...(stored.favicons_01 ?? []),
       ...(stored.favicons_02 ?? []),
       ...(stored.favicons_03 ?? []),
@@ -165,25 +184,70 @@ async function clearStorage(): Promise<void> {
 }
 
 async function loadGoogleDriveFiles(): Promise<void> {
-  const files = await Google.Drive.listFiles({ fields: ['id', 'name', 'size'] })
+  const files = await Google.Drive.listFiles({
+    fields: ['id', 'name', 'size', 'modifiedTime', 'appProperties'],
+  })
   if (!files) return
 
-  state.googleDriveFiles = files.map(f => {
+  const profiles: Record<ID, string> = {}
+  const filesInfo = files.map(f => {
     let size = 0
     if (f.size) size = parseInt(f.size)
     if (isNaN(size)) size = 0
+
+    let time = 0
+    let modDate
+    if (f.modifiedTime) {
+      modDate = new Date(f.modifiedTime)
+      time = modDate.getTime()
+    }
+
+    let name, profileId
+    if (f.appProperties) {
+      if (f.appProperties.profileId) profileId = f.appProperties.profileId
+      if (f.appProperties.type === 'profile-info') {
+        name = 'Profile Info'
+        profiles[f.appProperties.profileId] = f.appProperties.profileName
+      } else if (f.appProperties.type === 'settings') name = 'Settings'
+      else if (f.appProperties.type === 'ctx-menu') name = 'Context Menu'
+      else if (f.appProperties.type === 'keybindings') name = 'Keybindings'
+      else if (f.appProperties.type === 'styles') name = 'Styles'
+    }
+
     return {
       id: f.id ?? '',
-      name: f.name ?? '???',
+      name: name ?? f.name ?? '???',
+      profile: '',
+      profileId: profileId ?? '',
       size: size,
       sizeStr: Utils.sizeToString(size),
+      time,
+      timeStr: modDate ? `${Utils.dDate(modDate)} - ${Utils.dTime(modDate)}` : '???',
+      loading: false,
     }
   })
+
+  for (const info of filesInfo) {
+    const profileName = profiles[info.profileId]
+    if (profileName) info.profile = profileName
+    else info.profile = '???'
+  }
+
+  filesInfo.sort((a, b) => (b.time ?? 0) - (a.time ?? 0))
+
+  state.googleDriveFiles = filesInfo
 }
 
-async function deleteGoogleDriveFile(id: string) {
-  await Google.Drive.deleteFile(id)
-  await Utils.sleep(250)
-  await loadGoogleDriveFiles()
+async function deleteGoogleDriveFile(file: GoogleDriveFileInfo) {
+  if (file.loading) return
+  file.loading = true
+
+  try {
+    await Google.Drive.deleteFile(file.id)
+    await Utils.sleep(250)
+    await loadGoogleDriveFiles()
+  } finally {
+    file.loading = false
+  }
 }
 </script>
