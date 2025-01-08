@@ -1025,7 +1025,7 @@ interface QueueItem {
   ok: (result: any) => void
   err: (error: any) => void
   fn: AnyAsyncFunc
-  args?: any[]
+  args: any[]
 }
 
 export class AsyncQueue {
@@ -1044,7 +1044,7 @@ export class AsyncQueue {
 
     this._waitingQueue = true
 
-    const result = args ? await fn(...args) : await fn()
+    const result = await fn(...args)
 
     if (this._queue.length) this._processQueue()
     else this._waitingQueue = false
@@ -1058,8 +1058,7 @@ export class AsyncQueue {
     while (nextTask) {
       try {
         /* eslint @typescript-eslint/no-unsafe-argument: off */
-        if (nextTask.args) nextTask.ok(await nextTask.fn(...nextTask.args))
-        else nextTask.ok(await nextTask.fn())
+        nextTask.ok(await nextTask.fn(...nextTask.args))
       } catch (err) {
         nextTask.err(err)
       }
