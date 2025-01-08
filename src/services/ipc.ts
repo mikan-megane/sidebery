@@ -822,7 +822,7 @@ function runActionFor<T extends InstanceType, A extends keyof Actions>(msg: Mess
   }
 }
 
-const runningAsyncActions = new Map<number, string>()
+const runningAsyncActions = new Map<string, string>()
 /**
  * Handles message received from Port in background instance
  * and sends the answer message with the action result.
@@ -885,16 +885,17 @@ async function onPostMsg<T extends InstanceType, A extends keyof Actions>(
 
       // ...then wait for the final result and send it too
       let finalResult, error
+      const asyncActionId = msgId + port.name
       try {
-        runningAsyncActions.set(msgId, port.name)
+        runningAsyncActions.set(asyncActionId, port.name)
         finalResult = await result
       } catch (err) {
         error = String(err)
       }
 
       // Check if result is not needed anymore
-      if (!runningAsyncActions.has(msgId)) return
-      else runningAsyncActions.delete(msgId)
+      if (!runningAsyncActions.has(asyncActionId)) return
+      else runningAsyncActions.delete(asyncActionId)
 
       try {
         port.postMessage({ id: msgId, result: finalResult, error })
