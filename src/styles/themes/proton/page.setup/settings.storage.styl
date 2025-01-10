@@ -2,11 +2,11 @@
 
 .storage-section
   position: relative
+  overflow: hidden
 
 .storage-section .storage-prop
   position: relative
   display: flex
-  width: calc(100% - 16px)
   align-items: center
   padding: 2px 8px
   margin: 3px 8px 0
@@ -47,7 +47,8 @@
   position: relative
   padding: 1px 0
 .storage-section .storage-prop .left-group
-  flex-grow: 1
+  margin-right: auto
+  overflow: hidden
 .storage-section .storage-prop .right-group
   flex-shrink: 0
   margin-right: 4px
@@ -67,6 +68,9 @@
   color: var(--toolbar-fg)
   white-space: nowrap
   opacity: .7
+.storage-section .storage-prop .profile
+  overflow: hidden
+  text-overflow: ellipsis
 
 .storage-section .storage-prop .size
 .storage-section .storage-prop .time
@@ -79,6 +83,7 @@
   text-align: right
 
 .storage-section .storage-prop .btn
+  flex-shrink: 0
   font-size: rem(12)
   padding: 3px 6px
   margin: 2px 0
