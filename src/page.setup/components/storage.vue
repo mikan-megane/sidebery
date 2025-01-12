@@ -4,6 +4,7 @@
     h2
       span {{translate('settings.storage_title')}}
       .title-note   (~{{state.storageOveral}})
+    span.header-shadow
     .storage-section
       .storage-prop(v-for="info in state.storedProps" @click="openStoredData(info.name)")
         .name {{info.name}}
@@ -23,15 +24,16 @@
 
   section(v-if="Settings.state.syncUseGoogleDrive")
     h2 Google Drive Files
-
+    span.header-shadow
     .storage-section
       .storage-prop(
         v-for="info in state.googleDriveFiles"
         :data-loading="info.loading"
+        :data-profile-without-data="info.profileInfoWithoutData"
         @click="openStoredData(info.name)")
         .left-group
           .name {{info.name}}
-          .profile   ({{info.profile}})
+          .profile ({{info.profile}})
         .right-group
           .time {{info.timeStr}}
           .size {{info.sizeStr}}
@@ -60,6 +62,8 @@ interface GoogleDriveFileInfo {
   name: string
   profile: string
   profileId: string
+  profileInfoWithoutData: boolean
+  isProfile: boolean
   size: number
   sizeStr: string
   time: number
@@ -189,7 +193,7 @@ async function loadGoogleDriveFiles(): Promise<void> {
   })
   if (!files) return
 
-  const profiles: Record<ID, string> = {}
+  const profileNames: Record<ID, string> = {}
   const filesInfo = files.map(f => {
     let size = 0
     if (f.size) size = parseInt(f.size)
@@ -202,16 +206,18 @@ async function loadGoogleDriveFiles(): Promise<void> {
       time = modDate.getTime()
     }
 
-    let name, profileId
+    let name, profileId, isProfileInfo
     if (f.appProperties) {
       if (f.appProperties.profileId) profileId = f.appProperties.profileId
       if (f.appProperties.type === 'profile-info') {
         name = 'Profile Info'
-        profiles[f.appProperties.profileId] = f.appProperties.profileName
+        isProfileInfo = true
+        profileNames[f.appProperties.profileId] = f.appProperties.profileName
       } else if (f.appProperties.type === 'settings') name = 'Settings'
       else if (f.appProperties.type === 'ctx-menu') name = 'Context Menu'
       else if (f.appProperties.type === 'keybindings') name = 'Keybindings'
       else if (f.appProperties.type === 'styles') name = 'Styles'
+      else if (f.appProperties.type === 'tabs') name = 'Tabs'
     }
 
     return {
@@ -219,6 +225,8 @@ async function loadGoogleDriveFiles(): Promise<void> {
       name: name ?? f.name ?? '???',
       profile: '',
       profileId: profileId ?? '',
+      profileInfoWithoutData: false,
+      isProfile: !!isProfileInfo,
       size: size,
       sizeStr: Utils.sizeToString(size),
       time,
@@ -228,14 +236,25 @@ async function loadGoogleDriveFiles(): Promise<void> {
   })
 
   for (const info of filesInfo) {
-    const profileName = profiles[info.profileId]
+    const profileName = profileNames[info.profileId]
     if (profileName) info.profile = profileName
     else info.profile = '???'
   }
 
   filesInfo.sort((a, b) => (b.time ?? 0) - (a.time ?? 0))
 
+  checkIfProfileInfoIsUseless(filesInfo)
+
   state.googleDriveFiles = filesInfo
+}
+
+function checkIfProfileInfoIsUseless(files?: GoogleDriveFileInfo[]) {
+  if (!files) files = state.googleDriveFiles
+  for (const fileInfo of files) {
+    if (!fileInfo.isProfile) continue
+    const p = files.find(f => !f.isProfile && f.profileId === fileInfo.profileId)
+    fileInfo.profileInfoWithoutData = !p
+  }
 }
 
 async function deleteGoogleDriveFile(file: GoogleDriveFileInfo) {
