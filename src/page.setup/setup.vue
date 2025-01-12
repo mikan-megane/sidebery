@@ -26,6 +26,9 @@
   Transition(name="popup"): TabReopenRulesPopup(v-if="Popups.reactive.tabReopenRulesPopup")
   Transition(name="popup" type="transition"): DialogPopup(v-if="Popups.reactive.dialog" :dialog="Popups.reactive.dialog")
   Details
+
+  .notifications-container
+    NotificationsPopup
 </template>
 
 <script lang="ts" setup>
@@ -47,6 +50,7 @@ import TabMoveRulesPopup from 'src/components/popup.tab-move-rules.vue'
 import TabReopenRulesPopup from 'src/components/popup.tab-reopen-rules.vue'
 import DialogPopup from 'src/components/popup.dialog.vue'
 import Details from './components/settings.details.vue'
+import NotificationsPopup from '../sidebar/components/popup.notifications.vue'
 import * as Popups from 'src/services/popups'
 
 const animations = computed(() => (Settings.state.animations ? 'fast' : 'none'))
