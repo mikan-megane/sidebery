@@ -338,6 +338,8 @@ export async function updateJsonFile(opts: UpdFileOpts): Promise<GDOutputFile | 
     return null
   }
 
+  if (!responseObject.id) responseObject.id = opts.fileId
+
   return responseObject
 }
 
