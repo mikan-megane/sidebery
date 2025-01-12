@@ -8,6 +8,7 @@ import { WebReq } from 'src/services/web-req'
 import { Windows } from 'src/services/windows'
 import { Store } from 'src/services/storage'
 import { DetachedTabsInfo } from 'src/services/tabs.fg.move'
+import { Sync } from 'src/services/_services'
 
 export const enum InstanceType {
   unknown = -1,
@@ -61,6 +62,12 @@ export type BgActions = {
   checkIpInfo: typeof WebReq.checkIpInfo
   disableAutoReopening: typeof WebReq.disableAutoReopening
   enableAutoReopening: typeof WebReq.enableAutoReopening
+
+  saveToSync: typeof Sync.save
+  saveTabsToSync: typeof Sync.saveTabs
+  removeFromSync: typeof Sync.remove
+  getDataFromSync: typeof Sync.getData
+  loadSync: typeof Sync.load
 }
 
 export type SettingsActions = {

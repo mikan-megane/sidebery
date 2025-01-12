@@ -7,7 +7,7 @@ import { Menu } from './menu'
 import { Keybindings } from './keybindings'
 import { SyncedEntry } from './sync'
 
-type KeyType = 'settings' | 'ctxMenu' | 'kb' | 'styles'
+export type KeyType = 'settings' | 'ctxMenu' | 'kb' | 'styles'
 
 /**
  * Key value pairs stored to browser.storage.sync.
@@ -85,6 +85,8 @@ export async function save(key: KeyType, value: SyncableData, entryId?: string) 
     await browser.storage.sync.set<Synced>({
       [syncPropName]: { value, time, name: profileName, ver, entryId },
     })
+
+    return syncPropName
   }
 }
 

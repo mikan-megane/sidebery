@@ -206,20 +206,32 @@ export const commonTranslations: Translations = {
   },
 
   // ---
-  // -- Sync panel
+  // -- Sync
   // -
   'panel.sync.title': {
     en: 'Sync',
     zh_TW: '同步',
   },
-  'panel.sync.err.google_entries': {
-    en: 'Cannot load entries from Google Drive',
+  'sync.err.google_entries': {
+    en: 'Unable to load entries from Google Drive',
   },
-  'panel.sync.err.google_entries_sub': {
+  'sync.err.google_entries_sub': {
     en: 'Try again later',
   },
-  'panel.sync.err.google_tabs': {
-    en: 'Cannot load tabs from Google Drive',
+  'sync.err.google_tabs': {
+    en: 'Unable to load tabs from Google Drive',
+  },
+  'sync.err.load': {
+    en: 'Unable to load synced data',
+  },
+  'sync.err.save': {
+    en: 'Unable to save data to sync storage',
+  },
+  'sync.err.save_tabs': {
+    en: 'Unable to save tabs to sync storage',
+  },
+  'sync.err.rm': {
+    en: 'Unable to remove data from sync storage',
   },
 
   // ---

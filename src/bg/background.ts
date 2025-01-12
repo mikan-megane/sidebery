@@ -15,6 +15,7 @@ import { Info } from 'src/services/info'
 import { versionToInt } from 'src/services/info.actions'
 import { Menu } from 'src/services/menu'
 import { WebReq } from 'src/services/web-req'
+import { Sync } from 'src/services/_services'
 
 void (async function main() {
   Info.setInstanceType(InstanceType.bg)
@@ -43,6 +44,12 @@ void (async function main() {
     checkIpInfo: WebReq.checkIpInfo,
     disableAutoReopening: WebReq.disableAutoReopening,
     enableAutoReopening: WebReq.enableAutoReopening,
+
+    saveToSync: Sync.save,
+    saveTabsToSync: Sync.saveTabs,
+    removeFromSync: Sync.remove,
+    getDataFromSync: Sync.getData,
+    loadSync: Sync.load,
   })
 
   // Init first-need stuff

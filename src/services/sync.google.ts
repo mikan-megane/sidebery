@@ -198,70 +198,76 @@ export async function save<T>(
   props?: Record<string, string>,
   noRetry?: boolean
 ): Promise<Google.Drive.GDOutputFile | null | void> {
+  return QUEUE.add(_save, type, content, props, noRetry)
+}
+async function _save<T>(
+  type: FileType,
+  content: T,
+  props?: Record<string, string>,
+  noRetry?: boolean
+): Promise<Google.Drive.GDOutputFile | null | void> {
   Logs.info('Sync.Google.save():', typeNames[type])
 
-  return QUEUE.add(async () => {
-    // Load cached file ids if needed
-    if (!cachedFileIds) {
-      Logs.info('Sync.Google.save(): No cached file ids, loading...')
-      cachedFileIds = new Map(await loadCachedFileIds())
+  // Load cached file ids if needed
+  if (!cachedFileIds) {
+    Logs.info('Sync.Google.save(): No cached file ids, loading...')
+    cachedFileIds = new Map(await loadCachedFileIds())
+  }
+
+  const fileName = getFileName(type)
+  const cachedId = cachedFileIds.get(type)
+  let fileId: string | undefined
+
+  // Cached id is found
+  if (cachedId) {
+    fileId = cachedId
+  }
+
+  // No cached id: Fetch list of files and update cached file ids
+  // cachedId === null means the absence of file
+  else if (cachedId === undefined) {
+    Logs.info('Sync.Google.save(): No cached id: Upd cache')
+    await updateCachedFileIds()
+    fileId = cachedFileIds.get(type) ?? undefined
+    Logs.info('Sync.Google.save(): Cache updated: Id:', fileId)
+  }
+
+  const addonVer = browser.runtime.getManifest().version
+  const profileId = Sync.getProfileId()
+  const appProps = { ver: addonVer, type: typeNames[type], profileId, ...props }
+
+  // No file: Create new
+  if (!fileId) {
+    const newFile = await Google.Drive.createJsonFile({
+      name: fileName,
+      content,
+      appProperties: appProps,
+    })
+    if (newFile?.id) {
+      cachedFileIds.set(type, newFile.id)
+      saveCachedFileIdsDebounced(200)
+    } else {
+      throw 'Cannot create new file'
     }
+    return newFile
+  }
 
-    const fileName = getFileName(type)
-    const cachedId = cachedFileIds.get(type)
-    let fileId: string | undefined
-
-    // Cached id is found
-    if (cachedId) {
-      fileId = cachedId
+  // Try to update existed file
+  try {
+    return await Google.Drive.updateJsonFile({ fileId, content, appProperties: appProps })
+  } catch (err) {
+    if (noRetry) {
+      Logs.err('Sync.Google.save(): Cannot update file:', err)
+      return
     }
+    Logs.warn('Sync.Google.save(): Cannot update file, retrying...', err)
 
-    // No cached id: Fetch list of files and update cached file ids
-    // cachedId === null means the absence of file
-    else if (cachedId === undefined) {
-      Logs.info('Sync.Google.save(): No cached id: Upd cache')
-      await updateCachedFileIds()
-      fileId = cachedFileIds.get(type) ?? undefined
-      Logs.info('Sync.Google.save(): Cache updated: Id:', fileId)
-    }
+    // Reset cached id and try again
+    cachedFileIds.set(type, null)
+    saveCachedFileIds()
 
-    const addonVer = browser.runtime.getManifest().version
-    const profileId = Sync.getProfileId()
-    const appProps = { ver: addonVer, type: typeNames[type], profileId, ...props }
-
-    // No file: Create new
-    if (!fileId) {
-      const newFile = await Google.Drive.createJsonFile({
-        name: fileName,
-        content,
-        appProperties: appProps,
-      })
-      if (newFile?.id) {
-        cachedFileIds.set(type, newFile.id)
-        saveCachedFileIdsDebounced(200)
-      } else {
-        throw 'Cannot create new file'
-      }
-      return newFile
-    }
-
-    // Try to update existed file
-    try {
-      return await Google.Drive.updateJsonFile({ fileId, content, appProperties: appProps })
-    } catch (err) {
-      if (noRetry) {
-        Logs.err('Sync.Google.save(): Cannot update file:', err)
-        return
-      }
-      Logs.warn('Sync.Google.save(): Cannot update file, retrying...', err)
-
-      // Reset cached id and try again
-      cachedFileIds.set(type, null)
-      saveCachedFileIds()
-
-      return await save(type, content, props, true)
-    }
-  })
+    return await _save(type, content, props, true)
+  }
 }
 
 /**
@@ -338,6 +344,9 @@ export async function loadOtherProfilesInfo(): Promise<ProfileInfo[]> {
 }
 
 export async function saveProfileInfo() {
+  return QUEUE.add(_saveProfileInfo)
+}
+async function _saveProfileInfo() {
   Logs.info('Sync.Google.saveProfileInfo()')
 
   const profileInfo: ProfileInfo = {
@@ -351,7 +360,7 @@ export async function saveProfileInfo() {
     profileIcon: 'default',
     profileColor: 'toolbar',
   }
-  await Sync.Google.save(FileType.ProfileInfo, profileInfo, props)
+  await _save(FileType.ProfileInfo, profileInfo, props)
 }
 
 export async function removeAllFilesOfThisProfile() {
@@ -394,7 +403,7 @@ export async function loadSyncedEntries(): Promise<SyncedEntry[] | null> {
     return entries
   }
 
-  Logs.info('Sync.Google.loadSyncedEntries(): Files:', filesInfo)
+  Logs.info('Sync.Google.loadSyncedEntries(): Files count:', filesInfo.length)
 
   const profileId = Sync.getProfileId()
   const dayStartTime = Utils.getDayStartMS()
@@ -424,10 +433,7 @@ export async function loadSyncedEntries(): Promise<SyncedEntry[] | null> {
 
     const syncType = Sync.getSyncedType(props.type)
     // Skip non-sync file types
-    if (!syncType) {
-      Logs.info('Sync.Google.loadSyncedEntries(): Unknown type:', fileInfo)
-      continue
-    }
+    if (!syncType) continue
 
     const profileInfo = profiles[props.profileId]
     if (!profileInfo) {
@@ -475,15 +481,13 @@ export async function loadSyncedEntries(): Promise<SyncedEntry[] | null> {
       Notifications.notify({
         icon: '#icon_sync',
         lvl: 'err',
-        title: translate('panel.sync.err.google_tabs'),
-        details: translate('panel.sync.err.google_entries_sub'),
+        title: translate('sync.err.google_tabs'),
+        details: translate('sync.err.google_entries_sub'),
       })
     }
   }
 
-  // TODO: Remove profile-info if there is no valid entries for it
-
-  Logs.info('Sync.Google.loadSyncedEntries(): Result:', entries)
+  Logs.info('Sync.Google.loadSyncedEntries(): entries count:', entries.length)
 
   return entries
 }
@@ -494,7 +498,7 @@ async function loadSyncedTabEntries(
   dayStartTime: number,
   currentProfileId: string
 ): Promise<SyncedEntry[] | void> {
-  Logs.info('Sync.Google.loadSyncedTabEntries():', fileInfo)
+  Logs.info('Sync.Google.loadSyncedTabEntries()')
 
   const props = fileInfo.appProperties
   if (!fileInfo.id || !fileInfo.modifiedTime || !props) {
@@ -507,8 +511,6 @@ async function loadSyncedTabEntries(
     Logs.warn('Sync.Google.loadSyncedTabEntries(): Cannot load file:', fileInfo)
     return
   }
-
-  Logs.info('Sync.Google.loadSyncedTabEntries(): Raw data:', data)
 
   if (props.profileId === currentProfileId) {
     cachedTabFilesData.set(fileInfo.id, data)
@@ -544,7 +546,7 @@ async function loadSyncedTabEntries(
     })
   }
 
-  Logs.info('Sync.Google.loadSyncedTabEntries(): Entries:', entries)
+  Logs.info('Sync.Google.loadSyncedTabEntries(): Entries length:', entries.length)
 
   return entries
 }
@@ -583,22 +585,27 @@ function syncedTabsToEntryTabs(tabsEntry: SyncedTabsBatch, favicons: Record<stri
   return tabs
 }
 
-const TABS_PER_FILE_LIMIT = 10
+const TABS_PER_FILE_LIMIT = 1000
 const TAB_FILES_MAX_COUNT = 3
 
 export async function saveTabs(
   tabsBatch: Sync.Google.SyncedTabsBatch,
   favicons: Record<string, string>
 ): Promise<SyncedEntry> {
-  Logs.info('Sync.Google.saveTabs():', tabsBatch)
+  return QUEUE.add(_saveTabs, tabsBatch, favicons)
+}
+async function _saveTabs(
+  tabsBatch: Sync.Google.SyncedTabsBatch,
+  favicons: Record<string, string>
+): Promise<SyncedEntry> {
+  Logs.info('Sync.Google.saveTabs()')
 
-  if (!Sync.ready) await Sync.load()
+  if (!Sync.ready) throw 'Sync service is not ready'
 
   const recentTabsEntry = Sync.reactive.entries.find(e => e.type === Sync.SyncedEntryType.Tabs)
   const oldestTabsEntry = Sync.reactive.entries.findLast(e => e.type === Sync.SyncedEntryType.Tabs)
   const recentFileId = recentTabsEntry?.gdFileId
   const oldestFileId = oldestTabsEntry?.gdFileId
-  Logs.info('Sync.Google.saveTabs(): recentFileId:', recentFileId)
 
   let recentFileData = recentFileId ? cachedTabFilesData.get(recentFileId) : undefined
   let tabFilesCount = cachedTabFilesData.size
@@ -609,16 +616,13 @@ export async function saveTabs(
   const profileId = Sync.getProfileId()
   const appProps = { ver: addonVer, type: typeNames[FileType.Tabs], profileId }
 
-  Logs.info('Sync.Google.saveTabs(): tabFilesCount:', tabFilesCount)
-  Logs.info('Sync.Google.saveTabs(): recentFileData:', Utils.clone(recentFileData))
-
   // Add new tabs and favicons
   if (recentFileData) {
-    Logs.info('Sync.Google.saveTabs(): Updating current file data...')
+    Logs.info('Sync.Google.saveTabs(): Current file data will be updated')
     recentFileData.batches.splice(0, 0, tabsBatch)
     Object.assign(recentFileData.favicons, favicons)
   } else {
-    Logs.info('Sync.Google.saveTabs(): Creating new file data...')
+    Logs.info('Sync.Google.saveTabs(): New file data will be created')
     recentFileData = {
       batches: [tabsBatch],
       favicons,
@@ -643,8 +647,6 @@ export async function saveTabs(
       }
 
       if (tabCount > TABS_PER_FILE_LIMIT && splitIndex > 0) {
-        Logs.info('Sync.Google.saveTabs(): Splitting file: splitIndex:', splitIndex)
-        Logs.info('Sync.Google.saveTabs(): Splitting file...', Utils.clone(recentFileData))
         newFileData = halveTabBatches(recentFileData, splitIndex)
         tabFilesCount++
         break
@@ -672,14 +674,12 @@ export async function saveTabs(
 
   // Create the first file
   else {
-    Logs.info('Sync.Google.saveTabs(): Creating the first file...', Utils.clone(recentFileData))
+    Logs.info('Sync.Google.saveTabs(): Creating the first file...')
     const createdFile = await Google.Drive.createJsonFile({
       name: Sync.Google.getFileName(FileType.Tabs),
       content: recentFileData,
       appProperties: appProps,
     })
-
-    Logs.info('Sync.Google.saveTabs(): The first file:', createdFile)
 
     if (createdFile?.id) {
       targetFileId = createdFile.id
@@ -691,13 +691,12 @@ export async function saveTabs(
 
   // Create a new file separated from the overflowed one
   if (newFileData) {
-    Logs.info('Sync.Google.saveTabs(): Creating a new separated file...', Utils.clone(newFileData))
+    Logs.info('Sync.Google.saveTabs(): Creating a new separated file...')
     const createdFile = await Google.Drive.createJsonFile({
       name: Sync.Google.getFileName(FileType.Tabs),
       content: newFileData,
       appProperties: appProps,
     })
-    Logs.info('Sync.Google.saveTabs(): The new file:', createdFile)
 
     if (createdFile?.id) {
       targetFileId = createdFile.id
@@ -712,7 +711,6 @@ export async function saveTabs(
     Logs.info('Sync.Google.saveTabs(): Removing the oldest file that exeeds the limit...')
     await Google.Drive.deleteFile(fileIdToRemove)
     cachedTabFilesData.delete(fileIdToRemove)
-    // TODO: update reactive Sync state
   }
 
   // Return the new entry
@@ -721,6 +719,7 @@ export async function saveTabs(
   const dayStartTime = Utils.getDayStartMS()
   const dateYYYYMMDD = entryTime ? Utils.dDate(entryTime, '.', dayStartTime) : '???'
   const timeHHMM = entryTime ? Utils.dTime(entryTime, ':', false) : '???'
+  Logs.info('Sync.Google.saveTabs: Returning entry...')
   return {
     id: tabsBatch.id,
     type: Sync.SyncedEntryType.Tabs,
@@ -784,6 +783,9 @@ function halveTabBatches(
 }
 
 export async function removeTabsEntry(entry: SyncedEntry) {
+  return QUEUE.add(_removeTabsEntry, entry)
+}
+async function _removeTabsEntry(entry: SyncedEntry) {
   Logs.info('Sync.Google.removeTabsEntry():', entry)
 
   if (!entry.id || !entry.gdFileId) return
@@ -791,7 +793,6 @@ export async function removeTabsEntry(entry: SyncedEntry) {
   // Load file data
   const fileData = await Google.Drive.getJsonFile<SyncedTabsFileData>(entry.gdFileId)
   if (!fileData) return
-  Logs.info('Sync.Google.removeTabsEntry(): loaded fileData:', Utils.clone(fileData))
 
   // Remove tabs batch from this data
   const rmIndex = fileData.batches.findIndex(batch => batch.id === entry.id)
@@ -818,7 +819,6 @@ export async function removeTabsEntry(entry: SyncedEntry) {
   if (fileData.batches.length) {
     // Update file
     const fileId = entry.gdFileId
-    Logs.info('Sync.Google.removeTabsEntry(): Update fileData:', fileId, Utils.clone(fileData))
     await Google.Drive.updateJsonFile({ fileId, content: fileData })
 
     // Update cache

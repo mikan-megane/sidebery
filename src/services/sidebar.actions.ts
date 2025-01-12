@@ -1106,7 +1106,7 @@ export function activatePanel(panelId: ID, loadPanels = true, keepSearching?: bo
   const isTabsPanel = Utils.isTabsPanel(panel)
   const isPrevTabsPanel = Utils.isTabsPanel(prevPanel)
 
-  let loading: Promise<void> | undefined
+  let loading
   if (loadPanels && !panel.ready) {
     if (isTabsPanel) loading = Tabs.load()
     else if (panel.type === PanelType.bookmarks) loading = Bookmarks.load()
@@ -1133,7 +1133,7 @@ export function activatePanel(panelId: ID, loadPanels = true, keepSearching?: bo
 
   if (isPrevTabsPanel) Sidebar.lastTabsPanelId = prevPanel.id
   else if (Utils.isHistoryPanel(prevPanel)) History.unloadAfter(30_000)
-  else if (Utils.isSyncPanel(prevPanel)) Sync.unloadAfter(30_000)
+  else if (Utils.isSyncPanel(prevPanel)) Sync.unloadAfter(5_000)
 
   if (DnD.reactive.isStarted) DnD.reactive.dstPanelId = panelId
 
@@ -2537,7 +2537,7 @@ export function closeSubPanel() {
   if (Sidebar.subPanelType === SubPanelType.History && Sidebar.activePanelId !== 'history') {
     History.unloadAfter(30_000)
   } else if (Sidebar.subPanelType === SubPanelType.Sync && Sidebar.activePanelId !== 'sync') {
-    Sync.unloadAfter(30_000)
+    Sync.unloadAfter(5_000)
   }
 
   Sidebar.subPanelActive = false

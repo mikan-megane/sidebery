@@ -79,16 +79,16 @@ async function onMainAction(entry: SyncedEntry) {
 
   try {
     if (entry.type === Sync.SyncedEntryType.Settings) {
-      await Sync.q.add(Settings.importSyncedSettings, entry)
+      await Settings.importSyncedSettings(entry)
     }
     if (entry.type === Sync.SyncedEntryType.CtxMenu) {
-      await Sync.q.add(Menu.importSyncedCtxMenu, entry)
+      await Menu.importSyncedCtxMenu(entry)
     }
     if (entry.type === Sync.SyncedEntryType.Keybindings) {
-      await Sync.q.add(Keybindings.importSyncedKeybindings, entry)
+      await Keybindings.importSyncedKeybindings(entry)
     }
     if (entry.type === Sync.SyncedEntryType.Styles) {
-      await Sync.q.add(Styles.importSyncedStyles, entry)
+      await Styles.importSyncedStyles(entry)
     }
   } catch (err) {
     Logs.err('onMainAction', err, Utils.clone(entry))
@@ -137,7 +137,7 @@ async function onDelete(entry: SyncedEntry) {
   entry.loading = true
 
   try {
-    await Sync.q.add(Sync.remove, entry)
+    await Sync.remove(entry)
   } catch (err) {
     Logs.err('onDelete', err, Utils.clone(entry))
   }

@@ -149,10 +149,7 @@ function onSettingsToggle(): void {
   Logs.info('onSettingsToggle:', Settings.state.syncSaveSettings)
 
   if (!Settings.state.syncSaveSettings) {
-    Sync.Firefox.remove('settings')
-    if (Settings.state.syncUseGoogleDrive) {
-      Sync.Google.remove(Sync.Google.FileType.Settings)
-    }
+    Sync.removeByType(Sync.SyncedEntryType.Settings)
   }
   Settings.saveDebounced(150)
 }
@@ -163,10 +160,7 @@ function onMenuToggle(): void {
   if (Settings.state.syncSaveCtxMenu) {
     Menu.saveCtxMenuToSync()
   } else {
-    Sync.Firefox.remove('ctxMenu')
-    if (Settings.state.syncUseGoogleDrive) {
-      Sync.Google.remove(Sync.Google.FileType.CtxMenu)
-    }
+    Sync.removeByType(Sync.SyncedEntryType.CtxMenu)
   }
   Settings.saveDebounced(150)
 }
@@ -178,10 +172,7 @@ async function onStylesToggle(): Promise<void> {
     await Styles.loadCustomCSS()
     Styles.saveStylesToSync()
   } else {
-    Sync.Firefox.remove('styles')
-    if (Settings.state.syncUseGoogleDrive) {
-      Sync.Google.remove(Sync.Google.FileType.Styles)
-    }
+    Sync.removeByType(Sync.SyncedEntryType.Styles)
   }
 
   Settings.saveDebounced(150)
@@ -193,10 +184,7 @@ function onKbToggle(): void {
   if (Settings.state.syncSaveKeybindings) {
     Keybindings.saveKeybindingsToSync()
   } else {
-    Sync.Firefox.remove('kb')
-    if (Settings.state.syncUseGoogleDrive) {
-      Sync.Google.remove(Sync.Google.FileType.Keybindings)
-    }
+    Sync.removeByType(Sync.SyncedEntryType.Keybindings)
   }
 
   Settings.saveDebounced(150)
