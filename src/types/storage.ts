@@ -33,7 +33,7 @@ export interface Stored {
   expandedBookmarkFolders?: Record<ID, Record<ID, boolean>>
   bookmarksRecentFolders?: ID[]
 
-  googleDriveFileIds?: Record<string, string | null>
+  googleDriveFileIds?: Record<string, string>
 }
 
 export type StorageChanges = {

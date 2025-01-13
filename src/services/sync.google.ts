@@ -112,19 +112,25 @@ export function syncEntryTypeToFileType(entryType: Sync.SyncedEntryType): FileTy
   }
 }
 
-let cachedFileIds: Map<FileType, string | null> | null = null
+let cachedFileIds: Map<FileType, string> | null = null
 
-async function loadCachedFileIds() {
+async function loadCachedFileIds(): Promise<Map<FileType, string>> {
   Logs.info('Sync.Google.loadCachedFileIds()')
 
   const stored = await browser.storage.local.get<Stored>('googleDriveFileIds')
-  const storedIds = stored?.googleDriveFileIds ?? {}
-  const cachedIds = new Map()
-  cachedIds.set(FileType.ProfileInfo, storedIds[typeNames[FileType.ProfileInfo]] ?? null)
-  cachedIds.set(FileType.Settings, storedIds[typeNames[FileType.Settings]] ?? null)
-  cachedIds.set(FileType.CtxMenu, storedIds[typeNames[FileType.CtxMenu]] ?? null)
-  cachedIds.set(FileType.Styles, storedIds[typeNames[FileType.Styles]] ?? null)
-  cachedIds.set(FileType.Keybindings, storedIds[typeNames[FileType.Keybindings]] ?? null)
+  const storedIds: Record<string, string | undefined> = stored?.googleDriveFileIds ?? {}
+  const cachedIds = new Map<FileType, string>()
+
+  const profileInfoId = storedIds[typeNames[FileType.ProfileInfo]]
+  if (profileInfoId) cachedIds.set(FileType.ProfileInfo, profileInfoId)
+  const settingsId = storedIds[typeNames[FileType.Settings]]
+  if (settingsId) cachedIds.set(FileType.Settings, settingsId)
+  const menuId = storedIds[typeNames[FileType.CtxMenu]]
+  if (menuId) cachedIds.set(FileType.CtxMenu, menuId)
+  const stylesId = storedIds[typeNames[FileType.Styles]]
+  if (stylesId) cachedIds.set(FileType.Styles, stylesId)
+  const kbId = storedIds[typeNames[FileType.Keybindings]]
+  if (kbId) cachedIds.set(FileType.Keybindings, kbId)
 
   Logs.info('Sync.Google.loadCachedFileIds(): Loaded:', cachedIds)
 
@@ -136,7 +142,7 @@ async function saveCachedFileIds() {
 
   if (!cachedFileIds) return Logs.err('Sync.Google.saveCachedFileIds(): Nothing to save')
 
-  const storedIds: Record<string, string | null> = {}
+  const storedIds: Record<string, string> = {}
 
   for (const [fileType, id] of cachedFileIds) {
     if (id !== undefined) storedIds[typeNames[fileType]] = id
@@ -148,16 +154,28 @@ async function saveCachedFileIds() {
 }
 const saveCachedFileIdsDebounced = Utils.debounce(saveCachedFileIds)
 
+export async function removeCachedId(id: string) {
+  // Load cached file ids if needed
+  if (!cachedFileIds) cachedFileIds = new Map(await loadCachedFileIds())
+
+  const type = cachedFileIds.entries().find(([_, cid]) => id === cid)?.[0]
+  if (type === undefined) return
+
+  cachedFileIds.delete(type)
+  saveCachedFileIds()
+}
+
 async function updateCachedFileIds() {
   Logs.info('Sync.Google.updateCachedFileIds()')
 
   // Get all files of this profile
   const profileId = Sync.getProfileId()
   const files = await Google.Drive.listFiles({
-    fields: ['id'],
+    fields: ['id', 'appProperties'],
     q: `name contains '${Sync.getProfileId()}'`,
   })
   if (!files) return null
+  Logs.info('Sync.Google.updateCachedFileIds: files:', files)
 
   cachedFileIds = new Map()
 
@@ -180,11 +198,11 @@ async function updateCachedFileIds() {
     if (fileType === typeNames[FileType.Keybindings]) keybindingsId = file.id
   }
 
-  cachedFileIds.set(FileType.ProfileInfo, profileInfoId ?? null)
-  cachedFileIds.set(FileType.Settings, settingsId ?? null)
-  cachedFileIds.set(FileType.CtxMenu, ctxMenuId ?? null)
-  cachedFileIds.set(FileType.Styles, stylesId ?? null)
-  cachedFileIds.set(FileType.Keybindings, keybindingsId ?? null)
+  if (profileInfoId) cachedFileIds.set(FileType.ProfileInfo, profileInfoId)
+  if (settingsId) cachedFileIds.set(FileType.Settings, settingsId)
+  if (ctxMenuId) cachedFileIds.set(FileType.CtxMenu, ctxMenuId)
+  if (stylesId) cachedFileIds.set(FileType.Styles, stylesId)
+  if (keybindingsId) cachedFileIds.set(FileType.Keybindings, keybindingsId)
 
   saveCachedFileIds()
 }
@@ -224,8 +242,7 @@ async function _save<T>(
   }
 
   // No cached id: Fetch list of files and update cached file ids
-  // cachedId === null means the absence of file
-  else if (cachedId === undefined) {
+  else if (!cachedId) {
     Logs.info('Sync.Google.save(): No cached id: Upd cache')
     await updateCachedFileIds()
     fileId = cachedFileIds.get(type) ?? undefined
@@ -263,7 +280,7 @@ async function _save<T>(
     Logs.warn('Sync.Google.save(): Cannot update file, retrying...', err)
 
     // Reset cached id and try again
-    cachedFileIds.set(type, null)
+    cachedFileIds.delete(type)
     saveCachedFileIds()
 
     return await _save(type, content, props, true)
@@ -285,7 +302,7 @@ export async function remove(type: FileType) {
     if (fileId) {
       try {
         await Google.Drive.deleteFile(fileId)
-        cachedFileIds.set(type, null)
+        cachedFileIds.delete(type)
         saveCachedFileIds()
         return
       } catch (err) {
@@ -298,7 +315,7 @@ export async function remove(type: FileType) {
 
     // No files: Nothing to do
     if (!files || !files.length) {
-      cachedFileIds.set(type, null)
+      cachedFileIds.delete(type)
       saveCachedFileIds()
       return
     }
@@ -309,7 +326,7 @@ export async function remove(type: FileType) {
       }
     }
 
-    cachedFileIds.set(type, null)
+    cachedFileIds.delete(type)
     saveCachedFileIds()
   })
 }
