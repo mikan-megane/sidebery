@@ -28,6 +28,7 @@
     .storage-section
       .storage-prop(
         v-for="info in state.googleDriveFiles"
+        :title="info.tooltip"
         :data-loading="info.loading"
         :data-profile-without-data="info.profileInfoWithoutData"
         @click="openStoredData(info.name)")
@@ -55,7 +56,7 @@ import { SetupPage } from 'src/services/setup-page'
 import { Settings } from 'src/services/settings'
 import * as Logs from 'src/services/logs'
 import FooterSection from './footer-section.vue'
-import { Google } from 'src/services/_services'
+import { Google, Sync } from 'src/services/_services'
 
 interface GoogleDriveFileInfo {
   id: string
@@ -68,6 +69,7 @@ interface GoogleDriveFileInfo {
   sizeStr: string
   time: number
   timeStr: string
+  tooltip: string
   loading: boolean
 }
 
@@ -232,13 +234,14 @@ async function loadGoogleDriveFiles(): Promise<void> {
       time,
       timeStr: modDate ? `${Utils.dDate(modDate)} - ${Utils.dTime(modDate)}` : '???',
       loading: false,
+      tooltip: f.name ?? '',
     }
   })
 
   for (const info of filesInfo) {
     const profileName = profileNames[info.profileId]
     if (profileName) info.profile = profileName
-    else info.profile = '???'
+    else info.profile = info.profileId
   }
 
   filesInfo.sort((a, b) => (b.time ?? 0) - (a.time ?? 0))
@@ -263,6 +266,7 @@ async function deleteGoogleDriveFile(file: GoogleDriveFileInfo) {
 
   try {
     await Google.Drive.deleteFile(file.id)
+    await Sync.Google.removeCachedId(file.id)
     await Utils.sleep(250)
     await loadGoogleDriveFiles()
   } finally {
