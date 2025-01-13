@@ -249,6 +249,8 @@ export interface SettingsState {
   syncName: string
   syncUseFirefox: boolean
   syncUseGoogleDrive: boolean
+  syncUseGoogleDriveApi: boolean
+  syncUseGoogleDriveApiClientId: string
   syncSaveSettings: boolean
   syncSaveCtxMenu: boolean
   syncSaveStyles: boolean

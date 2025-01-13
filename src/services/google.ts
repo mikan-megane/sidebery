@@ -1,34 +1,45 @@
 import { Logs } from './_services'
+import { Settings } from './settings'
 
 export * as Drive from './google.drive'
 
 const CLIENT_ID = '644274995501-tnqg2kd1kpmdku1hni7qgv17fmvkjdl1.apps.googleusercontent.com'
 const SCOPES = {
   'drive.appdata': 'https://www.googleapis.com/auth/drive.appdata',
-  'drive.appfolder': 'https://www.googleapis.com/auth/drive.appfolder',
 }
 
 export let accessToken: string | null = null
 let accessTokenTimeout: number | undefined
+
+export function getRedirectURI() {
+  const redirectURL = browser.identity.getRedirectURL()
+  const redirIdStart = redirectURL.indexOf('/') + 2
+  const redirIdEnd = redirectURL.indexOf('.')
+  const redirId = redirectURL.slice(redirIdStart, redirIdEnd)
+  return `http://127.0.0.1/mozoauth2/${redirId}/`
+}
 
 export async function loadAccessToken(force = false): Promise<void> {
   if (!force && accessToken) {
     return
   }
 
+  // Get clientId
+  let clientId
+  if (Settings.state.syncUseGoogleDriveApi) {
+    clientId = Settings.state.syncUseGoogleDriveApiClientId.trim()
+  }
+  if (!clientId) clientId = CLIENT_ID
+
   // Get redirect URL
-  const redirectURL = browser.identity.getRedirectURL()
-  const redirIdStart = redirectURL.indexOf('/') + 2
-  const redirIdEnd = redirectURL.indexOf('.')
-  const redirId = redirectURL.slice(redirIdStart, redirIdEnd)
-  const loopbackRedirURL = `http://127.0.0.1/mozoauth2/${redirId}/`
+  const loopbackRedirURL = getRedirectURI()
 
   // Create auth URL
   const authURL = new URL('https://accounts.google.com/o/oauth2/v2/auth')
-  authURL.searchParams.append('client_id', CLIENT_ID)
+  authURL.searchParams.append('client_id', clientId)
   authURL.searchParams.append('redirect_uri', loopbackRedirURL)
   authURL.searchParams.append('response_type', 'token')
-  authURL.searchParams.append('scope', SCOPES['drive.appdata'] + ' ' + SCOPES['drive.appfolder'])
+  authURL.searchParams.append('scope', SCOPES['drive.appdata'])
   authURL.searchParams.append('include_granted_scopes', 'true')
   authURL.searchParams.append('enable_granular_consent', 'true')
   authURL.searchParams.append('prompt', 'none') // Without user consent.

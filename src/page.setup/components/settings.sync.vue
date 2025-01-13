@@ -19,6 +19,49 @@ section(ref="el")
     :loading="gdToggling"
     @update:value="onGDToggle"
     :note="translate('settings.sync_gd_note')")
+  .sub-fields
+    ToggleField(
+      label="Use your own API key"
+      v-model:value="Settings.state.syncUseGoogleDriveApi"
+      :note="`For advanced users. In case default key gets blocked due to exceeding the limits.`")
+    .sub-fields(v-if="Settings.state.syncUseGoogleDriveApi")
+      .note-field
+        .inline-box
+          .label 1. Create a Google Cloud project:
+          a.link(href="https://developers.google.com/workspace/guides/create-project" target="_blank") Link
+      .note-field
+        .inline-box
+          .label 2. Enable Drive API:
+          a.link(href="https://console.cloud.google.com/flows/enableapi?apiid=drive.googleapis.com" target="_blank") Link
+      .note-field
+        .inline-box
+          .label 3. Create a Client:
+          a.link(href="https://console.cloud.google.com/auth/clients" target="_blank") Link
+        .note.-wide - Type: Web application
+        .note.-wide - Authorized redirect URIs:
+        code.note.-wide {{Google.getRedirectURI()}}
+      .note-field
+        .inline-box
+          .label 4. Open created client and get the Client ID:
+          a.link(href="https://console.cloud.google.com/auth/clients" target="_blank") Link
+      TextField(
+        label="5. Insert that Client ID here:"
+        :or="'...'"
+        :line="true"
+        v-model:value="Settings.state.syncUseGoogleDriveApiClientId"
+        @update:value="Settings.saveDebounced(500)")
+      .note-field
+        .inline-box
+          .label 6. Add the following scopes in the Data Access section:
+          a.link(href="https://console.cloud.google.com/auth/scopes" target="_blank") Link
+        code.note.-wide https://www.googleapis.com/auth/drive.appdata
+      .note-field
+        .inline-box
+          .label 7. Disconnect Sidebery from your Google Drive:
+          a.link(href="https://drive.google.com/drive/settings" target="_blank") Link
+        .note (if you used the default API key)
+      .note-field
+        .label 8. Done. On the next request to Google Drive you will see a consent screen.
 
   ToggleField(
     label="settings.sync_save_settings"
@@ -51,7 +94,7 @@ import { SetupPage } from 'src/services/setup-page'
 import TextField from '../../components/text-field.vue'
 import ToggleField from '../../components/toggle-field.vue'
 import { Keybindings } from 'src/services/keybindings'
-import { Logs, Sync } from 'src/services/_services'
+import { Google, Logs, Sync } from 'src/services/_services'
 
 const el = ref<HTMLElement | null>(null)
 const gdToggling = ref(false)
