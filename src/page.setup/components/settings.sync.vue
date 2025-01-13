@@ -193,6 +193,6 @@ function onKbToggle(): void {
 function openSyncWin() {
   Logs.info('settings.sync.vue: openSyncWin()')
 
-  Sync.openSyncWindow()
+  Sync.openSyncPopup()
 }
 </script>

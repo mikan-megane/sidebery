@@ -441,6 +441,9 @@
     },
     "open_bookmarks_sub_panel": {
       "description": "__MSG_KbOpenBookmarksSubPanel__"
+    },
+    "open_sync_popup": {
+      "description": "__MSG_KbOpenSyncPopup__"
     }
   },
   "browser_action": {

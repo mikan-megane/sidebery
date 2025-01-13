@@ -607,8 +607,8 @@ export function resetUnloadTimeout() {
   clearTimeout(unloadAfterTimeout)
 }
 
-export async function openSyncWindow() {
-  Logs.info('Sync.openSyncWindow()')
+export async function openSyncPopup() {
+  Logs.info('Sync.openSyncPopup()')
 
   const width = 320
   const height = 640
@@ -628,5 +628,5 @@ export async function openSyncWindow() {
     titlePreface: 'Sync‎',
   })
 
-  Logs.info('Sync.openSyncWindow():', syncWindow)
+  Logs.info('Sync.openSyncPopup():', syncWindow)
 }

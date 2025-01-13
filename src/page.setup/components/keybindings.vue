@@ -14,6 +14,7 @@
     KeybindingField(:keybinding="Keybindings.reactive.byName.copy_title")
     KeybindingField(:keybinding="Keybindings.reactive.byName.copy_url")
     KeybindingField(:keybinding="Keybindings.reactive.byName.open_bookmarks_sub_panel")
+    KeybindingField(:keybinding="Keybindings.reactive.byName.open_sync_popup")
 
   section
     h2 {{translate('settings.kb_switching_panel')}}

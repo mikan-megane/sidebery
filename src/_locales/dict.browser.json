@@ -1122,6 +1122,9 @@
   "KbOpenBookmarksSubPanel": {
     "en": "Open bookmarks sub-panel"
   },
+  "KbOpenSyncPopup": {
+    "en": "Open sync popup"
+  },
 
   "proxy_popup_title_prefix": {
     "en": "Proxy for \"",

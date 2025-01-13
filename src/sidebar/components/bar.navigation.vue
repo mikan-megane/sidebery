@@ -540,7 +540,7 @@ async function onNavMouseDown(e: MouseEvent, item: NavItem) {
 
     // TODO: tmp shit, remove/update later
     if (item.type === PanelType.sync) {
-      Sync.openSyncWindow()
+      Sync.openSyncPopup()
     }
 
     if (item.type === ButtonType.create_snapshot) SetupPage.open('snapshots')

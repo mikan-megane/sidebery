@@ -267,6 +267,11 @@ function onCmd(name: string): void {
   else if (name === 'copy_title') onKeyCopyTitle()
   else if (name === 'copy_url') onKeyCopyUrl()
   else if (name === 'open_bookmarks_sub_panel') onKeyOpenBookmarksSubPanel()
+  else if (name === 'open_sync_popup') onKeyOpenSyncPopup()
+}
+
+function onKeyOpenSyncPopup() {
+  Sync.openSyncPopup()
 }
 
 function onKeyOpenBookmarksSubPanel() {
