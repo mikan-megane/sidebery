@@ -136,8 +136,8 @@ export const DEFAULT_SETTINGS: SettingsState = {
 
   // Tabs preview
   previewTabs: false,
-  previewTabsMode: 'i',
-  previewTabsPageModeFallback: 'w',
+  previewTabsMode: 'p',
+  previewTabsPageModeFallback: 'n',
   previewTabsInlineHeight: 70,
   previewTabsPopupWidth: 280,
   previewTabsTitle: 2,
