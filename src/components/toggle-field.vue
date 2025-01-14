@@ -9,7 +9,7 @@
     .label(:style="{ color: props.color }") {{translate(props.label)}}
     LoadingDots(v-if="loading")
     ToggleInput.input(ref="inputComponent" :value="props.value")
-  .note(v-if="props.note" @click.stop="") {{props.note}}
+  .note(v-if="props.note") {{props.note}}
   .note(v-if="props.noteWithLinks" @click.stop="")
     template(v-for="v, i in getNoteWithLinksParts(props.noteWithLinks)")
       template(v-if="!(i%2)") {{v}}
