@@ -82,11 +82,8 @@ export function setTargetTab(tabId: ID, y: number) {
     tooltipUpdTimeout = setTimeout(() => {
       const tab = Tabs.byId[tabId]
       if (tab) {
-        const isClosed = state.status === Status.Closed
         if (
           (Settings.state.previewTabsMode === 'p' && state.mode === Mode.Nope) ||
-          (state.mode === Mode.InPage && isClosed && (tab.discarded || tab.active)) ||
-          (state.mode === Mode.Window && isClosed && (tab.discarded || tab.active)) ||
           (state.mode === Mode.Inline && tab.discarded)
         ) {
           tab.reactive.tooltip = Tabs.getTooltip(tab)
@@ -200,7 +197,7 @@ function getTabPreviewInitData(tabId: ID, y?: number): TabPreviewInitData {
 
 async function showPreview(tabId: ID, y?: number) {
   const tab = Tabs.byId[tabId]
-  if (!tab || tab.invisible || tab.discarded || tab.active) return
+  if (!tab || tab.invisible) return
 
   // Inline
   if (state.mode === Mode.Inline) {
@@ -269,7 +266,7 @@ export function resetMode() {
 
 export async function showPreveiwPopupWindow(tabId: ID, y?: number) {
   const tab = Tabs.byId[tabId]
-  if (!tab || tab.invisible || tab.discarded) return
+  if (!tab || tab.invisible) return
 
   state.status = Status.Opening
 
