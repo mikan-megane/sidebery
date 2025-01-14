@@ -426,7 +426,7 @@ export async function loadSyncedEntries(): Promise<SyncedEntry[] | null> {
   const dayStartTime = Utils.getDayStartMS()
 
   // Get profile info
-  const profiles: Record<string, ProfileInfo> = {}
+  const profiles: Record<string, ProfileInfo | undefined> = {}
   const profileFileType = typeNames[FileType.ProfileInfo]
   for (const fileInfo of filesInfo) {
     const props = fileInfo.appProperties
@@ -465,10 +465,13 @@ export async function loadSyncedEntries(): Promise<SyncedEntry[] | null> {
     // Skip non-sync file types
     if (!syncType) continue
 
-    const profileInfo = profiles[props.profileId]
+    let profileInfo = profiles[props.profileId]
     if (!profileInfo) {
-      Logs.warn('Sync.Google.loadSyncedEntries(): Cannot find profile:', fileInfo, profiles)
-      continue
+      profileInfo = {
+        name: 'Unknown profile',
+        icon: 'default',
+        color: 'toolbar',
+      }
     }
 
     // Load synced tabs
