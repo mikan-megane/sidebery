@@ -210,28 +210,42 @@ export const commonTranslations: Translations = {
   // -
   'panel.sync.title': {
     en: 'Sync',
-    zh_TW: '同步',
+    zh: '同步',
   },
   'sync.err.google_entries': {
     en: 'Unable to load entries from Google Drive',
+    zh_CN: '无法从 Google 云端硬盘加载记录',
+    zh_TW: '無法從 Google 雲端硬碟載入記錄',
   },
   'sync.err.google_entries_sub': {
     en: 'Try again later',
+    zh_CN: '稍后再试',
+    zh_TW: '稍後再試',
   },
   'sync.err.google_tabs': {
     en: 'Unable to load tabs from Google Drive',
+    zh_CN: '无法从 Google 云端硬盘加载标签页',
+    zh_TW: '無法從 Google 雲端硬碟載入分頁',
   },
   'sync.err.load': {
     en: 'Unable to load synced data',
+    zh_CN: '无法加载同步数据',
+    zh_TW: '無法載入同步資料',
   },
   'sync.err.save': {
     en: 'Unable to save data to sync storage',
+    zh_CN: '无法将数据保存到同步存储',
+    zh_TW: '無法儲存同步資料',
   },
   'sync.err.save_tabs': {
     en: 'Unable to save tabs to sync storage',
+    zh_CN: '无法将标签页保存到同步存储',
+    zh_TW: '無法儲存同步分頁',
   },
   'sync.err.rm': {
     en: 'Unable to remove data from sync storage',
+    zh_CN: '无法从同步存储中删除数据',
+    zh_TW: '無法刪除同步資料',
   },
 
   // ---

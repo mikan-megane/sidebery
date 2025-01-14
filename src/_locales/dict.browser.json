@@ -83,6 +83,31 @@
     "zh_TW": "開啟選單",
     "ja": "選択した（またはアクティブな）タブ、ブックマーク、またはパネル用のオープンメニュー"
   },
+  "KbOpenPanelConfig": {
+    "en": "Open panel config",
+    "zh_CN": "打开面板配置",
+    "zh_TW": "開啟面板設定"
+  },
+  "KbCopyTitle": {
+    "en": "Copy titles of selected tabs/bookmarks or active tab",
+    "zh_CN": "复制选定标签页/书签或活动标签页的标题",
+    "zh_TW": "複製選定分頁/書籤或當前分頁的標題"
+  },
+  "KbCopyUrl": {
+    "en": "Copy URLs of selected tabs/bookmarks or active tab",
+    "zh_CN": "复制选定标签页/书签或活动标签页的网址",
+    "zh_TW": "複製選定分頁/書籤或當前分頁的網址"
+  },
+  "KbOpenBookmarksSubPanel": {
+    "en": "Open bookmarks sub-panel",
+    "zh_CN": "打开书签子面板",
+    "zh_TW": "開啟書籤子面板"
+  },
+  "KbOpenSyncPopup": {
+    "en": "Open sync popup",
+    "zh_CN": "打开同步弹出窗口",
+    "zh_TW": "彈出同步視窗"
+  },
   "KbNextPanel": {
     "en": "Switch to next panel",
     "de": "Zum nächsten Panel wechseln",
@@ -204,7 +229,9 @@
     "ja": "10番目のパネルに切り替え"
   },
   "KbSwitchToPrevPanel": {
-    "en": "Switch to previously active panel"
+    "en": "Switch to previously active panel",
+    "zh_CN": "切换到之前活动的面板",
+    "zh_TW": "切換到先前面板"
   },
   "KbScrollToActivePanelTop": {
     "en": "Scroll to the top of the active panel",
@@ -277,7 +304,9 @@
     "ja": "選択したタブをフラット化"
   },
   "KbEditTitle": {
-    "en": "Edit title"
+    "en": "Edit title",
+    "zh_CN": "编辑标题",
+    "zh_TW": "編輯標題"
   },
   "KbOpenNewTabInCurrPanel": {
     "en": "Open a new tab in the active panel",
@@ -1103,27 +1132,6 @@
     "pl": "Sortuj karty w aktywnym panelu po czasie dostępu (Nowe-Stare)",
     "zh_TW": "依最近瀏覽時間排序當前面板的分頁（新-舊）",
     "ja": "アクティブパネルのタブをアクセス時間でソート（新しい順）"
-  },
-  "KbOpenPanelConfig": {
-    "en": "Open panel config",
-    "zh_CN": "打开面板配置",
-    "zh_TW": "開啟面板設定"
-  },
-  "KbCopyTitle": {
-    "en": "Copy titles of selected tabs/bookmarks or active tab",
-    "zh_CN": "复制选定标签页/书签或活动标签页的标题",
-    "zh_TW": "複製選定分頁/書籤或當前分頁的標題"
-  },
-  "KbCopyUrl": {
-    "en": "Copy URLs of selected tabs/bookmarks or active tab",
-    "zh_CN": "复制选定标签页/书签或活动标签页的网址",
-    "zh_TW": "複製選定分頁/書籤或當前分頁的網址"
-  },
-  "KbOpenBookmarksSubPanel": {
-    "en": "Open bookmarks sub-panel"
-  },
-  "KbOpenSyncPopup": {
-    "en": "Open sync popup"
   },
 
   "proxy_popup_title_prefix": {
