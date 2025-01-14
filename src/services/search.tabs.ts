@@ -30,7 +30,7 @@ export function onTabsSearch(activePanel: Panel, noSel?: boolean): void {
       const filteredInvisible: Tab[] = []
       const filteredInvisibleIds: ID[] = []
       for (const tab of tabs) {
-        if (Search.check(tab.title) || Search.check(tab.url)) {
+        if (Search.check(tab.title) || Search.check(tab.customTitle) || Search.check(tab.url)) {
           if (!tab.invisible) {
             filtered.push(tab)
             filteredIds.push(tab.id)
@@ -133,14 +133,14 @@ export function onTabsSearchSelectAll(panel: TabsPanel): void {
 
 function findInAnotherPanel(): void {
   const firstMatch = Tabs.list.find(t => {
-    return !t.pinned && (Search.check(t.title) || Search.check(t.url))
+    return !t.pinned && (Search.check(t.title) || Search.check(t.customTitle) || Search.check(t.url))
   })
   if (!firstMatch) return
 
   const panel = Sidebar.panelsById[firstMatch.panelId]
   if (!Utils.isTabsPanel(panel)) return
 
-  // panel.filteredTabs = panel.tabs.filter(t => Search.check(t.title) || Search.check(t.url))
+  // panel.filteredTabs = panel.tabs.filter(t => Search.check(t.title) || Search.check(t.customTitle) || Search.check(t.url))
   // panel.filteredLen = panel.filteredTabs.length
 
   panel.filteredTabs = undefined
