@@ -368,10 +368,7 @@ function onMouseLeave(): void {
   }
 
   if (Sidebar.subPanelActive && !Search.rawValue && !Menu.isOpen && !DnD.items.length) {
-    clearTimeout(subPanelTimeout)
-    subPanelTimeout = setTimeout(() => {
-      Sidebar.closeSubPanel()
-    }, 300)
+    Sidebar.closeSubPanel()
   }
 
   if (Sidebar.switchOnMouseLeave) Sidebar.switchPanelOnMouseLeave()
