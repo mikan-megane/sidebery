@@ -439,6 +439,19 @@ export async function loadSyncedEntries(): Promise<SyncedEntry[] | null> {
     }
   }
 
+  // Check current profile info and update it if needed
+  const currentProfileInfo = profiles[profileId]
+  const currentProfileName = Settings.state.syncName.trim()
+  if (!currentProfileInfo || currentProfileInfo.name !== currentProfileName) {
+    Logs.info('Sync.Googld.loadSyncedEntries: No, or wrong profile, re-saving...')
+    await _saveProfileInfo()
+    profiles[profileId] = {
+      name: currentProfileName,
+      icon: 'default',
+      color: 'toolbar',
+    }
+  }
+
   const loadingTabEntries: Promise<SyncedEntry[] | void>[] = []
 
   for (const fileInfo of filesInfo) {
