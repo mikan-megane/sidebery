@@ -176,15 +176,6 @@ async function onGDToggle() {
     }
   }
 
-  // Remove files created from this profile
-  else {
-    try {
-      await Sync.Google.removeAllFilesOfThisProfile()
-    } catch (err) {
-      Logs.err('onGDToggle: turn off', err)
-    }
-  }
-
   gdToggling.value = false
 }
 
