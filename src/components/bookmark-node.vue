@@ -1,5 +1,6 @@
 <template lang="pug">
 .BookmarkNode(
+  ref="rootEl"
   :id="'bookmark' + panelId + node.id"
   :data-type="node.type"
   :data-expanded="expanded"
@@ -32,7 +33,7 @@ export default { name: 'BookmarkNode' }
 </script>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { Bookmark, DragInfo, DragItem, MenuType, DragType, DropType } from 'src/types'
 import { Settings } from 'src/services/settings'
 import { Windows } from 'src/services/windows'
@@ -55,6 +56,8 @@ const props = defineProps<{
   filter?: (n: Bookmark) => boolean
 }>()
 
+const rootEl = ref<HTMLElement | null>(null)
+
 const favicon = computed((): string => {
   if (!props.node.url) return ''
   return Favicons.getFavicon(props.node.url)
@@ -75,6 +78,8 @@ const expanded = computed<boolean>(() => {
   if (!props.panelId) return false
   return !!Bookmarks.reactive.expanded[props.panelId]?.[props.node.id]
 })
+
+let middleClickReactionTimeout: number | undefined
 
 async function onMouseDown(e: MouseEvent): Promise<void> {
   Mouse.setTarget('bookmark', props.node.id)
@@ -122,6 +127,15 @@ async function onMouseDown(e: MouseEvent): Promise<void> {
     if (Selection.isBookmarks()) {
       Selection.resetSelection()
       if (!Search.rawValue) return
+    }
+
+    // Visualize clicking
+    if (rootEl.value) {
+      rootEl.value.classList.add('-middle-click')
+      clearTimeout(middleClickReactionTimeout)
+      middleClickReactionTimeout = setTimeout(() => {
+        rootEl.value?.classList.remove('-middle-click')
+      }, 300)
     }
 
     // Bookmark

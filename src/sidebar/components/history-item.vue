@@ -1,5 +1,5 @@
 <template lang="pug">
-.item(:id="'history' + visit.id")
+.item(ref="rootEl" :id="'history' + visit.id")
   .body(
     :title="visit.reactive.tooltip"
     :data-sel="visit.reactive.sel"
@@ -50,6 +50,7 @@ import { Windows } from 'src/services/windows'
 import * as Favicons from 'src/services/favicons.fg'
 
 const props = defineProps<{ visit: Visit }>()
+const rootEl = ref<HTMLElement | null>(null)
 
 const favicon = computed(() => {
   return Favicons.reactive.byDomains[props.visit.domain]
@@ -80,6 +81,8 @@ function onMouseDown(e: MouseEvent, visit: Visit): void {
   }
 }
 
+let middleClickReactionTimeout: number | undefined
+
 function onMouseUp(e: MouseEvent, visit: Visit): void {
   const sameTarget = Mouse.isTarget('history', visit.id)
   Mouse.resetTarget()
@@ -94,6 +97,15 @@ function onMouseUp(e: MouseEvent, visit: Visit): void {
     if (e.button === 1) {
       const action = Settings.state.historyMidClickAction
       if (action === 'forget_visit') return History.deleteVisits([visit.id])
+
+      // Visualize clicking
+      if (rootEl.value) {
+        rootEl.value.classList.add('-middle-click')
+        clearTimeout(middleClickReactionTimeout)
+        middleClickReactionTimeout = setTimeout(() => {
+          rootEl.value?.classList.remove('-middle-click')
+        }, 300)
+      }
     }
 
     let conf = History.getMouseOpeningConf(e.button)

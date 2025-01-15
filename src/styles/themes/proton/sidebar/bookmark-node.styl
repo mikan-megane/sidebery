@@ -98,6 +98,9 @@
   background-color: var(--frame-el-overlay-clicked-bg)
   opacity: 1
 
+.BookmarkNode.-middle-click > .body
+  animation: middle-click-animation .2s
+
 .BookmarkNode[data-selected="true"] > .body:before
   background-color: var(--frame-el-overlay-selected-bg)
   box-shadow: inset 0 0 0 1px var(--frame-el-overlay-selected-border)

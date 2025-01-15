@@ -10,6 +10,7 @@
     .sync-tab(
       v-for="t in entry.tabs"
       draggable="true"
+      :id="'st' + entry.id + t.id"
       :key="t.id"
       :title="`${t.title}\n---\n${t.url}`"
       :data-lvl="t.lvl"
@@ -156,6 +157,8 @@ function onTabMouseDown(e: MouseEvent, tab: Sync.EntryTab, entry: Sync.SyncedEnt
   Mouse.setTarget('sync.tab', mouseTargetId)
 }
 
+let middleClickReactionTimeout: number | undefined
+
 async function onTabMouseUp(e: MouseEvent, tab: Sync.EntryTab, entry: Sync.SyncedEntry) {
   if (!entry.id || !entry.tabs) return
 
@@ -178,8 +181,22 @@ async function onTabMouseUp(e: MouseEvent, tab: Sync.EntryTab, entry: Sync.Synce
     containerId: Containers.getContainerFor(tab.url),
   }
 
-  if (e.button === 0) tabInfo.active = true
-  else if (e.button === 1) tabInfo.active = false
+  if (e.button === 0) {
+    tabInfo.active = true
+  } else if (e.button === 1) {
+    tabInfo.active = false
+
+    // Visualize clicking
+    const elId = 'st' + mouseTargetId
+    const el = document.getElementById(elId)
+    if (el) {
+      el.classList.add('-middle-click')
+      clearTimeout(middleClickReactionTimeout)
+      middleClickReactionTimeout = setTimeout(() => {
+        el.classList.remove('-middle-click')
+      }, 300)
+    }
+  }
 
   if (Info.isSync) await updDstInfoForPopup(dstInfo)
 

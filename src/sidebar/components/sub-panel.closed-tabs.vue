@@ -69,9 +69,24 @@ function onTabMouseDown(e: MouseEvent, tab: RecentlyClosedTabInfo) {
   }
 }
 
+let middleClickReactionTimeout: number | undefined
+
 function onTabMouseUp(e: MouseEvent, tab: RecentlyClosedTabInfo) {
   const sameTarget = Mouse.isTarget('closedTab', tab.id)
   Mouse.resetTarget()
+
+  if (e.button === 1) {
+    // Visualize clicking
+    const elId = 'rmt' + tab.id
+    const el = document.getElementById(elId)
+    if (el) {
+      el.classList.add('-middle-click')
+      clearTimeout(middleClickReactionTimeout)
+      middleClickReactionTimeout = setTimeout(() => {
+        el.classList.remove('-middle-click')
+      }, 300)
+    }
+  }
 
   if (e.button === 2) {
     e.stopPropagation()
