@@ -255,6 +255,7 @@ export const DEFAULT_SETTINGS: SettingsState = {
 
   // Keybindings
   selectActiveTabFirst: true,
+  selectCyclic: false,
 }
 
 // prettier-ignore

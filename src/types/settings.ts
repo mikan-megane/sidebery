@@ -258,4 +258,5 @@ export interface SettingsState {
 
   // Keybindings
   selectActiveTabFirst: boolean
+  selectCyclic: boolean
 }

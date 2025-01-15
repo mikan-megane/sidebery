@@ -81,6 +81,10 @@
           label="settings.select_active_tab_first"
           v-model:value="Settings.state.selectActiveTabFirst"
           @update:value="Settings.saveDebounced(150)")
+        ToggleField(
+          label="settings.select_cyclic"
+          v-model:value="Settings.state.selectCyclic"
+          @update:value="Settings.saveDebounced(150)")
       KeybindingField(:keybinding="Keybindings.reactive.byName.up_shift")
       KeybindingField(:keybinding="Keybindings.reactive.byName.down_shift")
       KeybindingField(:keybinding="Keybindings.reactive.byName.sel_child_tabs")

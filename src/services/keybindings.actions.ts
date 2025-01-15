@@ -605,7 +605,10 @@ function onKeySelect(dir: number): void {
     }
 
     if (!target) {
-      target = dir > 0 ? tabs[0] : tabs.findLast(t => !t.invisible)
+      // Cyclically
+      if (Settings.state.selectCyclic) {
+        target = dir > 0 ? tabs[0] : tabs.findLast(t => !t.invisible)
+      }
       if (!target) return
     }
 
@@ -617,14 +620,24 @@ function onKeySelect(dir: number): void {
     Sidebar.updateBounds()
     if (!activePanel?.bounds?.length) return
 
+    const boundsLen = activePanel.bounds.length
     const selIsSet = Selection.isSet()
     const selId = Selection.getFirst()
 
     let selIndex = -1
     if (selIsSet) selIndex = activePanel.bounds.findIndex(s => s.id === selId)
-    if (selIndex === -1 && dir < 0) selIndex = activePanel.bounds.length
+    if (selIndex === -1 && dir < 0) selIndex = boundsLen
 
-    const target = activePanel.bounds[selIndex + dir]
+    let target = activePanel.bounds[selIndex + dir]
+
+    if (!target) {
+      // Cyclically
+      if (Settings.state.selectCyclic) {
+        target = dir > 0 ? activePanel.bounds[0] : activePanel.bounds[boundsLen - 1]
+      }
+      if (!target) return
+    }
+
     if (target) {
       Selection.resetSelection()
       if (target.type === ItemBoundsType.Header) Selection.select(target.id, SelectionType.Header)
