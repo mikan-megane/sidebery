@@ -1661,7 +1661,11 @@ export const setupPageTranslations: Translations = {
   },
   'settings.nav_bar_btn_sync': {
     en: 'Sync panel',
-    zh_TW: '同步面板',
+    hu: 'Szinkronizálási panel',
+    pl: 'Panel synchronizacji',
+    ru: 'Панель синхронизации',
+    zh: '同步面板',
+    js: '同期パネル',
   },
   'settings.nav_bar_btn_search': {
     en: 'Search',
@@ -3474,13 +3478,23 @@ Przykłady: "*", "ctrl+$", "ctrl+alt+g"`,
   },
   'settings.tabs.preview_title': {
     en: 'Max number of title lines',
+    de: 'Maximale Anzahl von Titelzeilen',
+    hu: 'A címsorok maximális száma',
+    pl: 'Maksymalna liczba wierszy tytułu',
+    ru: 'Максимальное количество строк заголовка',
     zh_CN: '标题行数上限',
     zh_TW: '標題行數上限',
+    ja: 'タイトル行の最大数',
   },
   'settings.tabs.preview_url': {
     en: 'Max number of URL lines',
+    de: 'Maximale Anzahl an URL-Zeilen',
+    hu: 'Az URL-sorok maximális száma',
+    pl: 'Maksymalna liczba linii URL',
+    ru: 'Максимальное количество строк URL',
     zh_CN: 'URL 行数上限',
     zh_TW: 'URL 行數上限',
+    ja: 'URL 行の最大数',
   },
   'settings.tabs.preview_side': {
     en: 'Sidebar side (needed to correctly calculate position of the popup)',
@@ -4735,6 +4749,7 @@ Przykłady: "*", "ctrl+$", "ctrl+alt+g"`,
   'settings.tab_pinned_middle_click': {
     en: 'If tab is pinned',
     de: 'Wenn die Registerkarte angeheftet ist',
+    hu: 'Ha egy lap rögzítve van',
     pl: 'Jeśli karta jest przypięta',
     ru: 'Если вкладка закреплена',
     zh_CN: '如果标签页已固定',
@@ -4894,9 +4909,11 @@ Przykłady: "*", "ctrl+$", "ctrl+alt+g"`,
     en: 'unload or close tab',
     de: 'Entladen oder Schließen der Registerkarte',
     hu: 'lap kirakása vagy bezárása',
+    pl: 'rozładuj lub zamknij kartę',
     ru: 'выгрузить или закрыть вкладку',
     zh_CN: '卸载或关闭标签页',
     zh_TW: '卸載或關閉',
+    ja: 'タブをアンロードまたは閉じる',
   },
   'settings.tab_action_edit_title': {
     en: 'edit title',
@@ -5715,6 +5732,18 @@ Przykłady: "*", "ctrl+$", "ctrl+alt+g"`,
     en: `Notes:
 - You need to login to Firefox account to get it working
 - To be sure that data is uploaded to Firefox sync server you need to press the "Sync now" button in the Firefox settings or in your profile in the main menu (the three-line button)`,
+    de: `Hinweise:
+- Sie müssen sich bei Ihrem Firefox-Konto anmelden, damit es funktioniert.
+- Um sicherzustellen, dass die Daten auf den Firefox-Synchronisierungsserver hochgeladen werden, müssen Sie in den Firefox-Einstellungen oder in Ihrem Profil im Hauptmenü (die Schaltfläche mit den drei Strichen) auf die Schaltfläche „Jetzt synchronisieren“ klicken.`,
+    hu: `Megjegyzések:
+- A működéséhez be kell jelentkeznie a Firefox fiókba
+- Annak érdekében, hogy az adatok feltöltésre kerüljenek a Firefox szinkronizáló szerverére, meg kell nyomnia a "Szinkronizálás most" gombot a Firefox beállításainál vagy a profiljában a főmenüben (háromsoros gomb).`,
+    pl: `Uwagi:
+- Musisz zalogować się na konto Firefox, aby to działało
+- Aby mieć pewność, że dane zostaną przesłane na serwer synchronizacji Firefox, musisz nacisnąć przycisk „Synchronizuj teraz” w ustawieniach Firefox lub w swoim profilu w menu głównym (przycisk z trzema liniami)`,
+    ru: `Примечания:
+- Вам необходимо войти в учетную запись Firefox, чтобы все заработало
+- Чтобы убедиться, что данные загружены на сервер синхронизации Firefox, вам необходимо нажать кнопку «Синхронизировать сейчас» в настройках Firefox или в вашем профиле в главном меню (кнопка с тремя линиями)`,
     zh_TW: `說明：
 - 您需要登入 Mozilla 帳號方可運行
 - 要確保資料已上傳到 Firefox 同步伺服器，您需要在下列八處擇一按「立刻同步」按鈕：
@@ -5724,14 +5753,32 @@ Przykłady: "*", "ctrl+$", "ctrl+alt+g"`,
   -「工具列 > 設定 > 同步」
   -「選單列 > 編輯 > 設定 > 同步」
   -「選單列 > 工具」`,
+    ja: `注意:
+- 動作させるには、Firefox アカウントにログインする必要があります
+- データが Firefox 同期サーバーにアップロードされていることを確認するには、Firefox 設定またはメイン メニューのプロファイルにある [今すぐ同期] ボタン (3 本の線のボタン) を押す必要があります`,
   },
   'settings.sync_gd_note': {
     en: `Notes:
 - Sidebery doesn't have access to your files on Google Drive
 - Sidebery files are stored in JSON, so Google can read their contents (encryption is planned)`,
+    de: `Hinweise:
+- Sidebery hat keinen Zugriff auf Ihre Dateien auf Google Drive
+- Sidebery-Dateien werden in JSON gespeichert, sodass Google deren Inhalte lesen kann (Verschlüsselung ist geplant)`,
+    hu: `Megjegyzések:
+- A Sidebery nem fér hozzá az Ön Google Drive-on lévő fájljaihoz
+- A Sidebery fájlok JSON-ban vannak tárolva, így a Google el tudja olvasni a tartalmukat (titkosítást tervezünk)`,
+    pl: `Uwagi:
+- Sidebery nie ma dostępu do Twoich plików na Dysku Google
+- Pliki Sidebery są przechowywane w formacie JSON, więc Google może odczytać ich zawartość (planowane jest szyfrowanie)`,
+    ru: `Примечания:
+- Sidebery не имеет доступа к вашим файлам на Google Диске
+- Файлы Sidebery хранятся в формате JSON, поэтому Google может читать их содержимое (шифрование планируется)`,
     zh_TW: `說明：
 - Sidebery 不會存取您在 Google 雲端硬碟上的檔案
 - Sidebery 以 JSON 格式儲存同步檔案，因此 Google 可以讀取其內容（計劃實做加密）`,
+    ja: `注:
+- Sidebery は Google ドライブのファイルにアクセスできません
+- Sidebery ファイルは JSON 形式で保存されるため、Google はファイルの内容を読み取ることができます (暗号化が予定されています)`,
   },
   'settings.sync_update_btn': {
     en: 'Update synced data',
