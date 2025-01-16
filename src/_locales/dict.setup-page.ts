@@ -5790,6 +5790,82 @@ Przykłady: "*", "ctrl+$", "ctrl+alt+g"`,
     zh_TW: '更新同步資料',
     ja: '同期データを更新',
   },
+  'settings.sync_use_ff': {
+    en: 'Use Firefox Sync',
+    de: 'Firefox Sync verwenden',
+    hu: 'Használja a Firefox Sync alkalmazást',
+    pl: 'Użyj synchronizacji Firefox',
+    ru: 'Использовать синхронизацию Firefox',
+    zh: '使用 Firefox 同步',
+    ja: 'Firefox Syncを使用する',
+  },
+  'settings.sync_use_gd': {
+    en: 'Use Google Drive (experimental)',
+    de: 'Google Drive verwenden (experimentell)',
+    hu: 'Használja a Google Drive-ot (kísérleti)',
+    pl: 'Użyj Dysku Google (eksperymentalne)',
+    ru: 'Использовать Google Диск (экспериментально)',
+    zh_CN: '使用 Google Drive（实验性）',
+    zh_TW: '使用 Google Drive（實驗性）',
+    ja: 'Google ドライブを使用する (試験的)',
+  },
+  'settings.sync_gd_api': {
+    en: 'Use your own API key',
+    de: 'Eigenen API-Schlüssel verwenden',
+    hu: 'Használja saját API-kulcsát',
+    pl: 'Użyj własnego klucza API',
+    ru: 'Использовать свой собственный API ключ',
+    zh_CN: '使用您自己的 API 密钥',
+    zh_TW: '使用您自己的 API 金鑰',
+    ja: '独自のAPIキーを使用する',
+  },
+  'settings.sync_gd_api_note': {
+    en: 'For advanced users. In case default key gets blocked due to exceeding the limits.',
+    de: 'Für fortgeschrittene Benutzer. Falls der Standardschlüssel aufgrund Überschreitung der Grenzwerte gesperrt wird.',
+    hu: 'Haladó felhasználóknak. Abban az esetben, ha az alapértelmezett kulcs a korlátok túllépése miatt blokkolva lesz.',
+    pl: 'Dla zaawansowanych użytkowników. W przypadku zablokowania domyślnego klucza z powodu przekroczenia limitów.',
+    ru: 'Для продвинутых пользователей. В случае блокировки ключа по умолчанию из-за превышения лимитов.',
+    zh_CN: '适用于高级用户。以防默认密钥因超出限制而被阻止。',
+    zh_TW: '對於高級用戶。以防預設密鑰因超出限製而被阻止。',
+    ja: '上級ユーザー向け。制限を超えたためにデフォルト キーがブロックされた場合。',
+  },
+  'settings.sync_gd_api_link': {
+    en: 'Link',
+  },
+  'settings.sync_gd_api_proj': {
+    en: '1. Create a Google Cloud project:',
+  },
+  'settings.sync_gd_api_drive': {
+    en: '2. Enable Drive API:',
+  },
+  'settings.sync_gd_api_cli': {
+    en: '3. Create a Client:',
+  },
+  'settings.sync_gd_api_cli_sub': {
+    en: `- Type: Web application
+- Authorized redirect URIs:`,
+  },
+  'settings.sync_gd_api_id': {
+    en: '4. Open created client and get the Client ID:',
+  },
+  'settings.sync_gd_api_ins': {
+    en: '5. Insert that Client ID here:',
+  },
+  'settings.sync_gd_api_scope': {
+    en: '6. Add the following scopes in the Data Access section:',
+  },
+  'settings.sync_gd_api_reload': {
+    en: '7. Disconnect Sidebery from your Google Drive:',
+  },
+  'settings.sync_gd_api_reload_sub': {
+    en: '(if you used the default API key)',
+  },
+  'settings.sync_gd_api_done': {
+    en: '8. Done. On the next request to Google Drive you will see a consent screen.',
+  },
+  'settings.sync_view_btn': {
+    en: 'View synced data',
+  },
 
   // - Help
   'settings.help_title': {

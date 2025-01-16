@@ -468,7 +468,7 @@ export async function loadSyncedEntries(): Promise<SyncedEntry[] | null> {
     let profileInfo = profiles[props.profileId]
     if (!profileInfo) {
       profileInfo = {
-        name: 'Unknown profile',
+        name: translate('sync.unknown_profile'),
         icon: 'default',
         color: 'toolbar',
       }

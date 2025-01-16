@@ -3,7 +3,7 @@
   .sync-header
     .type(:title="title") {{title}}
     .info
-      .profile(v-if="entry.sameProfile") This profile
+      .profile(v-if="entry.sameProfile") {{translate('sync.entry.this_profile')}}
       .profile(v-else :title="entry.profileName") {{entry.profileName}}
       .date-time {{entry.dateYYYYMMDD}} - {{entry.timeHHMM}}
   .sync-content
@@ -30,18 +30,19 @@
       .btn(
         v-if="entry.type !== Sync.SyncedEntryType.Tabs"
         :class="{'-inactive': entry.loading}"
-        @click="onMainAction(entry)") Import
+        @click="onMainAction(entry)") {{translate('sync.entry.import_btn')}}
       .btn(
         v-if="entry.type === Sync.SyncedEntryType.Tabs"
         :class="{'-inactive': entry.loading}"
-        @click="openTabs(entry)") Open
+        @click="openTabs(entry)") {{translate('sync.entry.open_tabs_btn')}}
       .btn(
         :class="{'-inactive': entry.loading}"
-        @click="onDelete(entry)") Delete
+        @click="onDelete(entry)") {{translate('sync.entry.rm_btn')}}
 </template>
 
 <script lang="ts" setup>
 import { Logs, Sync, Utils } from 'src/services/_services'
+import { translate } from 'src/dict'
 import { SyncedEntry } from 'src/services/sync'
 import { Keybindings } from 'src/services/keybindings'
 import { Menu } from 'src/services/menu'

@@ -9,59 +9,65 @@ section(ref="el")
     v-model:value="Settings.state.syncName"
     @update:value="onSyncNameUpdated")
   ToggleField(
-    label="Use Firefox Sync"
+    label="settings.sync_use_ff"
     v-model:value="Settings.state.syncUseFirefox"
     @update:value="onFFToggle"
     :note="translate('settings.sync_ff_note')")
   ToggleField(
-    label="Use Google Drive (experimental)"
+    label="settings.sync_use_gd"
     v-model:value="Settings.state.syncUseGoogleDrive"
     :loading="gdToggling"
     @update:value="onGDToggle"
     :note="translate('settings.sync_gd_note')")
   .sub-fields
     ToggleField(
-      label="Use your own API key"
+      label="settings.sync_gd_api"
       v-model:value="Settings.state.syncUseGoogleDriveApi"
-      :note="`For advanced users. In case default key gets blocked due to exceeding the limits.`")
+      :note="translate('settings.sync_gd_api_note')"
+      @update:value="Settings.saveDebounced(150)")
     .sub-fields(v-if="Settings.state.syncUseGoogleDriveApi")
       .note-field
         .inline-box
-          .label 1. Create a Google Cloud project:
-          a.link(href="https://developers.google.com/workspace/guides/create-project" target="_blank") Link
+          .label {{translate('settings.sync_gd_api_proj')}}
+          a.link(href="https://developers.google.com/workspace/guides/create-project" target="_blank").
+            {{translate('settings.sync_gd_api_link')}}
       .note-field
         .inline-box
-          .label 2. Enable Drive API:
-          a.link(href="https://console.cloud.google.com/flows/enableapi?apiid=drive.googleapis.com" target="_blank") Link
+          .label {{translate('settings.sync_gd_api_drive')}}
+          a.link(href="https://console.cloud.google.com/flows/enableapi?apiid=drive.googleapis.com" target="_blank").
+            {{translate('settings.sync_gd_api_link')}}
       .note-field
         .inline-box
-          .label 3. Create a Client:
-          a.link(href="https://console.cloud.google.com/auth/clients" target="_blank") Link
-        .note.-wide - Type: Web application
-        .note.-wide - Authorized redirect URIs:
+          .label {{translate('settings.sync_gd_api_cli')}}
+          a.link(href="https://console.cloud.google.com/auth/clients" target="_blank").
+            {{translate('settings.sync_gd_api_link')}}
+        .note.-wide {{translate('settings.sync_gd_api_cli_sub')}}
         code.note.-wide {{Google.getRedirectURI()}}
       .note-field
         .inline-box
-          .label 4. Open created client and get the Client ID:
-          a.link(href="https://console.cloud.google.com/auth/clients" target="_blank") Link
+          .label {{translate('settings.sync_gd_api_id')}}
+          a.link(href="https://console.cloud.google.com/auth/clients" target="_blank").
+            {{translate('settings.sync_gd_api_link')}}
       TextField(
-        label="5. Insert that Client ID here:"
+        label="settings.sync_gd_api_ins"
         :or="'...'"
         :line="true"
         v-model:value="Settings.state.syncUseGoogleDriveApiClientId"
         @update:value="Settings.saveDebounced(500)")
       .note-field
         .inline-box
-          .label 6. Add the following scopes in the Data Access section:
-          a.link(href="https://console.cloud.google.com/auth/scopes" target="_blank") Link
+          .label {{translate('settings.sync_gd_api_scope')}}
+          a.link(href="https://console.cloud.google.com/auth/scopes" target="_blank").
+            {{translate('settings.sync_gd_api_link')}}
         code.note.-wide https://www.googleapis.com/auth/drive.appdata
       .note-field
         .inline-box
-          .label 7. Disconnect Sidebery from your Google Drive:
-          a.link(href="https://drive.google.com/drive/settings" target="_blank") Link
-        .note (if you used the default API key)
+          .label {{translate('settings.sync_gd_api_reload')}}
+          a.link(href="https://drive.google.com/drive/settings" target="_blank").
+            {{translate('settings.sync_gd_api_link')}}
+        .note {{translate('settings.sync_gd_api_reload_sub')}}
       .note-field
-        .label 8. Done. On the next request to Google Drive you will see a consent screen.
+        .label {{translate('settings.sync_gd_api_done')}}
 
   ToggleField(
     label="settings.sync_save_settings"
@@ -81,7 +87,7 @@ section(ref="el")
     @update:value="onKbToggle()")
 
   .ctrls
-    .btn(@click="openSyncWin") View synced data
+    .btn(@click="openSyncWin") {{translate('settings.sync_view_btn')}}
 </template>
 
 <script lang="ts" setup>

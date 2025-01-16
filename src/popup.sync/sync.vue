@@ -15,7 +15,7 @@
   .header
     .header-btn(@click="Sync.reload")
       svg.icon.-sync(): use(xlink:href="#icon_sync")
-    .title Sync
+    .title {{translate('panel.sync.title')}}
     .space-filler
   SyncPanel
   NotificationsPopup
@@ -23,6 +23,7 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
+import { translate } from 'src/dict'
 import { Settings } from 'src/services/settings'
 import { Styles } from 'src/services/styles'
 import { Sync } from 'src/services/_services'
