@@ -30,8 +30,8 @@ export function warn<T extends Array<unknown>>(msg: string, ...args: T): void {
 export function err(msg: string, err?: unknown, ...args: Array<unknown>): void {
   msg = `[${_type}${_winId}${_tabId}] ${msg}\n`
 
-  if (err !== undefined) console.error(msg, err)
-  else console.error(msg)
+  if (args.length) args.unshift('\n')
 
-  if (args.length) console.error(...args)
+  if (err !== undefined) console.error(msg, err, ...args)
+  else console.error(msg, ...args)
 }
