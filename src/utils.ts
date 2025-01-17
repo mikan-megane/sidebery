@@ -576,6 +576,7 @@ export function normalizeUrl(url?: string, title?: string): string | undefined {
     url.startsWith('data:') ||
     url.startsWith('file:') ||
     url.startsWith('jar:file:') ||
+    url.startsWith('blob:') ||
     url.startsWith('about:')
   ) {
     if (title) return URL_URL + '#' + encodeURIComponent(JSON.stringify([url, title]))
