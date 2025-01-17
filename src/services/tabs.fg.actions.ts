@@ -269,7 +269,7 @@ async function restoreTabsState(): Promise<void> {
   ])
   const nativeTabs = Utils.settledOr(results[0], [])
   const storage = Utils.settledOr(results[1], {})
-  const isWindowTabsLocked = Utils.settledOr(results[2], false)
+  const isWindowTabsLocked = Utils.settledOr(results[2], true)
   let tabsWasMoved = false
 
   // Check if tabs are locked right now
