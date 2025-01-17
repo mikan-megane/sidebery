@@ -156,17 +156,17 @@ export async function load(): Promise<void> {
   Tabs.setupTabsListeners()
 
   await Utils.retry({
-    action: async again => {
+    action: async (again, isLastTry) => {
       try {
-        await restoreTabsState()
+        await restoreTabsState(isLastTry)
       } catch (err) {
         if (err === Err.TabsLocked) again()
         else Logs.err('Tabs.load: Cannot restore tabs state', err)
       }
     },
-    interval: 1000,
-    increment: 500,
-    count: 5,
+    interval: 500,
+    increment: 250,
+    count: 10,
   })
 
   Tabs.updateActiveGroupPage()
@@ -256,7 +256,7 @@ export function unload(): void {
   Tabs.loadInShadowMode()
 }
 
-async function restoreTabsState(): Promise<void> {
+async function restoreTabsState(ignoreLockedTabs?: boolean): Promise<void> {
   if (!Sidebar.hasTabs) return
 
   const ts = performance.now()
@@ -273,11 +273,12 @@ async function restoreTabsState(): Promise<void> {
   let tabsWasMoved = false
 
   // Check if tabs are locked right now
-  if (isWindowTabsLocked) {
+  if (isWindowTabsLocked && !ignoreLockedTabs) {
     if (isWindowTabsLocked === true) {
-      Logs.info('Tabs.restoreTabsState: window tabs are locked (still opening)')
+      Logs.info('Tabs.restoreTabsState: window tabs are locked (still opening?)')
       throw Err.TabsLocked
     }
+    Logs.info('Tabs.restoreTabsState: window tabs were locked')
     storage.tabsDataCache = [isWindowTabsLocked.cache]
     tabsWasMoved = isWindowTabsLocked.move
 

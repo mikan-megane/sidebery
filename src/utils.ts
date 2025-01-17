@@ -876,7 +876,7 @@ export function isRegExp(value: unknown): value is RegExp {
 }
 
 interface RetryConfig {
-  action: (again: () => void) => Promise<void>
+  action: (again: () => void, isLastTry: boolean) => Promise<void>
   interval: number
   count: number
   increment?: number
@@ -890,7 +890,7 @@ export async function retry(conf: RetryConfig): Promise<void> {
 
     while (count--) {
       let result = false
-      await conf.action(() => (result = true))
+      await conf.action(() => (result = true), count === 0)
 
       if (!result || count <= 0) break
 
