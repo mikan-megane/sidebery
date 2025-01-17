@@ -153,7 +153,7 @@ export async function createWithTabs(
   }
 
   const idsMap: Record<ID, ID> = {}
-  const createdTabs: browser.tabs.Tab[] = []
+  const processedTabs: browser.tabs.Tab[] = []
 
   // Create window
   const defaultContainerId = conf.incognito ? PRIVATE_CONTAINER_ID : DEFAULT_CONTAINER_ID
@@ -208,22 +208,22 @@ export async function createWithTabs(
     }
   }
 
-  // Normalize processed tabs
+  // Gather processed tabs
   try {
     const processed = await Promise.all(processingTabs)
     for (const tabOrTabs of processed) {
-      if (Array.isArray(tabOrTabs)) createdTabs.push(...tabOrTabs)
-      else createdTabs.push(tabOrTabs)
+      if (Array.isArray(tabOrTabs)) processedTabs.push(...tabOrTabs)
+      else processedTabs.push(tabOrTabs)
     }
   } catch (err) {
     Logs.err('Windows.createWithTabs: Cannot process tabs:', err)
     return false
   }
 
-  // Go through src/new tabs
+  // Go through moved/new tabs and restore their state from srcInfo
   const cache: TabCache[] = []
-  for (let i = 0; i < createdTabs.length; i++) {
-    const tab = createdTabs[i] as Tab
+  for (let i = 0; i < processedTabs.length; i++) {
+    const tab = processedTabs[i] as Tab
     const srcInfo = tabsInfo[i]
     if (!srcInfo || !tab) continue
 
@@ -265,7 +265,7 @@ export async function createWithTabs(
   Tabs.cacheTabsData(window.id, cache, 0)
 
   // Update succession for the initial tab
-  const firstTab = createdTabs[0]
+  const firstTab = processedTabs[0]
   if (firstTab && moveTabs) {
     if (activeTabId === NOID) activeTabId = firstTab.id
     await browser.tabs.moveInSuccession([initialTabId], activeTabId).catch(err => {
