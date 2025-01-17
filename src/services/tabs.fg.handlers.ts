@@ -158,6 +158,8 @@ async function tryToRestoreTabsStateFromSessionData(
   tabs: Tab[],
   sData: (TabSessionData | undefined)[]
 ) {
+  Logs.info('Tabs.tryToRestoreTabsStateFromSessionData', tabs.length)
+
   const idsMap: Record<ID, ID> = {}
 
   for (let data, tab, i = 0; i < tabs.length; i++) {

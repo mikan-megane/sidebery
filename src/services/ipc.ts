@@ -235,7 +235,7 @@ export function connectTo(
 
   // Handle disconnect
   connection.disconnectListener = (port: browser.runtime.Port) => {
-    Logs.info(`${dbgPrefix} Disconnected!`, port, port.error?.message)
+    Logs.info(`${dbgPrefix} Disconnected!`, port.name, port.error?.message)
 
     port.onMessage.removeListener(connection.postListener)
     port.onDisconnect.removeListener(connection.disconnectListener)

@@ -122,7 +122,7 @@ export function closeWindowsPopup(): void {
 
 const lockedWindowsTabs: Record<ID, boolean | { move: boolean; cache: TabCache[] }> = {}
 export function isWindowTabsLocked(id: ID): boolean | { move: boolean; cache: TabCache[] } {
-  Logs.info('Windows.isWindowTabsLocked', id)
+  Logs.info('Windows.isWindowTabsLocked', id, typeof lockedWindowsTabs[id])
   return lockedWindowsTabs[id] ?? false
 }
 
@@ -130,6 +130,8 @@ export async function createWithTabs(
   tabsInfo: ItemInfo[],
   conf?: browser.windows.CreateData
 ): Promise<boolean> {
+  Logs.info('Windows.createWithTabs', tabsInfo.length)
+
   if (!conf) conf = {}
 
   const moveTabs = conf.tabId === MOVEID
@@ -275,8 +277,13 @@ export async function createWithTabs(
   lockedWindowsTabs[window.id] = { move: moveTabs, cache }
 
   setTimeout(() => {
-    if (window.id !== undefined) delete lockedWindowsTabs[window.id]
+    if (window.id !== undefined) {
+      Logs.info('Windows.createWithTabs: Delete locked window tabs')
+      delete lockedWindowsTabs[window.id]
+    }
   }, 5000)
+
+  Logs.info('Windows.createWithTabs: Done')
 
   return true
 }

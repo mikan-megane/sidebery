@@ -30,6 +30,8 @@ const GLOB_PINNED_ID = 'global_pinned'
  * Create base snapshot
  */
 export async function createSnapshot(auto = false): Promise<Snapshot | undefined> {
+  Logs.info('Snapshots.createSnapshot', auto)
+
   if (!Info.isBg) return await IPC.bg('createSnapshot')
 
   // Get snapshot src data and current snapshots list
@@ -544,6 +546,8 @@ async function adaptTabsPanels(snapshot: NormalizedSnapshot): Promise<void> {
  * Open windows (all or by index) of snapshot
  */
 export async function openWindows(snapshot: NormalizedSnapshot, winIndex?: number): Promise<void> {
+  Logs.info('Snapshots.openWindows')
+
   // Adapt containers
   await adaptContainers(snapshot)
 
@@ -564,6 +568,8 @@ export async function openWindows(snapshot: NormalizedSnapshot, winIndex?: numbe
  * Open window of snapshot
  */
 async function openWindow(snapshot: NormalizedSnapshot, winIndex: number): Promise<void> {
+  Logs.info('Snapshots.openWindow')
+
   const winTabs = snapshot.tabs[winIndex]
   if (!winTabs) return Logs.warn('Snapshots.openWindow: No winTabs')
 

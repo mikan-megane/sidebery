@@ -274,7 +274,10 @@ async function restoreTabsState(): Promise<void> {
 
   // Check if tabs are locked right now
   if (isWindowTabsLocked) {
-    if (isWindowTabsLocked === true) throw Err.TabsLocked
+    if (isWindowTabsLocked === true) {
+      Logs.info('Tabs.restoreTabsState: window tabs are locked (still opening)')
+      throw Err.TabsLocked
+    }
     storage.tabsDataCache = [isWindowTabsLocked.cache]
     tabsWasMoved = isWindowTabsLocked.move
   }
