@@ -123,7 +123,12 @@ export function closeWindowsPopup(): void {
 const lockedWindowsTabs: Record<ID, boolean | { move: boolean; cache: TabCache[] }> = {}
 export function isWindowTabsLocked(id: ID): boolean | { move: boolean; cache: TabCache[] } {
   Logs.info('Windows.isWindowTabsLocked', id, typeof lockedWindowsTabs[id])
-  return lockedWindowsTabs[id] ?? false
+  const locked = lockedWindowsTabs[id]
+  if (locked && locked !== true) {
+    Logs.info('Windows.isWindowTabsLocked: removing locked tabs data...')
+    delete lockedWindowsTabs[id]
+  }
+  return locked ?? false
 }
 
 export async function createWithTabs(
