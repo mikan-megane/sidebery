@@ -280,6 +280,9 @@ async function restoreTabsState(): Promise<void> {
     }
     storage.tabsDataCache = [isWindowTabsLocked.cache]
     tabsWasMoved = isWindowTabsLocked.move
+
+    // Clear deferredEventHandling
+    Tabs.deferredEventHandling = []
   }
 
   let tabs: Tab[] | undefined
