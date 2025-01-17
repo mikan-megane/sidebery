@@ -899,7 +899,7 @@ async function updateSidebar(newConfig?: SidebarConfig): Promise<void> {
   if (!newConfig) return
   if (!Sidebar.ready) return
 
-  const panelConfigs = Object.values(newConfig.panels)
+  const newPanelConfigs = Object.values(newConfig.panels)
   const newPanelsMap: Record<ID, Panel> = {}
   const oldNavItems = Sidebar.reactive.nav
   Sidebar.reactive.nav = newConfig.nav
@@ -916,12 +916,12 @@ async function updateSidebar(newConfig?: SidebarConfig): Promise<void> {
   let webReqHandlerNeeded = false
 
   // Loop over the new panels
-  for (const panelConfig of panelConfigs) {
-    let panel = Sidebar.panelsById[panelConfig.id]
+  for (const newPanelConfig of newPanelConfigs) {
+    let panel = Sidebar.panelsById[newPanelConfig.id]
 
     // Update existed panel
     if (panel) {
-      Object.assign(panel, panelConfig)
+      Object.assign(panel, newPanelConfig)
 
       const r = panel.reactive
       r.name = panel.name
@@ -939,7 +939,7 @@ async function updateSidebar(newConfig?: SidebarConfig): Promise<void> {
 
     // or add new panel
     else {
-      const newPanel = createPanelFromConfig(panelConfig)
+      const newPanel = createPanelFromConfig(newPanelConfig)
       if (!newPanel) throw Logs.err('Sidebar.updateSidebar: Cannot create new panel')
       panel = newPanel
       Sidebar.panelsById[panel.id] = panel
