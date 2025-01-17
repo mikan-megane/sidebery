@@ -6,11 +6,14 @@ export * from './defaults/settings'
 export const PRE_SCROLL = 64
 export const ADDON_HOST = browser.runtime.getURL('')
 export const SIDEBAR_URL = browser.runtime.getURL('/sidebar/sidebar.html')
-export const GROUP_URL = browser.runtime.getURL('/sidebery/group.html')
+export const GROUP_PATH = '/sidebery/group.html'
+export const GROUP_URL = browser.runtime.getURL(GROUP_PATH)
 export const GROUP_URL_LEN = GROUP_URL.length
-export const URL_URL = browser.runtime.getURL('/sidebery/url.html')
+export const URL_PATH = '/sidebery/url.html'
+export const URL_URL = browser.runtime.getURL(URL_PATH)
 export const URL_URL_LEN = URL_URL.length
-export const SETUP_URL = browser.runtime.getURL('/page.setup/setup.html')
+export const SETUP_PATH = '/page.setup/setup.html'
+export const SETUP_URL = browser.runtime.getURL(SETUP_PATH)
 export const SEARCH_URL = browser.runtime.getURL('/popup.search/search.html')
 export const EDITING_POPUP_URL = browser.runtime.getURL('/popup.editing/editing.html')
 export const RGB_COLORS: Record<browser.ColorName, string> = {

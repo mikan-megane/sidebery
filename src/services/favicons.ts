@@ -1,5 +1,5 @@
 import { Stored } from 'src/types'
-import { FILE_RE, GROUP_URL, IMG_RE, MUS_RE, SETUP_URL, URL_URL, VID_RE } from 'src/defaults'
+import { FILE_RE, GROUP_PATH, IMG_RE, MUS_RE, SETUP_PATH, URL_PATH, VID_RE } from 'src/defaults'
 import * as Utils from 'src/utils'
 import * as Logs from 'src/services/logs'
 
@@ -98,9 +98,9 @@ export async function resizeFavicon(fav: string): Promise<string> {
 
 export function getFavPlaceholder(url: string): string {
   if (url.startsWith('m')) {
-    if (url.startsWith(GROUP_URL)) return '#icon_group'
-    if (url.startsWith(URL_URL)) return '#icon_link_favicon'
-    if (url.startsWith(SETUP_URL)) return '#icon_settings'
+    if (url.startsWith(GROUP_PATH, 52)) return '#icon_group'
+    if (url.startsWith(URL_PATH, 52)) return '#icon_link_favicon'
+    if (url.startsWith(SETUP_PATH, 52)) return '#icon_settings'
   }
 
   if (IMG_RE.test(url)) return '#icon_img'
