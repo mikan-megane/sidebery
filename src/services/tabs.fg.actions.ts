@@ -2184,7 +2184,7 @@ export function findSuccessorTab(tab: Tab, exclude?: readonly ID[]): Tab | undef
         const actTabs = prevTabsPanelHistory.actTabs
         const prevActTab = Tabs.byId[actTabs[actTabs.length - 1]]
         if (prevActTab && prevActTab.panelId === panelId && !prevActTab.discarded) {
-          return prevActTab
+          if (!exclude || !exclude.includes(prevActTab.id)) return prevActTab
         }
       }
     }
