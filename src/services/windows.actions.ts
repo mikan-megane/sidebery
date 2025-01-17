@@ -153,7 +153,7 @@ export async function createWithTabs(
   }
 
   const idsMap: Record<ID, ID> = {}
-  const processedTabs: browser.tabs.Tab[] = []
+  const processedTabs: (browser.tabs.Tab | null)[] = []
 
   // Create window
   const defaultContainerId = conf.incognito ? PRIVATE_CONTAINER_ID : DEFAULT_CONTAINER_ID
@@ -210,8 +210,9 @@ export async function createWithTabs(
 
   // Gather processed tabs
   try {
-    const processed = await Promise.all(processingTabs)
-    for (const tabOrTabs of processed) {
+    const processed = await Promise.allSettled(processingTabs)
+    for (const processingResult of processed) {
+      const tabOrTabs = Utils.settledOr(processingResult, null)
       if (Array.isArray(tabOrTabs)) processedTabs.push(...tabOrTabs)
       else processedTabs.push(tabOrTabs)
     }
@@ -223,7 +224,7 @@ export async function createWithTabs(
   // Go through moved/new tabs and restore their state from srcInfo
   const cache: TabCache[] = []
   for (let i = 0; i < processedTabs.length; i++) {
-    const tab = processedTabs[i] as Tab
+    const tab = processedTabs[i] as Tab | null
     const srcInfo = tabsInfo[i]
     if (!srcInfo || !tab) continue
 
