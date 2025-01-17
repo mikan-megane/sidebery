@@ -313,6 +313,7 @@ function disableBtn(index: number): void {
   }
 
   SidebarConfigRState.nav.splice(index, 1)
+  delete SidebarConfigRState.panels[panelConf.id]
   saveSidebarConfig()
 }
 
