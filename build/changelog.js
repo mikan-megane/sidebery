@@ -18,6 +18,7 @@ const ignoreCommitPrefixRE = /^chore/i
 const commitGroups = [
   { re: /^feat\(?(?<subGroup>[a-zA-Z0-9-_ ]*)\)?:(?<msg>.+)/, name: '### Added' },
   { re: /^fix\(?(?<subGroup>[a-zA-Z0-9-_ ]*)\)?:(?<msg>.+)/, name: '### Fixed' },
+  { re: /^l10n\(?(?<subGroup>[a-zA-Z0-9-_ ]*)\)?:(?<msg>.+)/, name: '### Localization' },
   {
     re: /^perf\(?(?<subGroup>[a-zA-Z0-9-_ ]*)\)?:(?<msg>.+)/,
     name: '### Performance Improvements',
