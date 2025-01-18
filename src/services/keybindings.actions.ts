@@ -606,7 +606,7 @@ function onKeySelect(dir: number): void {
 
     if (!target) {
       // Cyclically
-      if (Settings.state.selectCyclic) {
+      if (Settings.state.selectCyclic || !selIsSet) {
         target = dir > 0 ? tabs[0] : tabs.findLast(t => !t.invisible)
       }
       if (!target) return
