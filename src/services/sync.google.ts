@@ -132,13 +132,11 @@ async function loadCachedFileIds(): Promise<Map<FileType, string>> {
   const kbId = storedIds[typeNames[FileType.Keybindings]]
   if (kbId) cachedIds.set(FileType.Keybindings, kbId)
 
-  Logs.info('Sync.Google.loadCachedFileIds(): Loaded:', cachedIds)
-
   return cachedIds
 }
 
 async function saveCachedFileIds() {
-  Logs.info('Sync.Google.saveCachedFileIds():', cachedFileIds)
+  Logs.info('Sync.Google.saveCachedFileIds()')
 
   if (!cachedFileIds) return Logs.err('Sync.Google.saveCachedFileIds(): Nothing to save')
 
@@ -147,8 +145,6 @@ async function saveCachedFileIds() {
   for (const [fileType, id] of cachedFileIds) {
     if (id !== undefined) storedIds[typeNames[fileType]] = id
   }
-
-  Logs.info('Sync.Google.saveCachedFileIds(): storedIds:', storedIds)
 
   await Store.set({ googleDriveFileIds: storedIds })
 }
@@ -175,7 +171,6 @@ async function updateCachedFileIds() {
     q: `name contains '${Sync.getProfileId()}'`,
   })
   if (!files) return null
-  Logs.info('Sync.Google.updateCachedFileIds: files:', files)
 
   cachedFileIds = new Map()
 
@@ -364,7 +359,7 @@ export async function saveProfileInfo() {
   return QUEUE.add(_saveProfileInfo)
 }
 async function _saveProfileInfo() {
-  Logs.info('Sync.Google.saveProfileInfo()')
+  Logs.info('Sync.Google._saveProfileInfo()')
 
   const profileInfo: ProfileInfo = {
     name: Settings.state.syncName.trim(),
@@ -819,7 +814,7 @@ export async function removeTabsEntry(entry: SyncedEntry) {
   return QUEUE.add(_removeTabsEntry, entry)
 }
 async function _removeTabsEntry(entry: SyncedEntry) {
-  Logs.info('Sync.Google.removeTabsEntry():', entry)
+  Logs.info('Sync.Google.removeTabsEntry()')
 
   if (!entry.id || !entry.gdFileId) return
 

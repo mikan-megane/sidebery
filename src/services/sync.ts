@@ -388,11 +388,10 @@ async function _remove(entry: Partial<SyncedEntry>) {
 
 export async function getData<T>(entry: SyncedEntry): Promise<T | null | void> {
   Logs.info('Sync.getData()')
-  Logs.info('Sync.getData: entry:', entry.id)
   return QUEUE.add(_getData<T>, entry)
 }
 async function _getData<T>(entry: SyncedEntry): Promise<T | null | void> {
-  Logs.info('Sync._getData: entry:', entry)
+  Logs.info('Sync._getData: entry:', entry.id)
 
   if (!entry.id) {
     Logs.err('Sync._getData: No entry.id', entry)
@@ -615,7 +614,7 @@ export async function openSyncPopup() {
 
   const parentWinId = Windows.id
 
-  const syncWindow = await browser.windows.create({
+  await browser.windows.create({
     allowScriptsToClose: true,
     focused: true,
     width,
@@ -627,6 +626,4 @@ export async function openSyncPopup() {
     // For userChrome modificatoins with `#main-window[titlepreface='Sync‎']`
     titlePreface: 'Sync‎',
   })
-
-  Logs.info('Sync.openSyncPopup():', syncWindow)
 }
