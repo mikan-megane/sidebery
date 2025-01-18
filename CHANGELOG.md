@@ -4,6 +4,14 @@
 
 ### Added
 
+- Keybindings: select up/down: "Cyclically" sub-option
+- Show visual feedback after middle clicking on elements (bookmarks, history, recently closed tabs)
+- Keybinding to open sync popup
+- Keybinding to open bookmarks sub-panel (if available)
+- Keybindings: select bookmarks in sub-panel too
+- Keybinding to edit title of selected/active tab (resolves [#966](https://github.com/mbnuqw/sidebery/issues/966)) (resolves [#1848](https://github.com/mbnuqw/sidebery/issues/1848)) (resolves [#1845](https://github.com/mbnuqw/sidebery/issues/1845))  
+- Keybindings: switch to previously active panel
+- Keybindings to copy url/title of selected tab/bookmarks/active tab
 - Keybinding to open config popup of selected/active panel
 - Panel config in popup-window with basic keyboard navigation
 - History: load more in search mode
@@ -21,6 +29,33 @@
 
 ### Fixed
 
+- Snapshots: normalize urls; utils.normalizeUrl: handle 'blob:' url ([#1942](https://github.com/mbnuqw/sidebery/issues/1942))  
+- Windows.createWithTabs: handle errors of browser.tabs.create() ([#1942](https://github.com/mbnuqw/sidebery/issues/1942))  
+- Tabs loading: increase count/freq of retry, ignore the tabs lock on the last retry
+- Tabs/move: preserve panel if dst.panelId is not set
+- Favicons: getting placeholder for internal pages of a dif profile
+- Setup-page: incomplete removing of nav element
+- Setup page/nav and contianers settings: more compact layout of cards
+- Tab preview: show preview popup for active and unloaded tabs too
+- Default tab context menu: first sort the tree itself (by [@llc0930](https://github.com/llc0930): [#1961](https://github.com/mbnuqw/sidebery/issues/1961))
+- Search: should also search for custom titles for tabs (by [@llc0930](https://github.com/llc0930): [#1960](https://github.com/mbnuqw/sidebery/issues/1960))
+- Setup-page: rm title/sub-title shadows
+- Notifications: set max width
+- Dnd: place new panel after the last one on dropping tabs to the Add Tab Panel btn
+- Export/import: more granular backup: separated "settings" field to "settings", "panels and nav" and "menu"
+- Importing data  
+  - race condition on importing containers and settings
+  - show error messages
+  - preserve old tabs panels
+- Menu editor: reload menu config on opening
+- Importing keybindings: handle defaults and conflicts
+- Keybindings: selecting panel in inlined nav-bar: show drop-down popup with not visible panels
+- Url-placeholder-page: make copy button focusable
+- Keybindings: activate selected bookmark: check if creation of a new tab is needed
+- Snapshots: preserve folded tabs state
+- Prevent wrong tab activation after fast closing with ctrl+w
+- Dnd: preserve folded state on dragging tabs outside the window
+- Dnd: preserve customTitle/Color on dragging tabs outside the window
 - Can't reopen containered tab in a new private window
 - Preserve custom color/title on auto-reopening tab in dif container
 - Trying to detect the manual session restore [#1368](https://github.com/mbnuqw/sidebery/issues/1368)
@@ -88,8 +123,12 @@
 - Default settings: tabsSecondClickActPrev: false ([#1521](https://github.com/mbnuqw/sidebery/issues/1521))  
 - Recalc native tabs visibility when a globally pinned tab is active ([#700](https://github.com/mbnuqw/sidebery/issues/700))
 
-### Translations
+### Localization
 
+- zh: updated translation, hu: ru: corrected (by [@llc0930](https://github.com/llc0930): [#1966](https://github.com/mbnuqw/sidebery/issues/1966))
+- zh: updated translation (by [@llc0930](https://github.com/llc0930): [#1959](https://github.com/mbnuqw/sidebery/issues/1959))
+- ja, zh (by [@llc0930](https://github.com/llc0930): [#1940](https://github.com/mbnuqw/sidebery/issues/1940))  
+- en, ru: tab panel menu: rm the word "all" to avoid confusion between panel tabs and all tabs in general
 - Updated translation (by [@llc0930](https://github.com/llc0930): [#1913](https://github.com/mbnuqw/sidebery/issues/1913))  
 - Setup-page: help: repo link URL (by [@llc0930](https://github.com/llc0930): [#1580](https://github.com/mbnuqw/sidebery/issues/1580))
 - Fix translation duplications and errors (by [@llc0930](https://github.com/llc0930): [#1766](https://github.com/mbnuqw/sidebery/issues/1766))
