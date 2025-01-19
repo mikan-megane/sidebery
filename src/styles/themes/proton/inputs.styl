@@ -738,18 +738,18 @@
 
 .StyleField .color-wrapper
   position: relative
-  width: 16px
-  height: 16px
+  width: 22px
+  height: 22px
   flex-shrink: 0
-  border-radius: 42%
+  border-radius: 3px
   overflow: hidden
-  margin: 0 8px 0 0
+  margin: 0 4px 0 0
   padding: 0
   cursor: pointer
   transform: translateZ(0)
-  box-shadow: 0 0 0 1px #cecece,
-              0 0 0 2px #323232,
-              0 1px 3px 0 #00000024
+  box-shadow: 0 0 1px 0 #fffa, 0 0 1px 0 #000a
+  &:hover
+    box-shadow: 0 0 1px 0 #ffff, 0 0 1px 0 #000f
 
 .StyleField .color
   position: relative
@@ -764,7 +764,7 @@
   padding: 0
   background-color: transparent
   z-index: 0
-  cursor: pointer
+  cursor: default
 
 
 // ---
@@ -832,7 +832,7 @@
   text-overflow: ellipsis
   font-weight: 600
   overflow: hidden
-  cursor: pointer
+  cursor: default
   text-align: center
   border-radius: var(--btn-border-radius)
   -moz-user-select: none
