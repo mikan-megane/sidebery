@@ -231,6 +231,13 @@ async function main() {
     opacity: 0;
     transition: opacity .1s;
     transform-origin: 50% 0%;
+    text-align: start;
+    direction: ltr;
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+    visibility: visible;
+    white-space: normal;
 `
 
   // Create popup element
