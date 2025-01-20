@@ -384,7 +384,7 @@ export function stop(): void {
   blur()
 }
 
-export function check(str: string): boolean {
+export function check(str?: string): boolean {
   if (str === undefined) {
     return false
   }
