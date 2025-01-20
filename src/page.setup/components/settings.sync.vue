@@ -31,6 +31,7 @@ section(ref="el")
           .label {{translate('settings.sync_gd_api_proj')}}
           a.link(href="https://developers.google.com/workspace/guides/create-project" target="_blank").
             {{translate('settings.sync_gd_api_link')}}
+        .note.-wide {{translate('settings.sync_gd_api_proj_sub')}}
       .note-field
         .inline-box
           .label {{translate('settings.sync_gd_api_drive')}}
@@ -60,6 +61,11 @@ section(ref="el")
           a.link(href="https://console.cloud.google.com/auth/scopes" target="_blank").
             {{translate('settings.sync_gd_api_link')}}
         code.note.-wide https://www.googleapis.com/auth/drive.appdata
+      .note-field
+        .inline-box
+          .label {{translate('settings.sync_gd_api_usr')}}
+          a.link(href="https://console.cloud.google.com/auth/audience" target="_blank").
+            {{translate('settings.sync_gd_api_link')}}
       .note-field
         .inline-box
           .label {{translate('settings.sync_gd_api_reload')}}

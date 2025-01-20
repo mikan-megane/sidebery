@@ -5671,6 +5671,9 @@ Przykłady: "*", "ctrl+$", "ctrl+alt+g"`,
     en: '1. Create a Google Cloud project:',
     zh_TW: '1. 建立 Google Cloud 專案：',
   },
+  'settings.sync_gd_api_proj_sub': {
+    en: '- Audience: External',
+  },
   'settings.sync_gd_api_drive': {
     en: '2. Enable Drive API:',
     zh_TW: '2. 啟用「Google Drive API」：',
@@ -5697,17 +5700,20 @@ Przykłady: "*", "ctrl+$", "ctrl+alt+g"`,
     en: '6. Add the following scopes in the Data Access section:',
     zh_TW: '6. 在資料存取權新增以下範圍：',
   },
+  'settings.sync_gd_api_usr': {
+    en: '7. Add a test user (your email):',
+  },
   'settings.sync_gd_api_reload': {
-    en: '7. Disconnect Sidebery from your Google Drive:',
-    zh_TW: '7. 取消 Sidebery 與 Google 雲端硬碟的連接：',
+    en: '8. Disconnect Sidebery from your Google Drive:',
+    zh_TW: '8. 取消 Sidebery 與 Google 雲端硬碟的連接：',
   },
   'settings.sync_gd_api_reload_sub': {
     en: '(if you used the default API key)',
     zh_TW: '（如果您使用預設 API 金鑰）',
   },
   'settings.sync_gd_api_done': {
-    en: '8. Done. On the next request to Google Drive you will see a consent screen.',
-    zh_TW: '8. 完成。下次向 Google 雲端硬碟發出請求時，您將看到同意畫面。',
+    en: '9. Done. On the next request to Google Drive you will see a consent screen.',
+    zh_TW: '9. 完成。下次向 Google 雲端硬碟發出請求時，您將看到同意畫面。',
   },
   'settings.sync_save_settings': {
     en: 'Save settings to sync storage',
