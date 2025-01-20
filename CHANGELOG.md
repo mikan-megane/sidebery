@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+...
+
+## 5.3.0 - 2025.01.20
+
 ### Added
 
 - Keybindings: select up/down: "Cyclically" sub-option
@@ -125,6 +129,7 @@
 
 ### Localization
 
+- ja, zh: updated translation (by [@llc0930](https://github.com/llc0930): [#1969](https://github.com/mbnuqw/sidebery/issues/1969))
 - zh: updated translation, hu: ru: corrected (by [@llc0930](https://github.com/llc0930): [#1966](https://github.com/mbnuqw/sidebery/issues/1966))
 - zh: updated translation (by [@llc0930](https://github.com/llc0930): [#1959](https://github.com/mbnuqw/sidebery/issues/1959))
 - ja, zh (by [@llc0930](https://github.com/llc0930): [#1940](https://github.com/mbnuqw/sidebery/issues/1940))  
