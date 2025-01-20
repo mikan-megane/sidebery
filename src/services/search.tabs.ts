@@ -133,7 +133,9 @@ export function onTabsSearchSelectAll(panel: TabsPanel): void {
 
 function findInAnotherPanel(): void {
   const firstMatch = Tabs.list.find(t => {
-    return !t.pinned && (Search.check(t.title) || Search.check(t.customTitle) || Search.check(t.url))
+    return (
+      !t.pinned && (Search.check(t.title) || Search.check(t.customTitle) || Search.check(t.url))
+    )
   })
   if (!firstMatch) return
 
