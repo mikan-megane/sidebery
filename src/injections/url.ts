@@ -15,7 +15,10 @@ function waitInitData(): Promise<void> {
   return new Promise((ok, err) => {
     if (window.sideberyInitData) return ok()
     window.onSideberyInitDataReady = ok
-    setTimeout(() => err('UrlPage: No initial data (sideberyInitData)'), 2000)
+    setTimeout(() => {
+      if (window.sideberyInitData) return
+      err('UrlPage: No initial data (sideberyInitData)')
+    }, 60_000)
   })
 }
 
