@@ -278,7 +278,7 @@ export function connectTo(
   }
   connection.localPort.onDisconnect.addListener(connection.disconnectListener)
 
-  // Reset reconnection count after 5s
+  // Reset reconnection count after RESET_RECON_COUNT_TIMEOUT
   clearTimeout(connection.reconnectingTimeout)
   connection.reconnectingTimeout = setTimeout(() => {
     // Logs.info(`${dbgPrefix} Reseting reconnection count:`, connection.reconnectCount)
@@ -494,7 +494,6 @@ export function send<T extends InstanceType, A extends ActionsKeys<T>>(msg: Mess
     port.postMessage(msg)
   } catch (e) {
     Logs.warn(`IPC.send(${msg.action}): Got error on postMessage`, e)
-    Logs.info('WTF', connection?.pendingSendings.length)
     connection?.pendingSendings.push(() => send(msg))
   }
 }
