@@ -2,7 +2,20 @@
 
 ## Unreleased
 
-...
+### Fixed
+
+- Drag and Drop: correctly handle dragging bookmarks in bookmarks sub-panel
+- OnTabRemoved: incorrect recalc of visibility of the child tabs
+- Internal pages initialization (resolves [#1975](https://github.com/mbnuqw/sidebery/issues/1975))  
+- Handling connections between different parts of addon
+- Increase deadlines for reconnection and resending msgs ([#1973](https://github.com/mbnuqw/sidebery/issues/1973))  
+- Setup-page styles: use system-ui font-family  
+- Snapshots viewer styles: decrease tabs height
+
+### Localization
+
+- zh: updated translation (by [@llc0930](https://github.com/llc0930): [#1972](https://github.com/mbnuqw/sidebery/issues/1972))
+
 
 ## 5.3.0 - 2025.01.20
 
