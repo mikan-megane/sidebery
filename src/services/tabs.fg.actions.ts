@@ -1324,7 +1324,7 @@ export async function duplicateTabs(tabIds: ID[], asChild?: boolean): Promise<vo
         if (t.lvl <= tab.lvl) break
 
         if (tabIds.includes(t.id)) {
-          const dupAncestorId = Tabs.findAncestor(t.id, id => tabIds.includes(id))
+          const dupAncestorId = Tabs.findAncestorId(t.id, id => tabIds.includes(id))
           if (dupAncestorId !== undefined) {
             descendantsToDuplicate.push([t.id, dupAncestorId])
             processed.push(t.id)
@@ -1350,7 +1350,7 @@ export async function duplicateTabs(tabIds: ID[], asChild?: boolean): Promise<vo
   }
 }
 
-export function findAncestor(tabId: ID, cb: (ancestorId: ID) => boolean): ID | void {
+export function findAncestorId(tabId: ID, cb: (ancestorId: ID) => boolean): ID | void {
   const tab = Tabs.byId[tabId]
   if (!tab) throw 'Tabs.getAncestors: No target tab'
 
