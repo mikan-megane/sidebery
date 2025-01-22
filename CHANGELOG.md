@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+...
+
+## 5.3.1 - 2025.01.22
+
 ### Fixed
 
 - Drag and Drop: correctly handle dragging bookmarks in bookmarks sub-panel
