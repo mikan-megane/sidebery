@@ -871,7 +871,7 @@ export function onDragMove(e: DragEvent): void {
         if (DnD.reactive.dstType === DropType.Bookmarks) {
           const targetId = slot.id
           const bookmark = Bookmarks.reactive.byId[targetId]
-          const isParent = !!bookmark.children?.length
+          const isParent = !!bookmark?.children?.length
           if (isParent && Settings.state.dndExp === 'hover') {
             const delay = assertExpandMod(e) ? 0 : Settings.state.dndExpDelay
             expandTimeout(() => {
