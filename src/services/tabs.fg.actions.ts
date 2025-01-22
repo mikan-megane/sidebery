@@ -2564,6 +2564,14 @@ export function forEachDescendant(rootTab: Tab, cb: (t: Tab) => void) {
   }
 }
 
+export function findAncestor(childTab: Tab, cb: (t: Tab) => any): Tab | undefined {
+  let parent = Tabs.byId[childTab.parentId]
+  while (parent) {
+    if (cb(parent)) return parent
+    parent = Tabs.byId[parent.parentId]
+  }
+}
+
 export async function copyUrls(ids: ID[]): Promise<void> {
   if (!Permissions.reactive.clipboardWrite) {
     const result = await Permissions.request('clipboardWrite')
