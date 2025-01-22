@@ -679,8 +679,8 @@ function onConnect(port: browser.runtime.Port) {
   const srcType = portNameData.srcType
   const srcWinId = portNameData.srcWinId ?? NOID
   const srcTabId = portNameData.srcTabId ?? NOID
-  // const dbgPrefix = `IPC.onConnect(${getInstanceName(srcType)}, ${srcWinId ?? srcTabId}):`
-  // Logs.info(dbgPrefix)
+  const dbgPrefix = `IPC.onConnect(${getInstanceName(srcType)}, ${srcWinId ?? srcTabId}):`
+  Logs.info(dbgPrefix)
 
   // Check connection data
   const fromBg = srcType === InstanceType.bg
@@ -716,13 +716,23 @@ function onConnect(port: browser.runtime.Port) {
     return
   }
 
+  // Check if new remote port is alive
+  try {
+    port.postMessage(-99)
+  } catch (err) {
+    Logs.warn(dbgPrefix, 'New port is already dead...')
+    return
+  }
+
   // Find/Create connection
   let connection: ConnectionInfo
   let connectionIsNew = false
   const existedConnection = getConnection(srcType, id)
   if (existedConnection) {
+    Logs.info(dbgPrefix, 'Connection already exists')
     connection = existedConnection
   } else {
+    Logs.info(dbgPrefix, 'New connection')
     connectionIsNew = true
     connection = createConnection(srcType, id)
   }
