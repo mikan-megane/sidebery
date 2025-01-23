@@ -61,6 +61,9 @@ export function start(info: DragInfo, dstType?: DropType): void {
   updateTooltip(info)
 
   DnD.reactive.isStarted = true
+
+  clearTimeout(dropEventWasConsumedTimeout)
+  DnD.dropEventConsumed = false
 }
 
 function updateTooltip(info: DragInfo): void {
