@@ -1,10 +1,19 @@
 # Donate
 
-You can donate (only crypto options) to this project, which will motivate me to answer questions, fix reported bugs, implement requested features and generally will speed up development process.
+You can donate to this project, which will motivate me to answer questions, fix reported bugs, implement requested features and generally will speed up development process.
 
 You can also donate to resolving a specific issue (feature request or bug report). To do this, message me to [maxbadryzlov@gmail.com](mailto:maxbadryzlov@gmail.com), we discuss the issue and its possible resolution, and I'll spend my time on that issue after donation.
 
+To purchase cryptocurrency you can use any exchange services, e.g.: [buy.coingate.com](https://buy.coingate.com/), [www.coinbase.com](https://www.coinbase.com/), [www.binance.com](https://www.binance.com/en/crypto/buy), [www.kraken.com](https://www.kraken.com/), etc...
+
 Thank you.
+
+## Payeer
+
+```
+P1128042154
+```
+
 
 ## Bitcoin (BTC)
 
