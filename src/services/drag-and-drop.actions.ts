@@ -1236,7 +1236,7 @@ export async function onDragEnd(e: DragEvent): Promise<void> {
   if (
     !DnD.dropEventConsumed &&
     e.dataTransfer?.types.length === 1 &&
-    Date.now() - lastDragStartTime > 150
+    Date.now() - lastDragStartTime > 250
   ) {
     const dndInfoStr = e.dataTransfer?.getData('application/x-sidebery-dnd')
 
