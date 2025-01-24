@@ -55,6 +55,10 @@ export async function move(
 
   // Move tabs to new window
   if (dst.windowId === NEWID) {
+    // Moving all tabs of this window to the new one... what?
+    const allInWin = Tabs.list.length === tabsInfo.length
+    if (allInWin && tabsInfo.length > 1) return
+
     Tabs.detachTabs(tabsInfo.map(t => t.id))
     const info = Utils.cloneArray<ItemInfo>(tabsInfo)
     const conf = { incognito: dst.incognito, tabId: MOVEID }
