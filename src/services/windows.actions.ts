@@ -125,7 +125,6 @@ export function isWindowTabsLocked(id: ID): boolean | { move: boolean; cache: Ta
   Logs.info('Windows.isWindowTabsLocked', id, typeof lockedWindowsTabs[id])
   const locked = lockedWindowsTabs[id]
   if (locked && locked !== true) {
-    Logs.info('Windows.isWindowTabsLocked: removing locked tabs data...')
     delete lockedWindowsTabs[id]
   }
   return locked ?? false
