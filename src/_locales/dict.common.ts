@@ -309,6 +309,7 @@ export const commonTranslations: Translations = {
   },
   'sync.entry.import_btn': {
     en: 'Import',
+    de: 'Importieren',
     hu: 'Importálás',
     ru: 'Импорт',
     zh_CN: '导入',
@@ -1516,7 +1517,7 @@ export const commonTranslations: Translations = {
   },
   'menu.tab.sort_tree_by_title_asc': {
     en: 'Sort tree by title (A-z)',
-    de: 'Baum nach Titel sortieren (A-z)',
+    de: 'Sortieren nach Titel im Zweig (A-z)',
     hu: 'Rendezés: fa cím szerint (A–z)',
     pl: 'Sortuj drzewo po tytule (A-z)',
     ru: 'Сортировать дерево по названию (А-я)',
@@ -1526,7 +1527,7 @@ export const commonTranslations: Translations = {
   },
   'menu.tab.sort_tree_by_title_des': {
     en: 'Sort tree by title (z-A)',
-    de: 'Baum nach Titel sortieren (z-A)',
+    de: 'Sortieren nach Titel im Zweig (z-A)',
     hu: 'Rendezés: fa cím szerint (z–A)',
     pl: 'Sortuj drzewo po tytule (z-A)',
     ru: 'Сортировать дерево по названию (я-А)',
@@ -1536,7 +1537,7 @@ export const commonTranslations: Translations = {
   },
   'menu.tab.sort_tree_by_url_asc': {
     en: 'Sort tree by URL (A-z)',
-    de: 'Baum nach URL sortieren (A-z)',
+    de: 'Sortieren nach URL im Zweig (A-z)',
     hu: 'Rendezés: fa URL szerint (A–z)',
     pl: 'Sortuj drzewo po URL (A-z)',
     ru: 'Сортировать дерево по адресу (А-я)',
@@ -1546,7 +1547,7 @@ export const commonTranslations: Translations = {
   },
   'menu.tab.sort_tree_by_url_des': {
     en: 'Sort tree by URL (z-A)',
-    de: 'Baum nach URL sortieren (z-A)',
+    de: 'Sortieren nach URL im Zweig (z-A)',
     hu: 'Rendezés: fa URL szerint (z–A)',
     pl: 'Sortuj drzewo po URL (z-A)',
     ru: 'Сортировать дерево по адресу (я-А)',
@@ -1556,7 +1557,7 @@ export const commonTranslations: Translations = {
   },
   'menu.tab.sort_tree_by_time_asc': {
     en: 'Sort tree by access time (Old-Recent)',
-    de: 'Baum nach Zugriffszeit sortieren (Alt-Neu)',
+    de: 'Sortieren nach Zugriffszeit im Zweig (Alt-Neu)',
     hu: 'Rendezés: fa idő szerint (régi–új)',
     pl: 'Sortuj drzewo po dacie (Stare-Nowe)',
     ru: 'Сортировать дерево по времени доступа (Старые-Новые)',
@@ -1566,7 +1567,7 @@ export const commonTranslations: Translations = {
   },
   'menu.tab.sort_tree_by_time_des': {
     en: 'Sort tree by access time (Recent-Old)',
-    de: 'Baum nach Zugriffszeit sortieren (Neu-Alt)',
+    de: 'Sortieren nach Zugriffszeit im Zweig (Neu-Alt)',
     hu: 'Rendezés: fa idő szerint (új–régi)',
     pl: 'Sortuj drzewo po dacie (Nowe-Stare)',
     ru: 'Сортировать дерево по времени доступа (Новые-Старые)',
@@ -1825,7 +1826,7 @@ export const commonTranslations: Translations = {
   // - Tabs panel
   'menu.tabs_panel.mute_all_audible': {
     en: 'Mute audible tabs',
-    de: 'Alle hörbaren Tabs stummschalten',
+    de: 'Hörbare Tabs stummschalten',
     hu: 'Hangos lapok némítása',
     pl: 'Wycisz wszystkie karty z dźwiękiem',
     ru: 'Выключить звук',
@@ -1855,7 +1856,7 @@ export const commonTranslations: Translations = {
   },
   'menu.tabs_panel.sort_all_sub_menu_name': {
     en: 'Sort tabs',
-    de: 'Sortiere alle Tabs',
+    de: 'Sortiere Tabs',
     hu: 'Minden lap rendezése',
     pl: 'Sortuj wszystkie karty',
     ru: 'Сортировать вкладки',
@@ -1865,7 +1866,7 @@ export const commonTranslations: Translations = {
   },
   'menu.tabs_panel.sort_all_by_title_asc': {
     en: 'Sort tabs by title (A-z)',
-    de: 'Sortiere alle Tabs nach Titel (A-z)',
+    de: 'Sortiere Tabs nach Titel (A-z)',
     hu: 'Minden lap rendezése: cím szerint (A–z)',
     pl: 'Sortuj wszystkie karty po tytule (A-z)',
     ru: 'Сортировать вкладки по названию (А-я)',
@@ -1875,7 +1876,7 @@ export const commonTranslations: Translations = {
   },
   'menu.tabs_panel.sort_all_by_title_des': {
     en: 'Sort tabs by title (z-A)',
-    de: 'Sortiere alle Tabs nach Titel (z-A)',
+    de: 'Sortiere Tabs nach Titel (z-A)',
     hu: 'Minden lap rendezése: cím szerint (z–A)',
     pl: 'Sortuj wszystkie karty po tytule (z-A)',
     ru: 'Сортировать вкладки по названию (я-А)',
@@ -1885,7 +1886,7 @@ export const commonTranslations: Translations = {
   },
   'menu.tabs_panel.sort_all_by_url_asc': {
     en: 'Sort tabs by URL (A-z)',
-    de: 'Sortiere alle Tabs nach URL (A-z)',
+    de: 'Sortiere Tabs nach URL (A-z)',
     hu: 'Minden lap rendezése: URL szerint (A–z)',
     pl: 'Sortuj wszystkie karty po URL (A-z)',
     ru: 'Сортировать вкладки по URL (А-я)',
@@ -1895,7 +1896,7 @@ export const commonTranslations: Translations = {
   },
   'menu.tabs_panel.sort_all_by_url_des': {
     en: 'Sort tabs by URL (z-A)',
-    de: 'Sortiere alle Tabs nach URL (z-A)',
+    de: 'Sortiere Tabs nach URL (z-A)',
     hu: 'Minden lap rendezése: URL szerint (z–A)',
     pl: 'Sortuj wszystkie karty po URL (z-A)',
     ru: 'Сортировать вкладки по URL (я-А)',
@@ -1905,7 +1906,7 @@ export const commonTranslations: Translations = {
   },
   'menu.tabs_panel.sort_all_by_time_asc': {
     en: 'Sort tabs by access time (Old-Recent)',
-    de: 'Sortiere alle Tabs nach Zugriffszeit (Alt-Neu)',
+    de: 'Sortiere Tabs nach Zugriffszeit (Alt-Neu)',
     hu: 'Minden lap rendezése: idő szerint (régi–új)',
     pl: 'Sortuj wszystkie karty po dacie (Stare-Nowe)',
     ru: 'Сортировать вкладки по времени доступа (Старые-Новые)',
@@ -1915,7 +1916,7 @@ export const commonTranslations: Translations = {
   },
   'menu.tabs_panel.sort_all_by_time_des': {
     en: 'Sort tabs by access time (Recent-Old)',
-    de: 'Sortiere alle Tabs nach Zugriffszeit (Neu-Alt)',
+    de: 'Sortiere Tabs nach Zugriffszeit (Neu-Alt)',
     hu: 'Minden lap rendezése: idő szerint (új–régi)',
     pl: 'Sortuj wszystkie karty po dacie (Nowe-Stare)',
     ru: 'Сортировать вкладки по времени доступа (Новые-Старые)',
@@ -1925,7 +1926,7 @@ export const commonTranslations: Translations = {
   },
   'menu.tabs_panel.sel_all': {
     en: 'Select tabs',
-    de: 'Alle Tabs auswählen',
+    de: 'Tabs auswählen',
     hu: 'Minden lap kijelölése',
     pl: 'Zaznacz wszystkie karty',
     ru: 'Выделить вкладки',

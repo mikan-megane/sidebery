@@ -85,26 +85,31 @@
   },
   "KbOpenPanelConfig": {
     "en": "Open panel config",
+    "de": "Panel-Einstellungen öffnen",
     "zh_CN": "打开面板配置",
     "zh_TW": "開啟面板設定"
   },
   "KbCopyTitle": {
     "en": "Copy titles of selected tabs/bookmarks or active tab",
+    "de": "Kopiere Titel der ausgewählten Tabs/Lesezeichen oder des aktiven Tabs",
     "zh_CN": "复制选定标签页/书签或活动标签页的标题",
     "zh_TW": "複製選定分頁/書籤或當前分頁的標題"
   },
   "KbCopyUrl": {
     "en": "Copy URLs of selected tabs/bookmarks or active tab",
+    "de": "Kopiere URL(s) der ausgewählten Tabs/Lesezeichen oder des aktiven Tabs",
     "zh_CN": "复制选定标签页/书签或活动标签页的网址",
     "zh_TW": "複製選定分頁/書籤或當前分頁的網址"
   },
   "KbOpenBookmarksSubPanel": {
     "en": "Open bookmarks sub-panel",
+    "de": "Öffne Lesezeichen Unter-Panel",
     "zh_CN": "打开书签子面板",
     "zh_TW": "開啟書籤子面板"
   },
   "KbOpenSyncPopup": {
     "en": "Open sync popup",
+    "de": "Öffne Synchronisationsdialog",
     "zh_CN": "打开同步弹出窗口",
     "zh_TW": "彈出同步視窗"
   },
@@ -230,6 +235,7 @@
   },
   "KbSwitchToPrevPanel": {
     "en": "Switch to previously active panel",
+    "de": "Zum zuletzt aktiven Panel wechseln",
     "zh_CN": "切换到之前活动的面板",
     "zh_TW": "切換到先前面板"
   },
@@ -255,7 +261,7 @@
   },
   "KbDuplicateTabs": {
     "en": "Duplicate selected (or active) tabs",
-    "de": "Ausgewählte (oder aktive) Tabs duplizieren",
+    "de": "Ausgewählte (oder aktiven) Tab(s) duplizieren",
     "hu": "A kijelölt (vagy aktív) panel megkettőzése",
     "pl": "Zduplikuj zaznaczone (lub aktywne) karty",
     "ru": "Дублировать выбранные (или активные) вкладки",
@@ -265,7 +271,7 @@
   },
   "KbPinTabs": {
     "en": "Pin/Unpin selected (or active) tabs",
-    "de": "Ausgewählte (oder aktive) Tabs anheften/lösen",
+    "de": "Ausgewählte (oder aktiven) Tab(s) anheften/lösen",
     "hu": "A kijelölt (vagy aktív) lapok rögzítése/feloldása",
     "pl": "Przypnij/Odepnij zaznaczone (lub aktywne) karty",
     "ru": "Закрепить/Открепить выбранные (или активные) вкладки",
@@ -275,7 +281,7 @@
   },
   "KbGroupTabs": {
     "en": "Group selected (or active) tabs",
-    "de": "Ausgewählte (oder aktive) Tabs gruppieren",
+    "de": "Ausgewählte (oder aktiven) Tab(s) gruppieren",
     "hu": "A kijelölt (vagy aktív) lapok csoportosítása",
     "pl": "Grupuj zaznaczone (lub aktywne) karty",
     "ru": "Сгруппировать выбранные (или активные) вкладки",
@@ -285,7 +291,7 @@
   },
   "KbGroupTabsAct": {
     "en": "Group selected (or active) tabs and switch to group page",
-    "de": "Ausgewählte (oder aktive) Tabs gruppieren und zur Gruppenseite wechseln",
+    "de": "Ausgewählte (oder aktiven) Tab(s) gruppieren und zur Gruppenseite wechseln",
     "hu": "A kijelölt (vagy aktív) lapok csoportosítása és ugrás a csoportoldalra",
     "pl": "Grupuj zaznaczone (lub aktywne) karty i przełącz na stronę grupy",
     "ru": "Сгруппировать выбранные (или активные) вкладки и переключится на групповую страницу",
@@ -305,6 +311,7 @@
   },
   "KbEditTitle": {
     "en": "Edit title",
+    "de": "Titel bearbeiten",
     "zh_CN": "编辑标题",
     "zh_TW": "編輯標題"
   },
@@ -589,7 +596,7 @@
   },
   "KbActPrevActTab": {
     "en": "Active tabs history: Back",
-    "de": "Aktive Tabs Chronik: Zurück",
+    "de": "Tab-Aktivierungschronik: Zurück",
     "hu": "Aktív lapok előzménye: vissza",
     "pl": "Aktywuj historię kart: Wstecz",
     "ru": "История активных вкладок: Назад",
@@ -599,7 +606,7 @@
   },
   "KbActNextActTab": {
     "en": "Active tabs history: Forward",
-    "de": "Aktive Tabs Chronik: Vor",
+    "de": "Tab-Aktivierungschronik: Vor",
     "hu": "Aktív lapok előzménye: előre",
     "pl": "Aktywuj historię kart: Naprzód",
     "ru": "История активных вкладок: Вперед",
@@ -609,7 +616,7 @@
   },
   "KbActPanelPrevActTab": {
     "en": "Active tabs history of panel: Back",
-    "de": "Aktive Tabs Chronik des Panels: Zurück",
+    "de": "Tab-Aktivierungschronik des aktiven Panels: Zurück",
     "hu": "A panel aktív lapjainak előzménye: vissza",
     "pl": "Aktywuj historię kart w panelu: Wstecz",
     "ru": "История активных вкладок панели: Назад",
@@ -619,7 +626,7 @@
   },
   "KbActPanelNextActTab": {
     "en": "Active tabs history of panel: Forward",
-    "de": "Aktive Tabs Chronik des Panels: Vor",
+    "de": "Tab-Aktivierungschronik des aktiven Panels: Vor",
     "hu": "A panel aktív lapjainak előzménye: előre",
     "pl": "Aktywuj historię kart w panelu: Naprzód",
     "ru": "История активных вкладок панели: Вперед",
