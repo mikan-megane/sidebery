@@ -907,7 +907,7 @@ function dropEventWasConsumed(): void {
   clearTimeout(dropEventWasConsumedTimeout)
   dropEventWasConsumedTimeout = setTimeout(() => {
     DnD.dropEventConsumed = false
-  }, 1500)
+  }, 2000)
 }
 
 export function isDropEventConsumed(): boolean {
