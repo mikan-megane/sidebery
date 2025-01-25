@@ -1719,7 +1719,10 @@ export function getIndexForNewTabsPanel(append?: boolean): number {
   let index = -1
 
   if (append) {
-    index = Sidebar.reactive.nav.findLastIndex(id => !!Sidebar.panelsById[id])
+    index = Sidebar.reactive.nav.findLastIndex(id => {
+      const p = Sidebar.panelsById[id]
+      return !!(Utils.isTabsPanel(p) || Utils.isBookmarksPanel(p))
+    })
     index++
     return index
   }
