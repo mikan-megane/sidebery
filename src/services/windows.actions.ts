@@ -282,13 +282,6 @@ export async function createWithTabs(
 
   lockedWindowsTabs[window.id] = { move: moveTabs, cache }
 
-  setTimeout(() => {
-    if (window.id !== undefined) {
-      Logs.info('Windows.createWithTabs: Delete locked window tabs')
-      delete lockedWindowsTabs[window.id]
-    }
-  }, 5000)
-
   Logs.info('Windows.createWithTabs: Done')
 
   return true
