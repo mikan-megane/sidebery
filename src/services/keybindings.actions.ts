@@ -660,7 +660,14 @@ function onKeySelect(dir: number): void {
 function onKeySelectExpand(dir: number): void {
   if (!dir) return
   Sidebar.updateBounds()
-  const activePanel = Sidebar.panelsById[Sidebar.activePanelId]
+  let activePanel = Sidebar.panelsById[Sidebar.activePanelId]
+  if (
+    Sidebar.subPanelActive &&
+    Sidebar.subPanelType === SubPanelType.Bookmarks &&
+    Sidebar.subPanels.bookmarks
+  ) {
+    activePanel = Sidebar.subPanels.bookmarks
+  }
   if (!activePanel) return
   if (!activePanel.bounds?.length) return
 
