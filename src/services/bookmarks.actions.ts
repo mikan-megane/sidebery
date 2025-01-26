@@ -380,6 +380,8 @@ export async function open(
         if (isIndirectTarget) info.parentId = node.parentId
         if (!info.url && info.title && info.title.length > 20) {
           Bookmarks.extractTabInfoFromTitle(info, true)
+        } else {
+          Bookmarks.extractTabInfoFromTitle(info)
         }
 
         // Set url for parent node
@@ -407,8 +409,19 @@ export async function open(
   }
 
   if (ids.length === 1 && firstBookmark?.type === 'bookmark') {
+    const info: ItemInfo = {
+      id: firstBookmark.id,
+      url: firstBookmark.url,
+      title: firstBookmark.title,
+    }
+    Bookmarks.extractTabInfoFromTitle(info)
+
     if (useActiveTab) {
-      browser.tabs.update({ url: Utils.normalizeUrl(firstBookmark.url, firstBookmark.title) })
+      // TODO: undo
+      browser.tabs.update({ url: Utils.normalizeUrl(info.url, info.title) })
+      const activeTab = Tabs.byId[Tabs.activeId]
+      if (info.customColor) Tabs.setCustomColor([Tabs.activeId], info.customColor)
+      else if (activeTab && activeTab.customColor) Tabs.setCustomColor([Tabs.activeId], 'toolbar')
       if (Settings.state.autoRemoveOther && firstBookmark.parentId === BKM_OTHER_ID) {
         Bookmarks.removeBookmarks([firstBookmark.id])
       }
@@ -419,7 +432,7 @@ export async function open(
       toRemove.push(firstBookmark.id)
     }
 
-    toOpen.push({ id: firstBookmark.id, url: firstBookmark.url, title: firstBookmark.title })
+    toOpen.push(info)
   } else {
     walker(Bookmarks.reactive.tree)
   }
