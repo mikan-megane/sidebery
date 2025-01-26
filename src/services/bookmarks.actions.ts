@@ -1510,3 +1510,21 @@ export async function prepareBookmarks() {
   if (!Bookmarks.reactive.tree.length) await Bookmarks.load()
   return true
 }
+
+const flashAnimationTimeouts = new Map<ID, number>()
+
+export function triggerFlashAnimation(panelId: ID, bookmarkId: ID) {
+  const elId = 'bookmark' + panelId + bookmarkId
+  const el = document.getElementById(elId)
+  if (!el) return
+
+  el.classList.add('-middle-click')
+  clearTimeout(flashAnimationTimeouts.get(bookmarkId))
+  flashAnimationTimeouts.set(
+    bookmarkId,
+    setTimeout(() => {
+      el?.classList.remove('-middle-click')
+      flashAnimationTimeouts.delete(bookmarkId)
+    }, 300)
+  )
+}

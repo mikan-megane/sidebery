@@ -464,43 +464,54 @@ function onKeyActivate(): void {
 
   // Bookmarks
   else if (Selection.isBookmarks()) {
-    const targetId = Selection.getFirst()
-    const target = Bookmarks.reactive.byId[targetId]
-    if (!target) return
+    const ids = Selection.get()
+    if (ids.length === 1) {
+      const target = Bookmarks.reactive.byId[ids[0]]
+      if (!target) return
 
-    const actPanel = Sidebar.panelsById[Sidebar.activePanelId]
-    if (!actPanel) return
-
-    if (target.type === 'folder') {
-      const isExpanded = Bookmarks.reactive.expanded[Sidebar.activePanelId]?.[target.id]
-      if (isExpanded) Bookmarks.foldBookmark(target.id, Sidebar.activePanelId)
-      else Bookmarks.expandBookmark(target.id, Sidebar.activePanelId)
-    }
-
-    if (target.type === 'bookmark') {
-      if (Settings.state.activateOpenBookmarkTab && target.isOpen) {
-        const tab = Tabs.list.find(t => t.url === target.url)
-        if (tab) {
-          browser.tabs.update(tab.id, { active: true })
-          return
-        }
+      if (target.type === 'folder') {
+        const isExpanded = Bookmarks.reactive.expanded[Sidebar.activePanelId]?.[target.id]
+        if (isExpanded) Bookmarks.foldBookmark(target.id, Sidebar.activePanelId)
+        else Bookmarks.expandBookmark(target.id, Sidebar.activePanelId)
+        return
       }
 
-      // Check if new tab is needed
-      let newTabNeededInActPanel = false
-      if (Utils.isTabsPanel(actPanel) && !newTabNeededInActPanel) {
-        const actTab = Tabs.byId[Tabs.activeId]
-        if (actTab) {
-          const inPanel = Settings.state.pinnedTabsPosition === 'panel'
-          newTabNeededInActPanel = actTab.panelId !== actPanel.id || (actTab.pinned && !inPanel)
-        }
-      }
+      if (target.type === 'bookmark') {
+        const actPanel = Sidebar.panelsById[Sidebar.activePanelId]
+        if (!actPanel) return
 
-      const conf = Bookmarks.getMouseOpeningConf(0)
-      const useActiveTab = !newTabNeededInActPanel && conf.useActiveTab
-      const activateFirstTab = newTabNeededInActPanel || conf.activateFirstTab
-      Bookmarks.open([targetId], conf.dst, useActiveTab, activateFirstTab)
+        if (Settings.state.activateOpenBookmarkTab && target.isOpen) {
+          const tab = Tabs.list.find(t => t.url === target.url)
+          if (tab) {
+            browser.tabs.update(tab.id, { active: true })
+            return
+          }
+        }
+
+        // Check if new tab is needed
+        let newTabNeededInActPanel = false
+        if (Utils.isTabsPanel(actPanel) && !newTabNeededInActPanel) {
+          const actTab = Tabs.byId[Tabs.activeId]
+          if (actTab) {
+            const inPanel = Settings.state.pinnedTabsPosition === 'panel'
+            newTabNeededInActPanel = actTab.panelId !== actPanel.id || (actTab.pinned && !inPanel)
+          }
+        }
+
+        const conf = Bookmarks.getMouseOpeningConf(0)
+        const useActiveTab = !newTabNeededInActPanel && conf.useActiveTab
+        const activateFirstTab = newTabNeededInActPanel || conf.activateFirstTab
+        Bookmarks.open(ids, conf.dst, useActiveTab, activateFirstTab)
+      }
+    } else {
+      const panelId = Sidebar.getRecentTabsPanelId()
+      const panel = Sidebar.panelsById[panelId]
+      if (!Utils.isTabsPanel(panel)) return
+      const dst = { panelId, index: Tabs.getIndexForNewTab(panel) }
+      Bookmarks.open(ids, dst, false, false)
     }
+
+    ids.forEach(id => Bookmarks.triggerFlashAnimation(Sidebar.activePanelId, id))
   }
 }
 
