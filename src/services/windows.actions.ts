@@ -122,19 +122,23 @@ export function closeWindowsPopup(): void {
 
 const lockedWindowsTabs: Record<ID, boolean | { move: boolean; cache: TabCache[] }> = {}
 export function isWindowTabsLocked(id: ID): boolean | { move: boolean; cache: TabCache[] } {
-  Logs.info('Windows.isWindowTabsLocked', id, typeof lockedWindowsTabs[id])
   const locked = lockedWindowsTabs[id]
+  Logs.info('Windows.isWindowTabsLocked', id, typeof locked, globalTabsLockCounter)
   if (locked && locked !== true) {
     delete lockedWindowsTabs[id]
   }
-  return locked ?? false
+  return locked ?? globalTabsLockCounter > 0
 }
+
+let globalTabsLockCounter = 0
 
 export async function createWithTabs(
   tabsInfo: ItemInfo[],
   conf?: browser.windows.CreateData
 ): Promise<boolean> {
   Logs.info('Windows.createWithTabs', tabsInfo.length)
+
+  globalTabsLockCounter++
 
   if (!conf) conf = {}
 
@@ -172,8 +176,10 @@ export async function createWithTabs(
       }
     }
     Logs.err('Windows: Cannot create window with tabs', err)
+    globalTabsLockCounter--
     return false
   }
+  globalTabsLockCounter--
   if (!window.id || !window.tabs?.length) return true
   lockedWindowsTabs[window.id] = true
 
