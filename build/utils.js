@@ -94,14 +94,14 @@ export function getTSConfig() {
   return convertResult.options
 }
 
-export function log(msg) {
-  console.log(`${getTime()} ${msg}`)
+export function log(...args) {
+  console.log(`${getTime()}`, ...args)
 }
 
-export function logOk(msg) {
-  console.log(`${getTime()} ${`\x1b[32m${msg}\x1b[0m`}`)
+export function logOk(msg, ...args) {
+  console.log(`${getTime()} ${`\x1b[32m${msg}\x1b[0m`}`, ...args)
 }
 
-export function logErr(msg) {
-  console.log(`${getTime()} ${`\x1b[31m${msg}\x1b[0m`}`)
+export function logErr(msg, ...args) {
+  console.log(`${getTime()} ${`\x1b[31m${msg}\x1b[0m`}`, ...args)
 }
