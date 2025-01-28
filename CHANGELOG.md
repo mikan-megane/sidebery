@@ -2,7 +2,33 @@
 
 ## Unreleased
 
-...
+### Fixed
+
+- Windows: lock tabs init on early steps of createWithTabs ([#1910](https://github.com/mbnuqw/sidebery/issues/1910))  
+  This should prevent some cases of losing tabs structure on opening
+  window by sidebery e.g. opening snapshot window or moving tabs to new window
+- Search: minimum search query length in CJK should be 1. (by [@llc0930](https://github.com/llc0930): [#1985](https://github.com/mbnuqw/sidebery/issues/1985))  
+  When the query string length is 1, check whether it is a CJK character.
+- Keybindings: open all selected bookmarks (resolves [#1980](https://github.com/mbnuqw/sidebery/issues/1980))  
+- Keybindings: expand selection range in bookmark sub-panel too
+- Bookmarks: preserve customColor on opening bookmarks
+- Drag and drop: insert new tab panel after the last tab/bkm panel
+- Drag and drop: dropping tabs on unloaded bookmarks [sub-]panel
+- Drag and drop: increase delay before resetting dropEventConsumed flag  
+  This should decrease count of false-positive moving tabs to the
+  new window, (when browser is too busy and time between drop and dragend
+  events is more than 1500ms).
+- Tabs: do not allow moving all tabs of window to the new one
+- Drag and drop: increase min drag and drop duration before opening new window ([#1947](https://github.com/mbnuqw/sidebery/issues/1947))  
+  this should fix/reduce cases of false positive opening of a new window
+  when sidebery doesn't get the ondrop event despite the cursor was over
+  sidebar
+- Drag and drop: increase deadline for requesting drop statuses from other sidebars
+
+### Localization
+
+- de: typos, fixes, new features (by [@ChilledMoth](https://github.com/ChilledMoth): [#1981](https://github.com/mbnuqw/sidebery/issues/1981))
+
 
 ## 5.3.1 - 2025.01.22
 
