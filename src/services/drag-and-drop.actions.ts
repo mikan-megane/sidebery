@@ -994,6 +994,15 @@ export async function onDrop(e: DragEvent): Promise<void> {
     applyLvlOffset(DnD.reactive.pointerLvl, dst)
   }
 
+  // Stop if dst parent is included in dragged items
+  if (dst.parentId !== -1 && items.some(i => i.id === dst.parentId)) {
+    resetDragPointer()
+    DnD.resetOther()
+    DnD.reset()
+    Selection.resetSelection()
+    return
+  }
+
   // From new tab bar to tabs
   if (fromNewTabBar && toTabs) {
     const item = items[0]
