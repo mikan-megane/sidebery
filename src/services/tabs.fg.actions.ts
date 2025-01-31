@@ -262,28 +262,37 @@ async function restoreTabsState(ignoreLockedTabs?: boolean): Promise<void> {
   const ts = performance.now()
   Logs.info('Tabs.restoreTabsState')
 
+  let isWindowTabsLocked
+  if (!ignoreLockedTabs) {
+    try {
+      isWindowTabsLocked = await IPC.bg('isWindowTabsLocked', Windows.id)
+    } catch {
+      isWindowTabsLocked = true
+    }
+  }
+
+  // Check if tabs are locked (sidebery is opening this window)
+  if (isWindowTabsLocked === true) {
+    Logs.info('Tabs.restoreTabsState: window tabs are locked (still opening?)')
+    throw Err.TabsLocked
+  }
+
+  // Clear deferredEventHandling
+  Tabs.deferredEventHandling = []
+
   const results = await Promise.allSettled([
     browser.tabs.query({ windowId: browser.windows.WINDOW_ID_CURRENT }),
     browser.storage.local.get<Stored>('tabsDataCache'),
-    IPC.bg('isWindowTabsLocked', Windows.id),
   ])
   const nativeTabs = Utils.settledOr(results[0], [])
   const storage = Utils.settledOr(results[1], {})
-  const isWindowTabsLocked = Utils.settledOr(results[2], true)
   let tabsWasMoved = false
 
-  // Check if tabs are locked right now
-  if (isWindowTabsLocked && !ignoreLockedTabs) {
-    if (isWindowTabsLocked === true) {
-      Logs.info('Tabs.restoreTabsState: window tabs are locked (still opening?)')
-      throw Err.TabsLocked
-    }
+  // Check if tabs were locked (sidebery opened this window)
+  if (isWindowTabsLocked) {
     Logs.info('Tabs.restoreTabsState: window tabs were locked')
     storage.tabsDataCache = [isWindowTabsLocked.cache]
     tabsWasMoved = isWindowTabsLocked.move
-
-    // Clear deferredEventHandling
-    Tabs.deferredEventHandling = []
   }
 
   let tabs: Tab[] | undefined
