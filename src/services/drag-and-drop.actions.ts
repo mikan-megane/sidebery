@@ -211,8 +211,10 @@ function getDstInfo(): DstPlaceInfo {
   if (DnD.reactive.dstPin) info.pinned = true
   else if (toTabs) info.pinned = false
 
-  const dstPanel = getDstPanel(info.panelId ?? NOID)
+  const dstPanel = getDstPanel(DnD.reactive.dstType, info.panelId ?? NOID)
   if (!dstPanel) return info
+
+  info.panelId = dstPanel.id
 
   if (Utils.isTabsPanel(dstPanel)) {
     const destContainer = Containers.reactive.byId[dstPanel.dropTabCtx ?? '']
@@ -226,15 +228,19 @@ function getDstInfo(): DstPlaceInfo {
   return info
 }
 
-function getDstPanel(dstPanelId: ID): Panel | undefined {
+function getDstPanel(dstType: DropType, dstPanelId: ID): Panel | undefined {
   let dstPanel
   if (dstPanelId === Sidebar.subPanels.bookmarks?.id) dstPanel = Sidebar.subPanels.bookmarks
   else dstPanel = Sidebar.panelsById[dstPanelId]
+  if (!dstPanel && dstType === DropType.Tabs) {
+    const actPanel = Sidebar.panelsById[Sidebar.activePanelId]
+    if (Utils.isTabsPanel(actPanel)) dstPanel = actPanel
+  }
   return dstPanel
 }
 
 function getDstIndexInside(dstType: DropType, dst: DstPlaceInfo): number {
-  const dstPanel = getDstPanel(dst.panelId ?? NOID)
+  const dstPanel = getDstPanel(dstType, dst.panelId ?? NOID)
   if (!dstPanel) return 0
 
   // To the last position in branch/panel
@@ -256,7 +262,7 @@ function getDstIndexInside(dstType: DropType, dst: DstPlaceInfo): number {
     dstType === DropType.BookmarksPanel ||
     dstType === DropType.BookmarksSubPanelBtn
   ) {
-    const parent = Bookmarks.reactive.byId[DnD.reactive.dstParentId]
+    const parent = Bookmarks.reactive.byId[dst.parentId ?? NOID]
     return parent?.children?.length || 0
   }
   return 0
@@ -291,7 +297,7 @@ function applyLvlOffset(lvl: number, dst: DstPlaceInfo): void {
   if (Sidebar.subPanelActive && Sidebar.subPanelType === SubPanelType.Bookmarks) {
     panel = Sidebar.subPanels.bookmarks
   } else {
-    panel = Sidebar.panelsById[DnD.reactive.dstPanelId]
+    panel = Sidebar.panelsById[dst.panelId ?? NOID]
   }
   if (!panel) return
   let parentBounds = panel.bounds?.find(b => b.id === dst.parentId)
@@ -315,7 +321,7 @@ function applyLvlOffset(lvl: number, dst: DstPlaceInfo): void {
       }
     } else {
       dst.parentId = parentBounds.id
-      if (prevParentBounds && DnD.reactive.dstPanelId === 'bookmarks') {
+      if (prevParentBounds && Utils.isBookmarksPanel(panel)) {
         dst.index = prevParentBounds.index + 1
       }
     }
@@ -1041,34 +1047,29 @@ export async function onDrop(e: DragEvent): Promise<void> {
   // Get index and set folder when dropping to bookmarks panel
   let setTabsPanelFolder = false
   if (toBookmarksPanel && !fromTabsPanel && !fromBookmarksPanel && !fromNav) {
-    const dstPanel = getDstPanel(dst.panelId ?? NOID)
+    const dstPanel = getDstPanel(dstType, dst.panelId ?? NOID)
     if (!dstPanel) return
 
-    dst.index = getDstIndexInside(dstType, dstPanel)
     dst.inside = true
 
-    const panel = Sidebar.panelsById[dst.panelId ?? NOID]
-
-    if (Utils.isBookmarksPanel(panel)) {
-      const existedFolder = Bookmarks.reactive.byId[panel.rootId]
-      dst.parentId = existedFolder ? panel.rootId : BKM_OTHER_ID
-    } else if (Utils.isTabsPanel(panel)) {
+    if (Utils.isBookmarksPanel(dstPanel)) {
+      const existedFolder = Bookmarks.reactive.byId[dstPanel.rootId]
+      dst.parentId = existedFolder ? dstPanel.rootId : BKM_OTHER_ID
+      dst.index = getDstIndexInside(dstType, dst)
+    } else if (Utils.isTabsPanel(dstPanel)) {
       let parentId
       if (
-        panel.bookmarksFolderId !== NOID &&
-        panel.bookmarksFolderId !== BKM_ROOT_ID &&
-        Bookmarks.reactive.byId[panel.bookmarksFolderId]
+        dstPanel.bookmarksFolderId !== NOID &&
+        dstPanel.bookmarksFolderId !== BKM_ROOT_ID &&
+        Bookmarks.reactive.byId[dstPanel.bookmarksFolderId]
       ) {
-        parentId = panel.bookmarksFolderId
+        parentId = dstPanel.bookmarksFolderId
       } else {
         parentId = BKM_OTHER_ID
         setTabsPanelFolder = true
       }
       dst.parentId = parentId
-
-      const parentFolder = Bookmarks.reactive.byId[parentId ?? NOID]
-      if (parentFolder?.children?.length) dst.index = parentFolder.children.length
-      else dst.index = 0
+      dst.index = getDstIndexInside(dstType, dst)
     }
   }
 
