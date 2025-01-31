@@ -299,6 +299,7 @@ export function connectTo(
       Logs.info(`${dbgPrefix} Retrying connection...`, connection.reconnectCount)
       connectTo(dstType, dstWinId)
     } else {
+      Logs.warn(`${dbgPrefix} Unable to reconnect...`, connection.reconnectCount)
       removeConnection(dstType, id)
       if (connection.pendingRequests.length) {
         connection.pendingRequests.forEach(pending => pending.err('No connection confirmation'))
@@ -761,6 +762,8 @@ function onConnect(port: browser.runtime.Port) {
 
   // Handle disconnect
   const disconnectListener = (port: browser.runtime.Port) => {
+    Logs.info(dbgPrefix, 'Disconnected!', port.name, port.error?.message)
+
     port.onMessage.removeListener(postListener)
     port.onDisconnect.removeListener(disconnectListener)
 
