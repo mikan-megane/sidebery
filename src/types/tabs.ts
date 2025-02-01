@@ -35,6 +35,7 @@ export interface Tab extends NativeTab {
   moving?: boolean
   preventAutoReopening?: boolean
   previewImg?: string
+  removing?: boolean
 
   reactive: ReactiveTabProps
   sessionData?: TabSessionData
