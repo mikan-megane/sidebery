@@ -65,7 +65,11 @@ async function onContainerRemovedFg(info: browser.contextualIdentities.ChangeInf
 
   // Close tabs
   const orphanTabs = Tabs.list.filter(t => t.cookieStoreId === id)
-  Tabs.removingTabs = orphanTabs.map(t => t.id)
+  Tabs.removingTabs = orphanTabs.map(t => {
+    const tab = Tabs.byId[t.id]
+    if (tab) tab.removing = true
+    return t.id
+  })
   await browser.tabs.remove([...Tabs.removingTabs])
 }
 

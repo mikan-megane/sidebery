@@ -290,16 +290,21 @@ export async function reopen(
   const result = await open(tabsInfo, dst, idsMap)
   if (!result) return Logs.err('Tabs: Cannot reopen tabs')
 
+  // Get ids and set removing flags
+  const ids = tabsInfo.map(t => {
+    const tab = Tabs.byId[t.id]
+    if (tab) tab.removing = true
+    return t.id
+  })
+
   // Update succession on reopening in another window
-  const ids = tabsInfo.map(ti => ti.id)
   if (dst.windowId !== undefined && dst.windowId !== Windows.id && ids.includes(Tabs.activeId)) {
-    Tabs.updateSuccessionDebounced(0, ids)
+    Tabs.updateSuccessionDebounced(0)
   }
 
   // Remove source tabs
-  const toRemove = tabsInfo.map(t => t.id)
-  Tabs.removingTabs = [...toRemove]
-  await browser.tabs.remove(toRemove)
+  Tabs.removingTabs = [...ids]
+  await browser.tabs.remove(ids)
 
   // Fix tree
   let treeUpdateNeeded = false
