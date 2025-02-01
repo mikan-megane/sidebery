@@ -1099,7 +1099,7 @@ function onTabRemoved(tabId: ID, info: browser.tabs.RemoveInfo, detached?: boole
         else if (removedTabInfo) removedTabInfo.children = [t.id]
       }
 
-      const willBeRemoved = Tabs.removingTabs.includes(t.id)
+      const willBeRemoved = t.removing
       if (!willBeRemoved) {
         const shouldBeRemoved =
           (Settings.state.rmChildTabs === 'folded' && tab.folded && !detached && !tab.reopening) ||

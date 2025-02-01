@@ -2127,8 +2127,6 @@ export function findSuccessorTab(tab: Tab, exclude?: readonly ID[]): Tab | undef
   const dirPrev = Settings.activateAfterClosingPrev
   const stayInPanel = Settings.state.activateAfterClosingStayInPanel
 
-  if (Tabs.removingTabs && !exclude) exclude = Tabs.removingTabs
-
   if (tab.pinned && (dirNext || dirPrev)) {
     let discardedFallback: Tab | undefined
     const pinInPanels = Settings.state.pinnedTabsPosition === 'panel'
