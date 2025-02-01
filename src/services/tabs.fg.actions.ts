@@ -2144,7 +2144,7 @@ export function findSuccessorTab(tab: Tab, exclude?: readonly ID[]): Tab | undef
     if (!target) {
       for (let foundTab, i = tab.index + dirDir; (foundTab = Tabs.list[i]); i += dirDir) {
         if (!foundTab?.pinned) break
-
+        if (foundTab.removing) continue
         if (exclude && exclude.includes(foundTab.id)) continue
 
         // Skip discarded tab
@@ -2160,7 +2160,7 @@ export function findSuccessorTab(tab: Tab, exclude?: readonly ID[]): Tab | undef
     if (!target) {
       for (let foundTab, i = tab.index + opDir; (foundTab = Tabs.list[i]); i += opDir) {
         if (!foundTab?.pinned) break
-
+        if (foundTab.removing) continue
         if (exclude && exclude.includes(foundTab.id)) continue
 
         // Skip discarded tab
@@ -2179,6 +2179,7 @@ export function findSuccessorTab(tab: Tab, exclude?: readonly ID[]): Tab | undef
       else panel = Sidebar.panelsById[Sidebar.activePanelId]
       if (Utils.isTabsPanel(panel)) {
         for (const t of panel.tabs) {
+          if (t.removing) continue
           if (exclude && exclude.includes(t.id)) continue
 
           // Skip discarded tab
@@ -2207,6 +2208,7 @@ export function findSuccessorTab(tab: Tab, exclude?: readonly ID[]): Tab | undef
     // Search in global scope
     if (!target) {
       for (const t of Tabs.list) {
+        if (t.removing) continue
         if (exclude && exclude.includes(t.id)) continue
 
         // Skip discarded tab
@@ -2284,6 +2286,7 @@ export function findSuccessorTab(tab: Tab, exclude?: readonly ID[]): Tab | undef
                 if (!discardedFallback) discardedFallback = Tabs.byId[pTab.id]
                 continue
               }
+              if (pTab.removing) continue
               if (exclude && exclude.includes(pTab.id)) continue
               target = Tabs.byId[pTab.id]
               break mainLoop
@@ -2333,6 +2336,9 @@ export function findSuccessorTab(tab: Tab, exclude?: readonly ID[]): Tab | undef
     // Increment/Decrement indexes
     if (dir === 1) downI++
     else upI--
+
+    // Next tab is in removing process
+    if (foundTab.removing) continue
 
     // Next tab excluded
     if (exclude && exclude.includes(foundTab.id)) continue
