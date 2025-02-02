@@ -30,9 +30,31 @@ export async function load(): Promise<void> {
   if (!Info.isBg) return loadInFg()
 }
 
+let loading = false
+let onLoaded: (() => void)[] = []
+function finishLoading() {
+  loading = false
+  onLoaded.forEach(fn => fn())
+  onLoaded = []
+}
+
 async function loadInFg(): Promise<void> {
-  const bookmarks = (await browser.bookmarks.getTree()) as Bookmark[]
-  if (!bookmarks[0].children) return
+  // Check if the process is already started
+  if (loading) return new Promise(ok => onLoaded.push(ok))
+
+  loading = true
+
+  let bookmarks
+  try {
+    bookmarks = (await browser.bookmarks.getTree()) as Bookmark[]
+  } catch {
+    finishLoading()
+    return
+  }
+  if (!bookmarks[0].children) {
+    finishLoading()
+    return
+  }
 
   // Normalize objects before vue
   Bookmarks.reactive.byId = {}
@@ -77,6 +99,8 @@ async function loadInFg(): Promise<void> {
   if (DnD.reactive.isStarted && Utils.isBookmarksPanel(activePanel)) {
     Sidebar.updateBounds()
   }
+
+  finishLoading()
 }
 
 export async function restoreTree(): Promise<void> {
