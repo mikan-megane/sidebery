@@ -3,7 +3,8 @@ import * as Logs from 'src/services/logs'
 import * as IPC from 'src/services/ipc'
 import * as Utils from 'src/utils'
 import { Store } from 'src/services/storage'
-import { MAX_COUNT_LIMIT, SHARD_SIZE, loadFaviconsData, resizeFavicon } from './favicons'
+import { MAX_COUNT_LIMIT, MAX_IMG_SIZE, SHARD_SIZE } from './favicons'
+import { loadFaviconsData, resizeFavicon } from './favicons'
 
 export * from './favicons'
 
@@ -99,7 +100,7 @@ function getIndexToReplace(): number {
 const saveFaviconTimeouts: Record<string, number | undefined> = {}
 export function saveFavicon(url: string, base64icon: string): void {
   if (!url || !base64icon) return
-  if (base64icon.length > 234567) return
+  if (base64icon.length > MAX_IMG_SIZE) return
   if (url.startsWith('about')) return
 
   clearTimeout(saveFaviconTimeouts[url])
