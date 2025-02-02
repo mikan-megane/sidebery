@@ -735,9 +735,11 @@ export function setSvgImageSize(base64img: string, w: number, h: number): string
 export function svgImageContainsCssMediaQueries(base64img: string): boolean {
   if (!base64img.startsWith('data:image/svg+xml;base64,')) return false
 
+  const base64 = base64img.slice(26)
+
   let svgText
   try {
-    svgText = atob(base64img.split(',')[1])
+    svgText = atob(base64)
   } catch {
     return false
   }
