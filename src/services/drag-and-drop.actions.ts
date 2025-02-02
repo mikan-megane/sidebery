@@ -970,21 +970,22 @@ export async function onDrop(e: DragEvent): Promise<void> {
   }
 
   const srcType = DnD.srcType
-  const dstType = DnD.reactive.dstType
+  let dstType = DnD.reactive.dstType
   const fromTabs = srcType === DragType.Tabs
-  const toTabs = dstType === DropType.Tabs
+  let toTabs = dstType === DropType.Tabs
   const fromTabsPanel = srcType === DragType.TabsPanel
   let toTabsPanel = dstType === DropType.TabsPanel
   const fromBookmarks = srcType === DragType.Bookmarks
   const toBookmarks = dstType === DropType.Bookmarks
   const fromBookmarksPanel = srcType === DragType.BookmarksPanel
-  const toBookmarksPanel =
+  let toBookmarksPanel =
     dstType === DropType.BookmarksPanel || dstType === DropType.BookmarksSubPanelBtn
   const toSync = dstType === DropType.SyncSubPanelBtn || dstType === DropType.SyncPanel
   const fromNav = srcType === DragType.NavItem
-  const toNav = dstType === DropType.NavItem
+  let toNav = dstType === DropType.NavItem
   const fromNewTabBar = srcType === DragType.NewTab
   const fromHistory = srcType === DragType.History
+  const bookmarksWasUnloaded = !Bookmarks.reactive.tree.length
 
   const items = DnD.items
   const src = getSrcInfo()
@@ -992,7 +993,10 @@ export async function onDrop(e: DragEvent): Promise<void> {
 
   if (Sidebar.reactive.hiddenPanelsPopup) Sidebar.closeHiddenPanelsPopup()
   if ((toTabs && !DnD.reactive.dstPin) || toBookmarks) {
-    if (Sidebar.subPanelActive && Sidebar.subPanels.bookmarks) {
+    if (toTabs && Sidebar.subPanelActive && Sidebar.subPanels.bookmarks) {
+      dstType = DropType.BookmarksPanel
+      toTabs = false
+      toBookmarksPanel = true
       dst.panelId = Sidebar.subPanels.bookmarks.id
     } else {
       dst.panelId = Sidebar.activePanelId
@@ -1028,6 +1032,8 @@ export async function onDrop(e: DragEvent): Promise<void> {
     Sidebar.recalcTabsPanels()
     dst.panelId = newTabPanel.id
     dst.index = newTabPanel.nextTabIndex
+    dstType = DropType.TabsPanel
+    toNav = false
     toTabsPanel = true
     tabsPanelsSaveNeeded = true
   }
@@ -1089,7 +1095,6 @@ export async function onDrop(e: DragEvent): Promise<void> {
     (fromTabsPanel && toBookmarks)
   ) {
     const panel = Sidebar.panelsById[dst.panelId ?? NOID]
-    const bookmarksWasUnloaded = !Bookmarks.reactive.tree.length
     const copyMode = DnD.dropMode === 'copy'
     const toRemove = Settings.state.dndMoveTabs && items.map(t => t.id)
 
@@ -1104,7 +1109,7 @@ export async function onDrop(e: DragEvent): Promise<void> {
       }
     }
 
-    // Recheck dst index
+    // Recheck dst index if bookmarks was unloaded
     if (dst.index === 0 && bookmarksWasUnloaded && toBookmarksPanel) {
       const parent = Bookmarks.reactive.byId[dst.parentId ?? NOID]
       if (parent?.children?.length) dst.index = parent.children.length
