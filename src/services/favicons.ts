@@ -103,7 +103,9 @@ export async function resizeFavicon(base64fav: string): Promise<string> {
   else return newBase64fav
 }
 
-export function getFavPlaceholder(url: string): string {
+export function getFavPlaceholder(url?: string): string {
+  if (!url) return '#icon_ff'
+
   if (url.startsWith('m')) {
     if (url.startsWith(GROUP_PATH, 52)) return '#icon_group'
     if (url.startsWith(URL_PATH, 52)) return '#icon_link_favicon'
