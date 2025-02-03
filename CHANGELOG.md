@@ -4,6 +4,11 @@
 
 ### Fixed
 
+- Notifications: hide notifications while dragging items
+- Skip favicon resize if it is a SVG containing a CSS media query (by [@capi1O](https://github.com/capi1O): [#1987](https://github.com/mbnuqw/sidebery/issues/1987)) (resolves [#1937](https://github.com/mbnuqw/sidebery/issues/1937))  
+- Tabs: check if tabs are locked by sidebery before retrieving them (on init)
+- Sidebar/bottom-bar: increase height of dnd-layer to window edge
+- Drag and drop: prevent dropping items on themselves  
 - Windows: lock tabs init on early steps of createWithTabs ([#1910](https://github.com/mbnuqw/sidebery/issues/1910))  
   This should prevent some cases of losing tabs structure on opening
   window by sidebery e.g. opening snapshot window or moving tabs to new window
