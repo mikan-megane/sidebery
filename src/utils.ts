@@ -591,8 +591,6 @@ export function normalizeUrl(url?: string, title?: string): string | undefined {
  */
 export function denormalizeUrl(url?: string): string | undefined {
   if (!url) return url
-  // Workaround for containered tabs
-  if (url.startsWith('about:blank#url')) return url.slice(15)
   // Unavailable URLs
   else if (url.startsWith('m') && URL_PAGE_RE.test(url)) {
     let data = url.slice(71)
@@ -601,7 +599,7 @@ export function denormalizeUrl(url?: string): string | undefined {
       const [url, _] = JSON.parse(data) as string[]
       return url
     } catch {
-      return data
+      return url
     }
   }
   // Ok
