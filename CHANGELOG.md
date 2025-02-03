@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+...
+
+## 5.3.2 - 2025.02.03
+
 ### Fixed
 
 - Notifications: hide notifications while dragging items
