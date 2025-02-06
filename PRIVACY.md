@@ -1,6 +1,7 @@
 # Privacy Policy
 - Sidebery does not engage in ad targeting, data collection, or other activities that could compromise your privacy.
 - By default, all data is stored locally on your machine.
+- Sidebery sends data only when synchronization is enabled and only to chosen provider.
 - You can optionally enable one or more synchronization providers (third-party services) to sync your data across multiple devices.
 
 ## Synchronization providers

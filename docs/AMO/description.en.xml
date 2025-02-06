@@ -50,7 +50,11 @@ You can setup auto snapshots that will keep info about open windows and tabs.
 
 <strong>Privacy policy</strong>
 <ul>
-Sidebery keeps all data that needed to correct work on the user's machine and doesn't send any kind of data to the outside.
+- Sidebery does not engage in ad targeting, data collection, or other activities that could compromise your privacy.
+- By default, all data is stored locally on your machine.
+- Sidebery sends data only when synchronization is enabled and only to chosen provider.
+- You can optionally enable one or more synchronization providers (third-party services) to sync your data across multiple devices.
+More detailed information can be found on this page: <a href="https://github.com/mbnuqw/sidebery/blob/v5/PRIVACY.md">https://github.com/mbnuqw/sidebery/blob/v5/PRIVACY.md</a>
 </ul>
 
 
