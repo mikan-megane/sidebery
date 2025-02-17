@@ -53,6 +53,7 @@
         :data-active="state.customIconType === 'file'"
         @click="setCustomIconType('file')")
         .btn-label {{translate('panel.custom_icon_file_btn')}}
+        .focus-fx
         input(
           tabindex="-1"
           type="file"
@@ -60,7 +61,6 @@
           @input="openCustomIconFile"
           @keydown.enter.space="setCustomIconType('file')"
           @keyup="onFileInputKeyup")
-        .focus-fx
       .img-box(v-if="state.customIconUrl")
         img(:src="state.customIconUrl" @load="onCustomIconLoad" @error="onCustomIconError")
       .img-rm(
