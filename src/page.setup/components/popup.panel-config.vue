@@ -556,14 +556,14 @@ async function drawTextIcon() {
   // let offset: number | null = 0
   // while (fontSize <= maxFontSize) {
   //   fontSize++
-  //   font = `${fontSize}px sans-serif`
+  //   font = `${fontSize}px system-ui`
   //   const offsetProbe = isTextFit(ctx, txt, font, 30, 30)
   //   if (offsetProbe !== null) offset = offsetProbe
   //   else break
   // }
 
   // Default font
-  if (!font) font = '32px sans-serif'
+  if (!font) font = '32px system-ui'
 
   // Vertically center the icon
   let offset = 0

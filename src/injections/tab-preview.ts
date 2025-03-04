@@ -263,7 +263,7 @@ async function main() {
     background-color: var(--bg);
     overflow: hidden;
     color: var(--fg);
-    font-family: sans-serif;
+    font-family: system-ui;
     transition: background 1s;
 `
 
