@@ -60,7 +60,7 @@ export const DEFAULT_SETTINGS: SettingsState = {
   dndActSearchTab: true,
   dndMoveTabs: false,
   dndMoveBookmarks: false,
-  moveTabToPanel: 'end',
+  dndTabToPanelPos: 'end',
 
   // Search
   searchBarMode: 'dynamic',
@@ -350,7 +350,7 @@ export const SETTINGS_OPTIONS = {
   dndExp: ['pointer', 'hover', 'none'],
   dndExpMod: ['alt', 'shift', 'ctrl', 'none'],
   dndOutside: ['win', 'data'],
-  moveTabToPanel: ['start', 'end'],
+  dndTabToPanelPos: ['start', 'end'],
   animationSpeed: ['fast', 'norm', 'slow'],
   treeRmOutdent: ['branch', 'first_child'],
   colorizeTabsSrc: ['domain', 'container'],

@@ -59,8 +59,8 @@ section(ref="el")
   SelectField(
     label="settings.move_tab_to_panel"
     optLabel="settings.move_tab_to_panel_"
-    v-model:value="Settings.state.moveTabToPanel"
-    :opts="Settings.getOpts('moveTabToPanel')"
+    v-model:value="Settings.state.dndTabToPanelPos"
+    :opts="Settings.getOpts('dndTabToPanelPos')"
     @update:value="Settings.saveDebounced(150)")
   ToggleField(
     label="settings.dnd_move_tabs"
@@ -77,8 +77,8 @@ section(ref="el")
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
 import { translate } from 'src/dict'
-import { Settings } from 'src/services/settings'
-import * as SetupPage from 'src/services/setup-page'
+import * as Settings from 'src/services/settings.fg'
+import * as SetupPage from 'src/services/setup-page.fg'
 import NumField from '../../components/num-field.vue'
 import ToggleField from '../../components/toggle-field.vue'
 import SelectField from '../../components/select-field.vue'
